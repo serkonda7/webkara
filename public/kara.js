@@ -6,31 +6,17 @@ const kara = {
 	y: 0,
 	lookOrientation: 1, // 0 up, 1 right, 2 down, 3 left
 	move: function(){
-		switch(this.lookOrientation){
-			case 0:
-				this.y--
-				if(this.y < 0){
-					this.y=world.height - 1
-				}
-				break
-			case 1:
-				this.x++
-				if(this.x>=world.width){
-					this.x = 0
-				}
-				break
-			case 2:
-				this.y++
-				if(this.y >= world.height){
-					this.y = 0
-				}
-				break
-			case 3:
-				this.x--
-				if(this.x < 0){
-					this.x =world.width - 1
-				}
-				break
+		const vec = this.getLookVector()
+		this.x += vec.x
+		this.y += vec.y
+		if(this.x < 0){
+			this.x =world.width - 1
+		} else if(this.x>=world.width){
+			this.x = 0
+		} else if(this.y < 0){
+			this.y=world.height - 1
+		} else if(this.y >= world.height){
+			this.y = 0
 		}
 		draw()
 	},
@@ -68,11 +54,53 @@ const kara = {
 	onLeaf: function(){
 		return world.leaf_positions.findIndex(leaf => leaf.x == this.x && leaf.y == this.y) >= 0
 	},
+	treeFront: function(){
+		// TODO
+	},
+	treeLeft: function(){
+		// TODO
+	},
+	treeRight: function(){
+		// TODO
+	},
+	mushroomFront: function(){
+		// TODO
+	},
 	setPosition: function(x, y) {
 		this.x = x
 		this.y = y
 		draw()
 	},
+	getPosition: function() {
+		return {x:this.x, y:this.y}
+	},
+	setOrientation: function(o) {
+		if (o < 0){
+			o = 0
+		} else if (o > 3){
+			o = 3
+		}
+		this.lookOrientation = o
+		draw()
+	},
+	getOrientation: function() {
+		return this.lookOrientation
+	},
+	getLookVector: function(){
+		switch(this.lookOrientation){
+			case 0:
+				return{x:0,y:1}
+			case 1:
+				return{x:1,y:0}
+
+			case 2:
+				return{x:0,y:-1}
+
+			case 3:
+				return{x:-1,y:0}
+
+		}
+	}
 }
 
 export { kara }

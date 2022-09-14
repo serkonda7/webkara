@@ -4,7 +4,7 @@ import { world } from './world.js'
 const board = document.querySelector('#board')
 
 function createBoardTable(){
-	for (let h = 0; h < world.height; h++){
+	for (let h = world.height - 1; h >= 0; h--){
 		const row = document.createElement('tr')
 		for (let w = 0; w < world.width; w++){
 			const cell = document.createElement('td')
@@ -30,9 +30,11 @@ function draw(){
 	const kara_cell = document.querySelector(`#cell_${kara.x}_${kara.y}`)
 	kara_cell.innerHTML = kara_to_arrow[kara.lookOrientation]
 	world.leaf_positions.forEach((val) => {
-		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '.'
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
 }
+// 9820 tree
+// 9730 shroom
 
 function main(){
 	document.querySelector('#btnMove').onclick = ()=>{kara.move()}
