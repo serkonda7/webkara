@@ -27,9 +27,11 @@ function draw(){
 	cells.forEach((el)=>{
 		el.innerHTML=''
 	})
-	// TODO kara img that shows orientation
 	const kara_cell = document.querySelector(`#cell_${kara.x}_${kara.y}`)
-	kara_cell.innerHTML = `<div id="kara">${kara_to_arrow[kara.lookOrientation]}</div>`
+	kara_cell.innerHTML = kara_to_arrow[kara.lookOrientation]
+	world.leaf_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '.'
+	})
 }
 
 function main(){

@@ -49,10 +49,24 @@ const kara = {
 		draw()
 	},
 	putLeaf: function(){
-		// TODO
+		if (this.onLeaf()){
+			alert('kara cannot put a leaf on another leaf')
+			return
+		}
+		world.leaf_positions.push({x:this.x, y:this.y})
+		draw()
 	},
 	takeLeaf: function(){
-		// TODO
+		const lpos_idx = world.leaf_positions.findIndex(leaf => leaf.x == this.x && leaf.y == this.y)
+		if (lpos_idx == -1){
+			alert('kara cannot take a leaf where is none')
+			return
+		}
+		world.leaf_positions.splice(lpos_idx, 1)
+		draw()
+	},
+	onLeaf: function(){
+		return world.leaf_positions.findIndex(leaf => leaf.x == this.x && leaf.y == this.y) >= 0
 	},
 	setPosition: function(x, y) {
 		this.x = x
