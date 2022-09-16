@@ -9,9 +9,35 @@ function createBoardTable(){
 		for (let w = 0; w < world.width; w++){
 			const cell = document.createElement('td')
 			cell.id = `cell_${w}_${h}`
+			cell.x = w
+			cell.y = h
+			cell.onclick = () => { cellclick_handler(cell)}
 			row.appendChild(cell)
 		}
 		board.appendChild(row)
+	}
+}
+
+function cellclick_handler(cell){
+	if (is_edit_mode) {
+		if (cell.innerHTML.includes(edit_val)){
+			if (edit_type == 'leaf'){
+				const lpos_idx = world.leaf_positions.findIndex(leaf => leaf.x == cell.x && leaf.y == cell.y)
+				world.leaf_positions.splice(lpos_idx, 1)
+			} else if(edit_type=='tree'){
+				const idx = world.tree_positions.findIndex(tree => tree.x == cell.x && tree.y == cell.y)
+				world.tree_positions.splice(idx, 1)
+			}else{
+			}
+		}else{
+			if (edit_type == 'leaf'){
+				world.leaf_positions.push({x:cell.x, y:cell.y})
+			} else if(edit_type=='tree'){
+				world.tree_positions.push({x:cell.x, y:cell.y})
+			}else{
+			}
+		}
+		draw()
 	}
 }
 
@@ -32,9 +58,35 @@ function draw(){
 	world.leaf_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
+	world.tree_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
+	})
 }
-// 9820 tree
-// 9730 shroom
+
+const placeLeafsBtn = document.querySelector('#placeLeafs')
+const placeTreesBtn = document.querySelector('#placeTrees')
+const placeShroomsBtn = document.querySelector('#placeShrooms')
+
+let is_edit_mode = false
+let edit_val = ''
+let edit_type = ''
+
+function toggleEditMode(btn, type){
+	if (btn.className == ''){
+		placeLeafsBtn.className = ''
+		placeTreesBtn.className = ''
+		placeShroomsBtn.className = ''
+		btn.className = 'toggleActive'
+
+		is_edit_mode = true
+		edit_val = btn.innerText
+		edit_type = type
+	} else {
+		btn.className = ''
+
+		is_edit_mode = false
+	}
+}
 
 function main(){
 	document.querySelector('#btnMove').onclick = ()=>{kara.move()}
@@ -42,6 +94,10 @@ function main(){
 	document.querySelector('#btnRight').onclick = ()=>{kara.turnRight()}
 	document.querySelector('#btnPut').onclick = ()=>{kara.putLeaf()}
 	document.querySelector('#btnTake').onclick = ()=>{kara.takeLeaf()}
+
+	placeLeafsBtn.onclick = ()=>{toggleEditMode(placeLeafsBtn, 'leaf')}
+	placeTreesBtn.onclick = ()=>{toggleEditMode(placeTreesBtn, 'tree')}
+	placeShroomsBtn.onclick = ()=>{toggleEditMode(placeShroomsBtn, 'shroom')}
 
 	createBoardTable()
 	kara.setPosition(1, 1)
