@@ -29,13 +29,32 @@ function cellclick_handler(cell){
 				const idx = world.tree_positions.findIndex(tree => tree.x == cell.x && tree.y == cell.y)
 				world.tree_positions.splice(idx, 1)
 			}else{
+				const idx = world.shroom_positions.findIndex(shroom => shroom.x == cell.x && shroom.y == cell.y)
+				world.shroom_positions.splice(idx, 1)
 			}
 		}else{
 			if (edit_type == 'leaf'){
+				if (world.tree_positions.findIndex(tree => tree.x == cell.x && tree.y == cell.y) >= 0) {
+					alert('cannot place leaf on a tree')
+					return
+				}
 				world.leaf_positions.push({x:cell.x, y:cell.y})
 			} else if(edit_type=='tree'){
+				if (world.leaf_positions.findIndex(leaf => leaf.x == cell.x && leaf.y == cell.y) >= 0){
+					alert('cannot place tree on a leaf')
+					return
+				} else if(world.shroom_positions.findIndex(shroom => shroom.x == cell.x && shroom.y == cell.y) >= 0)
+				{
+					alert('cannot place tree on a mushroom')
+					return
+				}
 				world.tree_positions.push({x:cell.x, y:cell.y})
 			}else{
+				if (world.tree_positions.findIndex(tree => tree.x == cell.x && tree.y == cell.y) >= 0) {
+					alert('cannot place mushroom on a tree')
+					return
+				}
+				world.shroom_positions.push({x:cell.x, y:cell.y})
 			}
 		}
 		draw()
@@ -61,6 +80,9 @@ function draw(){
 	})
 	world.tree_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
+	})
+	world.shroom_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
 	})
 }
 
