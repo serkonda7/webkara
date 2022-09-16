@@ -1,3 +1,4 @@
+import { runCode } from './editor.js'
 import { kara } from './kara.js'
 import { world } from './world.js'
 
@@ -98,6 +99,13 @@ function main(){
 	placeLeafsBtn.onclick = ()=>{toggleEditMode(placeLeafsBtn, 'leaf')}
 	placeTreesBtn.onclick = ()=>{toggleEditMode(placeTreesBtn, 'tree')}
 	placeShroomsBtn.onclick = ()=>{toggleEditMode(placeShroomsBtn, 'shroom')}
+
+	const codeEditor = document.querySelector('#code-editor')
+	codeEditor.innerText=`kara.move()
+	console.log(kara.treeFront())
+	console.log(kara.treeLeft())
+	console.log(kara.treeRight())`
+	document.querySelector('#runBtn').onclick = ()=>{runCode(codeEditor.innerText)}
 
 	createBoardTable()
 	kara.setPosition(1, 1)
