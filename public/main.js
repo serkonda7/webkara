@@ -101,10 +101,7 @@ function main(){
 	placeShroomsBtn.onclick = ()=>{toggleEditMode(placeShroomsBtn, 'shroom')}
 
 	const codeEditor = document.querySelector('#code-editor')
-	codeEditor.innerText=`kara.move()
-	console.log(kara.treeFront())
-	console.log(kara.treeLeft())
-	console.log(kara.treeRight())`
+	codeEditor.innerText=``
 	document.querySelector('#runBtn').onclick = ()=>{runCode(codeEditor.innerText)}
 
 	createBoardTable()

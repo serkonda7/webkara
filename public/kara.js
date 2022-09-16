@@ -6,6 +6,10 @@ const kara = {
 	y: 0,
 	lookOrientation: 1, // 0 up, 1 right, 2 down, 3 left
 	move: function(){
+		if (this.treeFront()) {
+			alert('kara cannot move: tree front')
+			return
+		}
 		const vec = this.getLookVector()
 		this.x += vec.x
 		this.y += vec.y
@@ -55,13 +59,53 @@ const kara = {
 		return world.leaf_positions.findIndex(leaf => leaf.x == this.x && leaf.y == this.y) >= 0
 	},
 	treeFront: function(){
-		// TODO
+		const vec = this.getLookVector()
+		vec.x += this.x
+		vec.y += this.y
+		return world.tree_positions.findIndex(tree => tree.x == vec.x && tree.y == vec.y) >= 0
+
 	},
 	treeLeft: function(){
-		// TODO
+		let target = {
+			x: this.x,
+			y: this.y
+		}
+		switch(this.lookOrientation){
+			case 0:
+				target.x--
+				break
+			case 1:
+				target.y++
+				break
+			case 2:
+				target.x++
+				break
+			case 3:
+				target.y--
+				break
+		}
+		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
 	},
 	treeRight: function(){
-		// TODO
+		let target = {
+			x: this.x,
+			y: this.y
+		}
+		switch(this.lookOrientation){
+			case 0:
+				target.x++
+				break
+			case 1:
+				target.y--
+				break
+			case 2:
+				target.x--
+				break
+			case 3:
+				target.y++
+				break
+		}
+		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
 	},
 	mushroomFront: function(){
 		// TODO
