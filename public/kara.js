@@ -10,6 +10,27 @@ const kara = {
 			alert('kara cannot move: tree front')
 			return
 		}
+		if(this.mushroomFront()){
+			const vec = this.getLookVector()
+			const frontField = {
+				x: vec.x + this.x,
+				y: vec.y + this.y
+			}
+			const nextField={
+				x:frontField.x + vec.x,
+				y:frontField.y + vec.y
+			}
+			if (world.shroom_positions.findIndex(shroom => shroom.x == nextField.x && shroom.y == nextField.y) >= 0) {
+				alert('kara cannot push multiple mushrooms')
+				return
+			}
+			if (world.tree_positions.findIndex(tree => tree.x == nextField.x && tree.y == nextField.y) >= 0) {
+				alert('kara tried pushing a mushroom into a tree')
+				return
+			}
+			const idx = world.shroom_positions.findIndex(shroom => shroom.x == frontField.x && shroom.y == frontField.y)
+			world.shroom_positions[idx] = nextField
+		}
 		const vec = this.getLookVector()
 		this.x += vec.x
 		this.y += vec.y
@@ -108,7 +129,10 @@ const kara = {
 		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
 	},
 	mushroomFront: function(){
-		// TODO
+		const vec = this.getLookVector()
+		vec.x += this.x
+		vec.y += this.y
+		return world.shroom_positions.findIndex(shroom => shroom.x == vec.x && shroom.y == vec.y) >= 0
 	},
 	setPosition: function(x, y) {
 		this.x = x
