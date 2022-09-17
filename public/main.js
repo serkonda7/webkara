@@ -1,4 +1,4 @@
-import { runCode } from './editor.js'
+import { saveCode, loadCode, runCode } from './editor.js'
 import { kara } from './kara.js'
 import { world } from './world.js'
 
@@ -122,9 +122,10 @@ function main(){
 	placeTreesBtn.onclick = ()=>{toggleEditMode(placeTreesBtn, 'tree')}
 	placeShroomsBtn.onclick = ()=>{toggleEditMode(placeShroomsBtn, 'shroom')}
 
-	const codeEditor = document.querySelector('#code-editor')
-	codeEditor.innerText=``
-	document.querySelector('#runBtn').onclick = ()=>{runCode(codeEditor.innerText)}
+	document.querySelector('#runBtn').onclick = ()=>{runCode()}
+
+	loadCode();
+    setInterval(saveCode, 15000);
 
 	createBoardTable()
 	kara.setPosition(1, 1)

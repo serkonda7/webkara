@@ -1,6 +1,18 @@
 import { kara } from './kara.js'
 
-function runCode(code){
+const codeEditor = document.querySelector('#code-editor')
+
+function saveCode(){
+    localStorage['editorContent'] = codeEditor.innerText
+}
+
+function loadCode(){
+    codeEditor.innerText = localStorage['editorContent'] || ''
+}
+
+function runCode(){
+    saveCode()
+    const code = codeEditor.innerText
     var Function = Object.getPrototypeOf(function () { }).constructor;
     var userFn = new Function('kara', code);
     try {
@@ -9,4 +21,4 @@ function runCode(code){
         console.log(e)
     }
 }
-export {runCode}
+export {runCode, loadCode, saveCode}
