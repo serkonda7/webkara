@@ -8,8 +8,11 @@
     "type": "git",
     "url": "git+https://github.com/serkonda7/webkara.git"
   },
+  "type": "module",
   "scripts": {
-    "build:dev": "tsc -p ."
+    "build:dev": "node scripts/esbuild.js --dev",
+    "build:watch": "node scripts/esbuild.js --dev --watch",
+    "build:prod": "node scripts/esbuild.js"
   },
   "engines": {
     "node": ">=16"
