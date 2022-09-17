@@ -9,12 +9,13 @@
     "url": "git+https://github.com/serkonda7/webkara.git"
   },
   "scripts": {
-    "build:dev": "tsc -p src"
+    "build:dev": "tsc -p ."
   },
   "engines": {
     "node": ">=16"
   },
   "devDependencies": {
+    "esbuild": "~0.15.7",
     "typescript": "~4.8.3"
   }
 }
