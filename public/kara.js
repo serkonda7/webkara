@@ -1,6 +1,20 @@
 import { draw } from './main.js'
 import { world } from './world.js'
 
+function clampToTorus(cell){
+	if (cell.x >= world.width){
+		cell.x = 0
+	} else if (cell.x < 0) {
+		cell.x = world.width - 1
+	}
+	if (cell.y >= world.height){
+		cell.y = 0
+	} else if (cell.y < 0) {
+		cell.y = world.height - 1
+	}
+	return cell
+}
+
 const kara = {
 	x: 0,
 	y: 0,
@@ -12,14 +26,16 @@ const kara = {
 		}
 		if(this.mushroomFront()){
 			const vec = this.getLookVector()
-			const frontField = {
+			let frontField = {
 				x: vec.x + this.x,
 				y: vec.y + this.y
 			}
-			const nextField={
+			frontField = clampToTorus(frontField)
+			let nextField={
 				x:frontField.x + vec.x,
 				y:frontField.y + vec.y
 			}
+			nextField = clampToTorus(nextField)
 			if (world.shroom_positions.findIndex(shroom => shroom.x == nextField.x && shroom.y == nextField.y) >= 0) {
 				alert('kara cannot push multiple mushrooms')
 				return
@@ -80,9 +96,10 @@ const kara = {
 		return world.leaf_positions.findIndex(leaf => leaf.x == this.x && leaf.y == this.y) >= 0
 	},
 	treeFront: function(){
-		const vec = this.getLookVector()
+		let vec = this.getLookVector()
 		vec.x += this.x
 		vec.y += this.y
+		vec = clampToTorus(vec)
 		return world.tree_positions.findIndex(tree => tree.x == vec.x && tree.y == vec.y) >= 0
 
 	},
@@ -105,6 +122,7 @@ const kara = {
 				target.y--
 				break
 		}
+		target = clampToTorus(target)
 		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
 	},
 	treeRight: function(){
@@ -126,12 +144,14 @@ const kara = {
 				target.y++
 				break
 		}
+		target = clampToTorus(target)
 		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
 	},
 	mushroomFront: function(){
-		const vec = this.getLookVector()
+		let vec = this.getLookVector()
 		vec.x += this.x
 		vec.y += this.y
+		vec = clampToTorus(vec)
 		return world.shroom_positions.findIndex(shroom => shroom.x == vec.x && shroom.y == vec.y) >= 0
 	},
 	setPosition: function(x, y) {
