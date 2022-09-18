@@ -1,6 +1,6 @@
 import { draw } from './main.js'
 
-let world = {
+const world = {
     width: 7,
 	height: 7,
     leaf_positions: [],

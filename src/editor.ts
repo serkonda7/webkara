@@ -13,8 +13,8 @@ function loadCode(){
 function runCode(){
     saveCode()
     const code = codeEditor.innerText
-    var Function = Object.getPrototypeOf(function () { }).constructor;
-    var userFn = new Function('kara', code);
+    const Function = Object.getPrototypeOf(function () { }).constructor;
+    const userFn = new Function('kara', code);
     try {
         userFn(kara);
     } catch(e){
