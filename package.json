@@ -13,7 +13,8 @@
     "prebuild": "tsc -p .",
     "build": "node scripts/esbuild.js",
     "build:dev": "npm run build -- --dev",
-    "build:watch": "npm run build -- --dev --watch"
+    "build:watch": "npm run build -- --dev --watch",
+    "check:watch": "tsc --watch -p ."
   },
   "engines": {
     "node": ">=16"

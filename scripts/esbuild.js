@@ -5,10 +5,10 @@ const dev_build = process.argv.includes('--dev')
 
 const config = {
 	entryPoints: [
-		'src/main.js',
-		'src/kara.js',
-		'src/world.js',
-		'src/editor.js',
+		'src/main.ts',
+		'src/kara.ts',
+		'src/world.ts',
+		'src/editor.ts',
 	],
 	outdir: 'public/js',
 	minify: !dev_build,
