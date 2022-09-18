@@ -1,0 +1,26 @@
+{
+  "name": "webkara",
+  "description": "Online environment for students to learn the basics of programming.",
+  "author": "Lukas Neubert <serkonda7@pm.me",
+  "version": "0.0.2-dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serkonda7/webkara.git"
+  },
+  "type": "module",
+  "scripts": {
+    "prebuild": "tsc -p .",
+    "build": "node scripts/esbuild.js",
+    "build:dev": "npm run build -- --dev",
+    "build:watch": "npm run build -- --dev --watch",
+    "check:watch": "tsc --watch -p ."
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "esbuild": "~0.15.7",
+    "typescript": "~4.8.3"
+  }
+}

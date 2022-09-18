@@ -1,6 +1,6 @@
 import { kara } from './kara.js'
 
-const codeEditor = document.querySelector('#code-editor')
+const codeEditor = document.querySelector('#code-editor') as HTMLDivElement
 
 function saveCode(){
     localStorage['editorContent'] = codeEditor.innerText
