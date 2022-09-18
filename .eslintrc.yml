@@ -1,0 +1,15 @@
+root: true
+parser: '@typescript-eslint/parser'
+plugins:
+  - '@typescript-eslint'
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+rules:
+  # layout and formatting
+  eol-last: 2
+  indent: [2, tab]
+  quotes: [2, single, allowTemplateLiterals: true]
+  semi: [2, never]
+
+  '@typescript-eslint/no-empty-function': 0

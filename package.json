@@ -12,13 +12,17 @@
   "scripts": {
     "build:prod": "tsc --noEmit -p . && node scripts/esbuild.js",
     "build:dev": "tsc -p .",
-    "build:watch": "tsc -w -p ."
+    "build:watch": "tsc -w -p .",
+    "lint": "eslint ."
   },
   "engines": {
     "node": ">=16"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "~5.37.0",
+    "@typescript-eslint/parser": "~5.37.0",
     "esbuild": "~0.15.7",
+    "eslint": "~8.23.1",
     "typescript": "~4.8.3"
   }
 }
