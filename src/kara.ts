@@ -69,7 +69,7 @@ const kara = {
 		draw()
 	},
 	turnRight: function(){
-		this.lookOrientation++;
+		this.lookOrientation++
 		if (this.lookOrientation > 3) {
 			this.lookOrientation = 0
 		}
@@ -109,18 +109,18 @@ const kara = {
 			y: this.y
 		}
 		switch(this.lookOrientation){
-			case 0:
-				target.x--
-				break
-			case 1:
-				target.y++
-				break
-			case 2:
-				target.x++
-				break
-			case 3:
-				target.y--
-				break
+		case 0:
+			target.x--
+			break
+		case 1:
+			target.y++
+			break
+		case 2:
+			target.x++
+			break
+		case 3:
+			target.y--
+			break
 		}
 		target = clampToTorus(target)
 		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
@@ -131,18 +131,18 @@ const kara = {
 			y: this.y
 		}
 		switch(this.lookOrientation){
-			case 0:
-				target.x++
-				break
-			case 1:
-				target.y--
-				break
-			case 2:
-				target.x--
-				break
-			case 3:
-				target.y++
-				break
+		case 0:
+			target.x++
+			break
+		case 1:
+			target.y--
+			break
+		case 2:
+			target.x--
+			break
+		case 3:
+			target.y++
+			break
 		}
 		target = clampToTorus(target)
 		return world.tree_positions.findIndex(tree => tree.x == target.x && tree.y == target.y) >= 0
@@ -176,16 +176,16 @@ const kara = {
 	},
 	getLookVector: function(){
 		switch(this.lookOrientation){
-			case 0:
-				return{x:0,y:1}
-			case 1:
-				return{x:1,y:0}
+		case 0:
+			return{x:0,y:1}
+		case 1:
+			return{x:1,y:0}
 
-			case 2:
-				return{x:0,y:-1}
+		case 2:
+			return{x:0,y:-1}
 
-			case 3:
-				return{x:-1,y:0}
+		case 3:
+			return{x:-1,y:0}
 
 		}
 	}

@@ -122,8 +122,8 @@ function main(){
 
 	(document.querySelector('#runBtn') as HTMLButtonElement).onclick = ()=>{runCode()}
 
-	loadCode();
-    setInterval(saveCode, 15000);
+	loadCode()
+	setInterval(saveCode, 15000)
 
 	createBoardTable()
 	kara.setPosition(1, 1)
