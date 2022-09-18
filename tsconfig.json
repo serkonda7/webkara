@@ -5,6 +5,8 @@
       "es2015",
       "dom"
     ],
+    "target": "es2015",
+    "module": "es2015",
     "sourceMap": true
   },
   "include": ["src"]
