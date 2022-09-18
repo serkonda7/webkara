@@ -10,11 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "prebuild": "tsc -p .",
-    "build": "node scripts/esbuild.js",
-    "build:dev": "npm run build -- --dev",
-    "build:watch": "npm run build -- --dev --watch",
-    "check:watch": "tsc --watch -p ."
+    "build:prod": "tsc --noEmit -p . && node scripts/esbuild.js",
+    "build:dev": "tsc -p .",
+    "build:watch": "tsc -w -p ."
   },
   "engines": {
     "node": ">=16"
