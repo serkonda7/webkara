@@ -9,5 +9,6 @@
     "module": "es2015",
     "sourceMap": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "strict": true
 }

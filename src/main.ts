@@ -1,4 +1,4 @@
-import { saveCode, loadCode, runCode } from './editor.js'
+import { init as editor_init, runCode } from './editor.js'
 import { kara } from './kara.js'
 import { world } from './world.js'
 
@@ -122,8 +122,7 @@ function main(){
 
 	(document.querySelector('#runBtn') as HTMLButtonElement).onclick = ()=>{runCode()}
 
-	loadCode()
-	setInterval(saveCode, 15000)
+	editor_init()
 
 	createBoardTable()
 	kara.setPosition(1, 1)

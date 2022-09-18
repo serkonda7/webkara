@@ -7,6 +7,7 @@ const config = {
 		'src/kara.ts',
 		'src/world.ts',
 		'src/editor.ts',
+		'src/data_storage.ts',
 	],
 	outdir: 'public/js',
 }
