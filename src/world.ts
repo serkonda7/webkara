@@ -1,8 +1,15 @@
 import { draw } from './main.js'
 
+type Vector2 = {
+	x: number,
+	y: number
+}
+
 const world = {
-	width: 7,
-	height: 7,
+	size: {
+		x: 7,
+		y: 7
+	},
 	leaf_positions: [],
 	tree_positions: [],
 	shroom_positions: [],
@@ -62,4 +69,19 @@ const world = {
 		return this.height
 	}
 }
-export{world}
+
+const clampOverflowToTorus = (cell: Vector2): Vector2 => {
+	if (cell.x >= world.size.x){
+		cell.x = 0
+	} else if (cell.x < 0) {
+		cell.x = world.size.x - 1
+	}
+	if (cell.y >= world.size.y){
+		cell.y = 0
+	} else if (cell.y < 0) {
+		cell.y = world.size.y - 1
+	}
+	return cell
+}
+
+export{world, clampOverflowToTorus }

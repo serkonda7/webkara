@@ -10,9 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "build:prod": "tsc --noEmit -p . && node scripts/esbuild.js",
-    "build:dev": "tsc -p .",
-    "build:watch": "tsc -w -p .",
+    "prod": "tsc --noEmit -p . && node scripts/esbuild.js",
+    "dev": "tsc -p .",
+    "watch": "tsc -w -p .",
     "lint": "eslint ."
   },
   "engines": {

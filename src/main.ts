@@ -5,12 +5,12 @@ import { world } from './world.js'
 const board = document.querySelector('#board')
 
 function createBoardTable(){
-	for (let h = world.height - 1; h >= 0; h--){
+	for (let y = world.size.y - 1; y >= 0; y--){
 		const row = document.createElement('tr')
-		for (let w = 0; w < world.width; w++){
+		for (let x = 0; x < world.size.x; x++){
 			const cell = document.createElement('td')
-			cell.id = `cell_${w}_${h}`
-			cell.onclick = () => { cellclick_handler(cell, w, h)}
+			cell.id = `cell_${x}_${y}`
+			cell.onclick = () => { cellclick_handler(cell, x, y)}
 			row.appendChild(cell)
 		}
 		board.appendChild(row)

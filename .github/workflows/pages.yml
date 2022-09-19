@@ -28,7 +28,7 @@ jobs:
           node-version: 16
           cache: 'npm'
       - run: npm install
-      - run: npm run build:prod
+      - run: npm run prod
       - uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
