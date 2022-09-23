@@ -5,44 +5,46 @@ type Vector2 = {
 	y: number
 }
 
+const world_size = {
+	x: 7,
+	y: 7,
+}
+
+let leaf_positions = []
+let tree_positions = []
+let shroom_positions = []
+
 const world = {
-	size: {
-		x: 7,
-		y: 7,
-	},
-	leaf_positions: [],
-	tree_positions: [],
-	shroom_positions: [],
 	clearAll:function(){
-		this.leaf_positions = []
-		this.tree_positions =[]
-		this.shroom_positions=[]
+		leaf_positions = []
+		tree_positions =[]
+		shroom_positions=[]
 		draw()
 	},
 	setLeaf:function(x, y, putLeaf){
 		if (putLeaf){
-			this.leaf_positions.push({ x:x, y:y })
+			leaf_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = this.leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y})
-			this.leaf_positions.splice(lpos_idx, 1)
+			const lpos_idx = leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y})
+			leaf_positions.splice(lpos_idx, 1)
 		}
 		draw()
 	},
 	setTree:function(x, y, putTree){
 		if (putTree){
-			this.tree_positions.push({ x:x, y:y })
+			tree_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = this.tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y})
-			this.tree_positions.splice(lpos_idx, 1)
+			const lpos_idx = tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y})
+			tree_positions.splice(lpos_idx, 1)
 		}
 		draw()
 	},
 	setMushroom:function(x, y, putMushroom){
 		if (putMushroom){
-			this.shroom_positions.push({ x:x, y:y })
+			shroom_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = this.shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y})
-			this.shroom_positions.splice(lpos_idx, 1)
+			const lpos_idx = shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y})
+			shroom_positions.splice(lpos_idx, 1)
 		}
 		draw()
 	},
@@ -53,35 +55,35 @@ const world = {
 		return true
 	},
 	isLeaf:function(x, y){
-		return this.leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
+		return leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
 
 	},
 	isTree:function(x, y){
-		return this.tree_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
+		return tree_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
 	},
 	isMushroom:function(x, y){
-		return this.shroom_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
+		return shroom_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
 	},
 	getSizeX:function(){
-		return this.width
+		return world_size.x
 	},
 	getSizeY:function(){
-		return this.height
+		return world_size.y
 	},
 }
 
-const clampOverflowToTorus = (cell: Vector2): Vector2 => {
-	if (cell.x >= world.size.x){
+const mapOverflowToTorus = (cell: Vector2): Vector2 => {
+	if (cell.x >= world_size.x){
 		cell.x = 0
 	} else if (cell.x < 0) {
-		cell.x = world.size.x - 1
+		cell.x = world_size.x - 1
 	}
-	if (cell.y >= world.size.y){
+	if (cell.y >= world_size.y){
 		cell.y = 0
 	} else if (cell.y < 0) {
-		cell.y = world.size.y - 1
+		cell.y = world_size.y - 1
 	}
 	return cell
 }
 
-export { world, clampOverflowToTorus }
+export { world, mapOverflowToTorus, world_size, leaf_positions, tree_positions, shroom_positions }

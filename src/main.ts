@@ -1,13 +1,13 @@
 import { init as editor_init, runCode } from './editor.js'
-import { kara } from './kara.js'
-import { world } from './world.js'
+import { kara, kara_pos, kara_orientation } from './kara.js'
+import { world_size, leaf_positions, tree_positions, shroom_positions } from './world.js'
 
 const board = document.querySelector('#board')
 
 function createBoardTable(){
-	for (let y = world.size.y - 1; y >= 0; y--){
+	for (let y = world_size.y - 1; y >= 0; y--){
 		const row = document.createElement('tr')
-		for (let x = 0; x < world.size.x; x++){
+		for (let x = 0; x < world_size.x; x++){
 			const cell = document.createElement('td')
 			cell.id = `cell_${x}_${y}`
 			cell.onclick = () => { cellclick_handler(cell, x, y)}
@@ -21,38 +21,38 @@ function cellclick_handler(cell, x, y){
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
 			if (edit_type == 'leaf'){
-				const lpos_idx = world.leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y})
-				world.leaf_positions.splice(lpos_idx, 1)
+				const lpos_idx = leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y})
+				leaf_positions.splice(lpos_idx, 1)
 			} else if (edit_type=='tree'){
-				const idx = world.tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y})
-				world.tree_positions.splice(idx, 1)
+				const idx = tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y})
+				tree_positions.splice(idx, 1)
 			} else {
-				const idx = world.shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y})
-				world.shroom_positions.splice(idx, 1)
+				const idx = shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y})
+				shroom_positions.splice(idx, 1)
 			}
 		} else {
 			if (edit_type == 'leaf'){
-				if (world.tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y}) >= 0) {
+				if (tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y}) >= 0) {
 					alert('cannot place leaf on a tree')
 					return
 				}
-				world.leaf_positions.push({ x:x, y:y })
+				leaf_positions.push({ x:x, y:y })
 			} else if (edit_type=='tree'){
-				if (world.leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0){
+				if (leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0){
 					alert('cannot place tree on a leaf')
 					return
-				} else if (world.shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y}) >= 0)
+				} else if (shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y}) >= 0)
 				{
 					alert('cannot place tree on a mushroom')
 					return
 				}
-				world.tree_positions.push({ x:x, y:y })
+				tree_positions.push({ x:x, y:y })
 			} else {
-				if (world.tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y}) >= 0) {
+				if (tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y}) >= 0) {
 					alert('cannot place mushroom on a tree')
 					return
 				}
-				world.shroom_positions.push({ x:x, y:y })
+				shroom_positions.push({ x:x, y:y })
 			}
 		}
 		draw()
@@ -71,15 +71,15 @@ function draw(){
 	cells.forEach((el) => {
 		el.innerHTML=''
 	})
-	const kara_cell = document.querySelector(`#cell_${kara.x}_${kara.y}`)
-	kara_cell.innerHTML = kara_to_arrow[kara.lookOrientation]
-	world.leaf_positions.forEach((val) => {
+	const kara_cell = document.querySelector(`#cell_${kara_pos.x}_${kara_pos.y}`)
+	kara_cell.innerHTML = kara_to_arrow[kara_orientation]
+	leaf_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
-	world.tree_positions.forEach((val) => {
+	tree_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
 	})
-	world.shroom_positions.forEach((val) => {
+	shroom_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
 	})
 }
