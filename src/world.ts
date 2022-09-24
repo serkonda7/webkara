@@ -1,81 +1,87 @@
 import { draw } from './main.js'
 import { Vector2 } from './vector.js'
 
-const world_size = {
+const world_size: Vector2 = {
 	x: 7,
 	y: 7,
 }
 
-let leaf_positions = []
-let tree_positions = []
-let shroom_positions = []
+let leaf_positions: Array<Vector2> = []
+let tree_positions: Array<Vector2> = []
+let shroom_positions: Array<Vector2> = []
+
+const findIndex = (arr: Array<Vector2>, x, y): number => {
+	return arr.findIndex((el) => {
+		return el.x === x && el.y === y
+	})
+}
+
+const findLeafIndex = (x, y): number => {
+	return findIndex(leaf_positions, x, y)
+}
+
+const findTreeIndex = (x, y): number => {
+	return findIndex(tree_positions, x, y)
+}
+
+const findMushroomIndex = (x, y): number => {
+	return findIndex(shroom_positions, x, y)
+}
 
 const world = {
-	clearAll:function(){
+	clearAll:function(): void{
 		leaf_positions = []
 		tree_positions = []
 		shroom_positions = []
 		draw()
 	},
-	setLeaf:function(x, y, putLeaf){
+	setLeaf:function(x, y, putLeaf: boolean): void{
 		if (putLeaf){
 			leaf_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = leaf_positions.findIndex((leaf) => {
-				return leaf.x === x && leaf.y === y
-			})
-			leaf_positions.splice(lpos_idx, 1)
+			const idx = findLeafIndex(x, y)
+			leaf_positions.splice(idx, 1)
 		}
 		draw()
 	},
-	setTree:function(x, y, putTree){
+	setTree:function(x, y, putTree: boolean): void{
 		if (putTree){
 			tree_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = tree_positions.findIndex((tree) => {
-				return tree.x === x && tree.y === y
-			})
-			tree_positions.splice(lpos_idx, 1)
+			const idx = findTreeIndex(x, y)
+			tree_positions.splice(idx, 1)
 		}
 		draw()
 	},
-	setMushroom:function(x, y, putMushroom){
+	setMushroom:function(x, y, putMushroom: boolean): void{
 		if (putMushroom){
 			shroom_positions.push({ x:x, y:y })
 		} else {
-			const lpos_idx = shroom_positions.findIndex((shroom) => {
-				return shroom.x === x && shroom.y === y
-			})
-			shroom_positions.splice(lpos_idx, 1)
+			const idx = findMushroomIndex(x, y)
+			shroom_positions.splice(idx, 1)
 		}
 		draw()
 	},
-	isEmpty:function(x, y){
+	isEmpty:function(x, y): boolean{
 		if ( this.isLeaf(x, y) || this.isTree(x, y) || this.isMushroom(x, y)){
 			return false
 		}
 		return true
 	},
-	isLeaf:function(x, y){
-		return leaf_positions.findIndex((leaf) => {
-			return leaf.x === x && leaf.y === y
-		}) >= 0
+	isLeaf:function(x, y): boolean{
+		return findLeafIndex(x, y) >= 0
 
 	},
-	isTree:function(x, y){
-		return tree_positions.findIndex((tree) => {
-			return tree.x === x && tree.y === y
-		}) >= 0
+	isTree:function(x, y): boolean{
+		return findTreeIndex(x, y) >= 0
 	},
-	isMushroom:function(x, y){
-		return shroom_positions.findIndex((shroom) => {
-			return shroom.x === x && shroom.y === y
-		}) >= 0
+	isMushroom:function(x, y): boolean{
+		return findMushroomIndex(x, y) >= 0
 	},
-	getSizeX:function(){
+	getSizeX:function(): number{
 		return world_size.x
 	},
-	getSizeY:function(){
+	getSizeY:function(): number{
 		return world_size.y
 	},
 }
@@ -94,4 +100,4 @@ const mapOverflowToWorld = (cell: Vector2): Vector2 => {
 	return cell
 }
 
-export { world, mapOverflowToWorld, leaf_positions, tree_positions, shroom_positions }
+export { world, mapOverflowToWorld, findLeafIndex, findTreeIndex, findMushroomIndex, leaf_positions, tree_positions, shroom_positions }

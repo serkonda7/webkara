@@ -2,7 +2,7 @@
   "name": "webkara",
   "description": "Online environment for students to learn the basics of programming.",
   "author": "Lukas Neubert <serkonda7@pm.me",
-  "version": "0.0.2",
+  "version": "0.0.3-dev",
   "license": "MIT",
   "repository": {
     "type": "git",

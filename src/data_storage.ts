@@ -1,4 +1,4 @@
-const save_string = (key: string, str: string) => {
+const save_string = (key: string, str: string): void => {
 	localStorage[key] = str
 }
 
