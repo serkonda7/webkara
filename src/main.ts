@@ -1,6 +1,10 @@
 import { init as editor_init, runCode } from './editor.js'
 import { kara, kara_pos, kara_orientation } from './kara.js'
-import { world, leaf_positions, tree_positions, shroom_positions } from './world.js'
+import {
+	world,
+	leaf_positions, tree_positions, shroom_positions,
+	findLeafIndex, findTreeIndex, findMushroomIndex,
+} from './world.js'
 
 const board = document.querySelector('#board')
 
@@ -15,7 +19,7 @@ const kara_to_arrow = {
 	3: '&#8678;',
 }
 
-function draw(){
+function draw(): void{
 	const cells = document.querySelectorAll('#board td')
 	cells.forEach((el) => {
 		el.innerHTML = ''
@@ -33,23 +37,17 @@ function draw(){
 	})
 }
 
-const cellclick_handler = (cell, x: number, y: number) => {
+const cellclick_handler = (cell, x: number, y: number): void => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
 			if (edit_type === 'leaf'){
-				const lpos_idx = leaf_positions.findIndex((leaf) => {
-					return leaf.x === x && leaf.y === y
-				})
-				leaf_positions.splice(lpos_idx, 1)
+				const idx = findLeafIndex(x, y)
+				leaf_positions.splice(idx, 1)
 			} else if (edit_type === 'tree'){
-				const idx = tree_positions.findIndex((tree) => {
-					return tree.x === x && tree.y === y
-				})
+				const idx = findTreeIndex(x, y)
 				tree_positions.splice(idx, 1)
 			} else {
-				const idx = shroom_positions.findIndex((shroom) => {
-					return shroom.x === x && shroom.y === y
-				})
+				const idx = findMushroomIndex(x, y)
 				shroom_positions.splice(idx, 1)
 			}
 		} else {
@@ -80,7 +78,7 @@ const cellclick_handler = (cell, x: number, y: number) => {
 	}
 }
 
-const createBoardTable = () => {
+const createBoardTable = (): void => {
 	for (let y = world.getSizeY() - 1; y >= 0; y--){
 		const row = document.createElement('tr')
 		for (let x = 0; x < world.getSizeX(); x++){
@@ -99,7 +97,7 @@ const placeLeafsBtn = document.querySelector('#placeLeafs') as HTMLButtonElement
 const placeTreesBtn = document.querySelector('#placeTrees') as HTMLButtonElement
 const placeShroomsBtn = document.querySelector('#placeShrooms') as HTMLButtonElement
 
-function toggleEditMode(btn, type){
+function toggleEditMode(btn, type): void{
 	if (btn.className === ''){
 		placeLeafsBtn.className = ''
 		placeTreesBtn.className = ''
@@ -116,7 +114,7 @@ function toggleEditMode(btn, type){
 	}
 }
 
-function main(){
+function main(): void{
 	(document.querySelector('#btnMove') as HTMLButtonElement).onclick = () => {
 		kara.move()
 	}

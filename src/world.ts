@@ -100,4 +100,9 @@ const mapOverflowToWorld = (cell: Vector2): Vector2 => {
 	return cell
 }
 
-export { world, mapOverflowToWorld, findLeafIndex, findTreeIndex, findMushroomIndex, leaf_positions, tree_positions, shroom_positions }
+export {
+	world,
+	mapOverflowToWorld,
+	findLeafIndex, findTreeIndex, findMushroomIndex,
+	leaf_positions, tree_positions, shroom_positions,
+}

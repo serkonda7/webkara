@@ -1,5 +1,9 @@
 import { draw } from './main.js'
-import { mapOverflowToWorld, leaf_positions, shroom_positions, world } from './world.js'
+import {
+	world, mapOverflowToWorld,
+	leaf_positions, shroom_positions,
+	findLeafIndex, findMushroomIndex,
+} from './world.js'
 
 let kara_pos = {
 	x: 0,
@@ -8,7 +12,7 @@ let kara_pos = {
 let kara_orientation = 1 // 0 up, 1 right, 2 down, 3 left
 
 const kara = {
-	move: function(){
+	move: function(): void{
 		if (this.treeFront()) {
 			alert('kara cannot move: tree front')
 			return
@@ -33,9 +37,7 @@ const kara = {
 				alert('kara tried pushing a mushroom into a tree')
 				return
 			}
-			const idx = shroom_positions.findIndex((shroom) => {
-				return shroom.x === frontField.x && shroom.y === frontField.y
-			})
+			const idx = findMushroomIndex(frontField.x, frontField.y)
 			shroom_positions[idx] = nextField
 		}
 		const vec = this.getLookVector()
@@ -44,21 +46,21 @@ const kara = {
 		kara_pos = mapOverflowToWorld(kara_pos)
 		draw()
 	},
-	turnLeft: function(){
+	turnLeft: function(): void{
 		kara_orientation--
 		if (kara_orientation < 0) {
 			kara_orientation = 3
 		}
 		draw()
 	},
-	turnRight: function(){
+	turnRight: function(): void{
 		kara_orientation++
 		if (kara_orientation > 3) {
 			kara_orientation = 0
 		}
 		draw()
 	},
-	putLeaf: function(){
+	putLeaf: function(): void{
 		if (this.onLeaf()){
 			alert('kara cannot put a leaf on another leaf')
 			return
@@ -66,15 +68,13 @@ const kara = {
 		leaf_positions.push({ x:kara_pos.x, y:kara_pos.y })
 		draw()
 	},
-	takeLeaf: function(){
-		const lpos_idx = leaf_positions.findIndex((leaf) => {
-			return leaf.x === kara_pos.x && leaf.y === kara_pos.y
-		})
-		if (lpos_idx === -1){
+	takeLeaf: function(): void{
+		const idx = findLeafIndex(kara_pos.x, kara_pos.y)
+		if (idx === -1){
 			alert('kara cannot take a leaf where is none')
 			return
 		}
-		leaf_positions.splice(lpos_idx, 1)
+		leaf_positions.splice(idx, 1)
 		draw()
 	},
 	onLeaf: function(){

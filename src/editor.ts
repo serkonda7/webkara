@@ -7,13 +7,13 @@ const AUTOSAVE_INTERVAL_MS = 15000
 
 const codeEditor = document.querySelector('#code-editor') as HTMLDivElement
 
-const save_code = () => {
+const save_code = (): void => {
 	storage.save_string(EDITOR_CONTENT_KEY, codeEditor.innerText)
 }
 
 const FnConstructor = Object.getPrototypeOf(function () { }).constructor
 
-const runCode = () => {
+const runCode = (): void => {
 	const userFn = new FnConstructor('kara', 'world', codeEditor.innerText)
 	try {
 		userFn(kara, world)
@@ -22,7 +22,7 @@ const runCode = () => {
 	}
 }
 
-const init = () => {
+const init = (): void => {
 	setInterval(save_code, AUTOSAVE_INTERVAL_MS)
 	codeEditor.innerText = storage.load_string(EDITOR_CONTENT_KEY)
 }
