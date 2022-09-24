@@ -20,7 +20,7 @@ const kara = {
 				y: vec.y + kara_pos.y,
 			}
 			frontField = mapOverflowToWorld(frontField)
-			let nextField={
+			let nextField = {
 				x:frontField.x + vec.x,
 				y:frontField.y + vec.y,
 			}

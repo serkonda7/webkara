@@ -18,7 +18,7 @@ const kara_to_arrow = {
 function draw(){
 	const cells = document.querySelectorAll('#board td')
 	cells.forEach((el) => {
-		el.innerHTML=''
+		el.innerHTML = ''
 	})
 	const kara_cell = document.querySelector(`#cell_${kara_pos.x}_${kara_pos.y}`)
 	kara_cell.innerHTML = kara_to_arrow[kara_orientation]
@@ -41,7 +41,7 @@ const cellclick_handler = (cell, x: number, y: number) => {
 					return leaf.x === x && leaf.y === y
 				})
 				leaf_positions.splice(lpos_idx, 1)
-			} else if (edit_type==='tree'){
+			} else if (edit_type === 'tree'){
 				const idx = tree_positions.findIndex((tree) => {
 					return tree.x === x && tree.y === y
 				})
@@ -59,7 +59,7 @@ const cellclick_handler = (cell, x: number, y: number) => {
 					return
 				}
 				leaf_positions.push({ x:x, y:y })
-			} else if (edit_type==='tree'){
+			} else if (edit_type === 'tree'){
 				if (world.isLeaf(x, y)){
 					alert('cannot place tree on a leaf')
 					return

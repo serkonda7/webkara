@@ -13,7 +13,7 @@ const save_code = () => {
 
 const FnConstructor = Object.getPrototypeOf(function () { }).constructor
 
-const runCode =() => {
+const runCode = () => {
 	const userFn = new FnConstructor('kara', 'world', codeEditor.innerText)
 	try {
 		userFn(kara, world)

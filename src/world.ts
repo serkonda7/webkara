@@ -13,8 +13,8 @@ let shroom_positions = []
 const world = {
 	clearAll:function(){
 		leaf_positions = []
-		tree_positions =[]
-		shroom_positions=[]
+		tree_positions = []
+		shroom_positions = []
 		draw()
 	},
 	setLeaf:function(x, y, putLeaf){
@@ -51,7 +51,7 @@ const world = {
 		draw()
 	},
 	isEmpty:function(x, y){
-		if ( this.isLeaf(x, y)||this.isTree(x, y)||this.isMushroom(x, y)){
+		if ( this.isLeaf(x, y) || this.isTree(x, y) || this.isMushroom(x, y)){
 			return false
 		}
 		return true
