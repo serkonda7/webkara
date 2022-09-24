@@ -36,30 +36,30 @@ function draw(){
 const cellclick_handler = (cell, x: number, y: number) => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
-			if (edit_type == 'leaf'){
+			if (edit_type === 'leaf'){
 				const lpos_idx = leaf_positions.findIndex((leaf) => {
-					return leaf.x == x && leaf.y == y
+					return leaf.x === x && leaf.y === y
 				})
 				leaf_positions.splice(lpos_idx, 1)
-			} else if (edit_type=='tree'){
+			} else if (edit_type==='tree'){
 				const idx = tree_positions.findIndex((tree) => {
-					return tree.x == x && tree.y == y
+					return tree.x === x && tree.y === y
 				})
 				tree_positions.splice(idx, 1)
 			} else {
 				const idx = shroom_positions.findIndex((shroom) => {
-					return shroom.x == x && shroom.y == y
+					return shroom.x === x && shroom.y === y
 				})
 				shroom_positions.splice(idx, 1)
 			}
 		} else {
-			if (edit_type == 'leaf'){
+			if (edit_type === 'leaf'){
 				if (world.isTree(x, y)) {
 					alert('cannot place leaf on a tree')
 					return
 				}
 				leaf_positions.push({ x:x, y:y })
-			} else if (edit_type=='tree'){
+			} else if (edit_type==='tree'){
 				if (world.isLeaf(x, y)){
 					alert('cannot place tree on a leaf')
 					return
@@ -100,7 +100,7 @@ const placeTreesBtn = document.querySelector('#placeTrees') as HTMLButtonElement
 const placeShroomsBtn = document.querySelector('#placeShrooms') as HTMLButtonElement
 
 function toggleEditMode(btn, type){
-	if (btn.className == ''){
+	if (btn.className === ''){
 		placeLeafsBtn.className = ''
 		placeTreesBtn.className = ''
 		placeShroomsBtn.className = ''
