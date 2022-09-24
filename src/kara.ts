@@ -33,7 +33,9 @@ const kara = {
 				alert('kara tried pushing a mushroom into a tree')
 				return
 			}
-			const idx = shroom_positions.findIndex((shroom) => {return shroom.x == frontField.x && shroom.y == frontField.y})
+			const idx = shroom_positions.findIndex((shroom) => {
+				return shroom.x == frontField.x && shroom.y == frontField.y
+			})
 			shroom_positions[idx] = nextField
 		}
 		const vec = this.getLookVector()
@@ -65,7 +67,9 @@ const kara = {
 		draw()
 	},
 	takeLeaf: function(){
-		const lpos_idx = leaf_positions.findIndex((leaf) => {return leaf.x == kara_pos.x && leaf.y == kara_pos.y})
+		const lpos_idx = leaf_positions.findIndex((leaf) => {
+			return leaf.x == kara_pos.x && leaf.y == kara_pos.y
+		})
 		if (lpos_idx == -1){
 			alert('kara cannot take a leaf where is none')
 			return

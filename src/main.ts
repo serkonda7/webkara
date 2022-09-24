@@ -37,13 +37,19 @@ const cellclick_handler = (cell, x: number, y: number) => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
 			if (edit_type == 'leaf'){
-				const lpos_idx = leaf_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y})
+				const lpos_idx = leaf_positions.findIndex((leaf) => {
+					return leaf.x == x && leaf.y == y
+				})
 				leaf_positions.splice(lpos_idx, 1)
 			} else if (edit_type=='tree'){
-				const idx = tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y})
+				const idx = tree_positions.findIndex((tree) => {
+					return tree.x == x && tree.y == y
+				})
 				tree_positions.splice(idx, 1)
 			} else {
-				const idx = shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y})
+				const idx = shroom_positions.findIndex((shroom) => {
+					return shroom.x == x && shroom.y == y
+				})
 				shroom_positions.splice(idx, 1)
 			}
 		} else {
@@ -57,8 +63,7 @@ const cellclick_handler = (cell, x: number, y: number) => {
 				if (world.isLeaf(x, y)){
 					alert('cannot place tree on a leaf')
 					return
-				} else if (world.isMushroom(x, y))
-				{
+				} else if (world.isMushroom(x, y)) {
 					alert('cannot place tree on a mushroom')
 					return
 				}
@@ -81,7 +86,9 @@ const createBoardTable = () => {
 		for (let x = 0; x < world.getSizeX(); x++){
 			const cell = document.createElement('td')
 			cell.id = `cell_${x}_${y}`
-			cell.onclick = () => { cellclick_handler(cell, x, y)}
+			cell.onclick = () => {
+				cellclick_handler(cell, x, y)
+			}
 			row.appendChild(cell)
 		}
 		board.appendChild(row)
@@ -110,17 +117,35 @@ function toggleEditMode(btn, type){
 }
 
 function main(){
-	(document.querySelector('#btnMove') as HTMLButtonElement).onclick = () => {kara.move()}
-	(document.querySelector('#btnLeft') as HTMLButtonElement).onclick = () => {kara.turnLeft()}
-	(document.querySelector('#btnRight') as HTMLButtonElement).onclick = () => {kara.turnRight()}
-	(document.querySelector('#btnPut') as HTMLButtonElement).onclick = () => {kara.putLeaf()}
-	(document.querySelector('#btnTake') as HTMLButtonElement).onclick = () => {kara.takeLeaf()}
+	(document.querySelector('#btnMove') as HTMLButtonElement).onclick = () => {
+		kara.move()
+	}
+	(document.querySelector('#btnLeft') as HTMLButtonElement).onclick = () => {
+		kara.turnLeft()
+	}
+	(document.querySelector('#btnRight') as HTMLButtonElement).onclick = () => {
+		kara.turnRight()
+	}
+	(document.querySelector('#btnPut') as HTMLButtonElement).onclick = () => {
+		kara.putLeaf()
+	}
+	(document.querySelector('#btnTake') as HTMLButtonElement).onclick = () => {
+		kara.takeLeaf()
+	}
 
-	placeLeafsBtn.onclick = () => {toggleEditMode(placeLeafsBtn, 'leaf')}
-	placeTreesBtn.onclick = () => {toggleEditMode(placeTreesBtn, 'tree')}
-	placeShroomsBtn.onclick = () => {toggleEditMode(placeShroomsBtn, 'shroom')}
+	placeLeafsBtn.onclick = () => {
+		toggleEditMode(placeLeafsBtn, 'leaf')
+	}
+	placeTreesBtn.onclick = () => {
+		toggleEditMode(placeTreesBtn, 'tree')
+	}
+	placeShroomsBtn.onclick = () => {
+		toggleEditMode(placeShroomsBtn, 'shroom')
+	}
 
-	(document.querySelector('#runBtn') as HTMLButtonElement).onclick = () => {runCode()}
+	(document.querySelector('#runBtn') as HTMLButtonElement).onclick = () => {
+		runCode()
+	}
 
 	editor_init()
 
