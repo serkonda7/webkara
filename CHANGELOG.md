@@ -1,5 +1,12 @@
 # Changelog
 ## _unreleased_
+
+## 0.0.2
+_24 September 2022_
+
+**Changes**
+- Prevent access to internal properties of `world` and `kara` from user code
+
 **Fixes**
 - Fix access to `world` object from code
 
@@ -12,4 +19,5 @@
 
 ## 0.0.1
 _17 September 2022_
+
 - Alpha Release
