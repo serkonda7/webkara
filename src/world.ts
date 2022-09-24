@@ -1,9 +1,5 @@
 import { draw } from './main.js'
-
-type Vector2 = {
-	x: number,
-	y: number
-}
+import { Vector2 } from './vector.js'
 
 const world_size = {
 	x: 7,
@@ -59,10 +55,10 @@ const world = {
 
 	},
 	isTree:function(x, y){
-		return tree_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
+		return tree_positions.findIndex((tree) => {return tree.x == x && tree.y == y}) >= 0
 	},
 	isMushroom:function(x, y){
-		return shroom_positions.findIndex((leaf) => {return leaf.x == x && leaf.y == y}) >= 0
+		return shroom_positions.findIndex((shroom) => {return shroom.x == x && shroom.y == y}) >= 0
 	},
 	getSizeX:function(){
 		return world_size.x
@@ -72,18 +68,18 @@ const world = {
 	},
 }
 
-const mapOverflowToTorus = (cell: Vector2): Vector2 => {
-	if (cell.x >= world_size.x){
-		cell.x = 0
-	} else if (cell.x < 0) {
+const mapOverflowToWorld = (cell: Vector2): Vector2 => {
+	if (cell.x < 0) {
 		cell.x = world_size.x - 1
+	} else if (cell.x >= world_size.x){
+		cell.x = 0
 	}
-	if (cell.y >= world_size.y){
-		cell.y = 0
-	} else if (cell.y < 0) {
+	if (cell.y < 0) {
 		cell.y = world_size.y - 1
+	} else if (cell.y >= world_size.y){
+		cell.y = 0
 	}
 	return cell
 }
 
-export { world, mapOverflowToTorus, world_size, leaf_positions, tree_positions, shroom_positions }
+export { world, mapOverflowToWorld, leaf_positions, tree_positions, shroom_positions }

@@ -1,7 +1,7 @@
 import { draw } from './main.js'
-import { mapOverflowToTorus, leaf_positions, tree_positions, shroom_positions, world_size } from './world.js'
+import { mapOverflowToWorld, leaf_positions, shroom_positions, world } from './world.js'
 
-const kara_pos = {
+let kara_pos = {
 	x: 0,
 	y: 0,
 }
@@ -19,17 +19,17 @@ const kara = {
 				x: vec.x + kara_pos.x,
 				y: vec.y + kara_pos.y,
 			}
-			frontField = mapOverflowToTorus(frontField)
+			frontField = mapOverflowToWorld(frontField)
 			let nextField={
 				x:frontField.x + vec.x,
 				y:frontField.y + vec.y,
 			}
-			nextField = mapOverflowToTorus(nextField)
-			if (shroom_positions.findIndex((shroom) => {return shroom.x == nextField.x && shroom.y == nextField.y}) >= 0) {
+			nextField = mapOverflowToWorld(nextField)
+			if (world.isMushroom(nextField.x, nextField.y)) {
 				alert('kara cannot push multiple mushrooms')
 				return
 			}
-			if (tree_positions.findIndex((tree) => {return tree.x == nextField.x && tree.y == nextField.y}) >= 0) {
+			if (world.isTree(nextField.x, nextField.y)) {
 				alert('kara tried pushing a mushroom into a tree')
 				return
 			}
@@ -39,15 +39,7 @@ const kara = {
 		const vec = this.getLookVector()
 		kara_pos.x += vec.x
 		kara_pos.y += vec.y
-		if (kara_pos.x < 0){
-			kara_pos.x =world_size.x - 1
-		} else if (kara_pos.x>=world_size.x){
-			kara_pos.x = 0
-		} else if (kara_pos.y < 0){
-			kara_pos.y=world_size.y - 1
-		} else if (kara_pos.y >= world_size.y){
-			kara_pos.y = 0
-		}
+		kara_pos = mapOverflowToWorld(kara_pos)
 		draw()
 	},
 	turnLeft: function(){
@@ -82,14 +74,14 @@ const kara = {
 		draw()
 	},
 	onLeaf: function(){
-		return leaf_positions.findIndex((leaf) => {return leaf.x == kara_pos.x && leaf.y == kara_pos.y}) >= 0
+		return world.isLeaf(kara_pos.x, kara_pos.y)
 	},
 	treeFront: function(){
 		let vec = this.getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = mapOverflowToTorus(vec)
-		return tree_positions.findIndex((tree) => {return tree.x == vec.x && tree.y == vec.y}) >= 0
+		vec = mapOverflowToWorld(vec)
+		return world.isTree(vec.x, vec.y)
 
 	},
 	treeLeft: function(){
@@ -111,8 +103,8 @@ const kara = {
 			target.y--
 			break
 		}
-		target = mapOverflowToTorus(target)
-		return tree_positions.findIndex((tree) => {return tree.x == target.x && tree.y == target.y}) >= 0
+		target = mapOverflowToWorld(target)
+		return world.isTree(target.x, target.y)
 	},
 	treeRight: function(){
 		let target = {
@@ -133,17 +125,17 @@ const kara = {
 			target.y++
 			break
 		}
-		target = mapOverflowToTorus(target)
-		return tree_positions.findIndex((tree) => {return tree.x == target.x && tree.y == target.y}) >= 0
+		target = mapOverflowToWorld(target)
+		return world.isTree(target.x, target.y)
 	},
 	mushroomFront: function(){
 		let vec = this.getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = mapOverflowToTorus(vec)
-		return shroom_positions.findIndex((shroom) => {return shroom.x == vec.x && shroom.y == vec.y}) >= 0
+		vec = mapOverflowToWorld(vec)
+		return world.isMushroom(vec.x, vec.y)
 	},
-	setPosition: function(x, y) {
+	setPosition: function(x: number, y: number) {
 		kara_pos.x = x
 		kara_pos.y = y
 		draw()
@@ -151,7 +143,7 @@ const kara = {
 	getPosition: function() {
 		return { x:kara_pos.x, y:kara_pos.y }
 	},
-	setOrientation: function(o) {
+	setOrientation: function(o: number) {
 		if (o < 0){
 			o = 0
 		} else if (o > 3){
@@ -169,13 +161,10 @@ const kara = {
 			return { x:0, y:1 }
 		case 1:
 			return { x:1, y:0 }
-
 		case 2:
 			return { x:0, y:-1 }
-
 		case 3:
 			return { x:-1, y:0 }
-
 		}
 	},
 }

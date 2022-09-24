@@ -8,6 +8,7 @@ const config = {
 		'src/world.ts',
 		'src/editor.ts',
 		'src/data_storage.ts',
+		'src/vector.ts',
 	],
 	outdir: 'public/js',
 }
