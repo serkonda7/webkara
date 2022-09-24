@@ -8,16 +8,23 @@ extends:
 rules:
   # possible problems
   no-duplicate-imports: 2
+  no-self-compare: 2
   no-template-curly-in-string: 2
+  no-unmodified-loop-condition: 2
   no-unreachable-loop: 2
+  no-use-before-define: 2
 
   # suggestions
   arrow-body-style: [2, always]
   curly: 2
+  default-case-last: 2
+  eqeqeq: 2
+  no-confusing-arrow: 2
 
   # layout and formatting
   arrow-parens: 2
   arrow-spacing: 2
+  brace-style: [2, "1tbs"]
   comma-dangle: [2, always-multiline]
   comma-spacing: 2
   eol-last: 2
@@ -29,5 +36,7 @@ rules:
   object-curly-spacing: [2, always]
   quotes: [2, single, allowTemplateLiterals: true]
   semi: [2, never]
+  space-infix-ops: 2
 
+  # typescript
   '@typescript-eslint/no-empty-function': 0
