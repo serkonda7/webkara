@@ -4,20 +4,36 @@ import { world, leaf_positions, tree_positions, shroom_positions } from './world
 
 const board = document.querySelector('#board')
 
-function createBoardTable(){
-	for (let y = world.getSizeY() - 1; y >= 0; y--){
-		const row = document.createElement('tr')
-		for (let x = 0; x < world.getSizeX(); x++){
-			const cell = document.createElement('td')
-			cell.id = `cell_${x}_${y}`
-			cell.onclick = () => { cellclick_handler(cell, x, y)}
-			row.appendChild(cell)
-		}
-		board.appendChild(row)
-	}
+let is_edit_mode = false
+let edit_val = ''
+let edit_type = ''
+
+const kara_to_arrow = {
+	0: '&#8679;',
+	1: '&#8680;',
+	2: '&#8681;',
+	3: '&#8678;',
 }
 
-function cellclick_handler(cell, x: number, y: number){
+function draw(){
+	const cells = document.querySelectorAll('#board td')
+	cells.forEach((el) => {
+		el.innerHTML=''
+	})
+	const kara_cell = document.querySelector(`#cell_${kara_pos.x}_${kara_pos.y}`)
+	kara_cell.innerHTML = kara_to_arrow[kara_orientation]
+	leaf_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
+	})
+	tree_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
+	})
+	shroom_positions.forEach((val) => {
+		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
+	})
+}
+
+const cellclick_handler = (cell, x: number, y: number) => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
 			if (edit_type == 'leaf'){
@@ -59,38 +75,22 @@ function cellclick_handler(cell, x: number, y: number){
 	}
 }
 
-const kara_to_arrow = {
-	0: '&#8679;',
-	1: '&#8680;',
-	2: '&#8681;',
-	3: '&#8678;',
-}
-
-function draw(){
-	const cells = document.querySelectorAll('#board td')
-	cells.forEach((el) => {
-		el.innerHTML=''
-	})
-	const kara_cell = document.querySelector(`#cell_${kara_pos.x}_${kara_pos.y}`)
-	kara_cell.innerHTML = kara_to_arrow[kara_orientation]
-	leaf_positions.forEach((val) => {
-		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
-	})
-	tree_positions.forEach((val) => {
-		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
-	})
-	shroom_positions.forEach((val) => {
-		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
-	})
+const createBoardTable = () => {
+	for (let y = world.getSizeY() - 1; y >= 0; y--){
+		const row = document.createElement('tr')
+		for (let x = 0; x < world.getSizeX(); x++){
+			const cell = document.createElement('td')
+			cell.id = `cell_${x}_${y}`
+			cell.onclick = () => { cellclick_handler(cell, x, y)}
+			row.appendChild(cell)
+		}
+		board.appendChild(row)
+	}
 }
 
 const placeLeafsBtn = document.querySelector('#placeLeafs') as HTMLButtonElement
 const placeTreesBtn = document.querySelector('#placeTrees') as HTMLButtonElement
 const placeShroomsBtn = document.querySelector('#placeShrooms') as HTMLButtonElement
-
-let is_edit_mode = false
-let edit_val = ''
-let edit_type = ''
 
 function toggleEditMode(btn, type){
 	if (btn.className == ''){

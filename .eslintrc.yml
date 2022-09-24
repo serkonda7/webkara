@@ -8,8 +8,11 @@ extends:
 rules:
   # possible problems
   no-duplicate-imports: 2
+  no-self-compare: 2
   no-template-curly-in-string: 2
+  no-unmodified-loop-condition: 2
   no-unreachable-loop: 2
+  no-use-before-define: 2
 
   # suggestions
   arrow-body-style: [2, always]
@@ -30,4 +33,5 @@ rules:
   quotes: [2, single, allowTemplateLiterals: true]
   semi: [2, never]
 
+  # typescript
   '@typescript-eslint/no-empty-function': 0
