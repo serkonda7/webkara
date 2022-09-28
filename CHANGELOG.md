@@ -5,6 +5,7 @@
 
 **Changes**
 - `world.clearAll()` removes kara too
+- editor: code is saved before running
 
 ## 0.0.3
 _28 September 2022_
