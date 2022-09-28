@@ -1,7 +1,14 @@
 # Changelog
 ## _unreleased_
+
+## 0.0.3
+_28 September 2022_
+
 **Breaking**
 - `world`: combine `getSizeX()` and `getSizeY()` into `getSize()` which returns an object like`{x, y}`
+
+**Changes**
+- Position code editor on the right screen half
 
 **Fixes**
 - Prevent placing trees and mushrooms on kara
