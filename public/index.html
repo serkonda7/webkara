@@ -6,21 +6,25 @@
 	<title>WebKara</title>
 </head>
 <body>
-	<table id="board"></table>
-	<div>
-		<button id="btnMove">move</button>
-		<button id="btnLeft">turn left</button>
-		<button id="btnRight">turn right</button>
-		<button id="btnPut">put leaf</button>
-		<button id="btnTake">take leaf</button>
+	<div id="world-panel">
+		<table id="board"></table>
+		<div>
+			<button id="btnMove">move</button>
+			<button id="btnLeft">turn left</button>
+			<button id="btnRight">turn right</button>
+			<button id="btnPut">put leaf</button>
+			<button id="btnTake">take leaf</button>
+		</div>
+		<div>
+			<button id="placeLeafs">&#9752;</button>
+			<button id="placeTrees">&#9820;</button>
+			<button id="placeShrooms">&#9730;</button>
+		</div>
 	</div>
-	<div>
-		<button id="placeLeafs">&#9752;</button>
-		<button id="placeTrees">&#9820;</button>
-		<button id="placeShrooms">&#9730;</button>
+	<div id="editor-panel">
+		<div id="code-editor" contenteditable="true" spellcheck="false"></div>
+		<button id="runBtn">run code</button>
 	</div>
-	<button id="runBtn">run code</button>
-	<div id="code-editor" contenteditable="true" spellcheck="false"></div>
 
 	<script type="module" src="js/main.js"></script>
 </body>
