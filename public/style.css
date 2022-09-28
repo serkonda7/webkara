@@ -30,9 +30,8 @@ div{
 }
 
 #code-editor{
-	width: 100%;
-	min-height: 428px;
-	padding-left: 5px;
+	min-height: 424px;
+	padding: 2px 4px;
 	outline: none;
 	font-family: 'Courier New', Courier, monospace;
 	border: 1px solid black;
