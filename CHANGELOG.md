@@ -3,6 +3,9 @@
 **Additions**
 - add edit button to set / remove kara
 
+**Changes**
+- `world.clearAll()` removes kara too
+
 ## 0.0.3
 _28 September 2022_
 

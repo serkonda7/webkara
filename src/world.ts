@@ -1,3 +1,4 @@
+import { setKaraActive } from './kara.js'
 import { draw } from './main.js'
 import { Vector2 } from './vector.js'
 
@@ -33,6 +34,7 @@ const world = {
 		leaf_positions = []
 		tree_positions = []
 		shroom_positions = []
+		setKaraActive(false)
 		draw()
 	},
 	setLeaf:function(x, y, putLeaf: boolean): void{
