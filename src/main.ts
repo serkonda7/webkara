@@ -1,5 +1,5 @@
 import { init as editor_init, runCode } from './editor.js'
-import { kara, initKaraButtons } from './kara.js'
+import { kara, setKaraActive, isKaraActive, initKaraButtons } from './kara.js'
 import { compare_to_vec2 } from './vector.js'
 import {
 	world,
@@ -25,9 +25,11 @@ function draw(): void{
 	cells.forEach((el) => {
 		el.innerHTML = ''
 	})
-	const kpos = kara.getPosition()
-	const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
-	kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
+	if (isKaraActive()) {
+		const kpos = kara.getPosition()
+		const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
+		kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
+	}
 	leaf_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
@@ -42,7 +44,9 @@ function draw(): void{
 const cellclick_handler = (cell, x: number, y: number): void => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
-			if (edit_type === 'leaf'){
+			if (edit_type === 'kara') {
+				setKaraActive(false)
+			} else if (edit_type === 'leaf'){
 				const idx = findLeafIndex(x, y)
 				leaf_positions.splice(idx, 1)
 			} else if (edit_type === 'tree'){
@@ -53,7 +57,11 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 				shroom_positions.splice(idx, 1)
 			}
 		} else {
-			if (edit_type === 'leaf'){
+			if (edit_type === 'kara') {
+				setKaraActive(true)
+				kara.setPosition(x, y)
+				kara.setOrientation(1)
+			} else if (edit_type === 'leaf'){
 				if (world.isTree(x, y)) {
 					alert('cannot place leaf on a tree')
 					return
@@ -102,12 +110,14 @@ const createBoardTable = (): void => {
 	}
 }
 
+const placeKaraBtn = document.querySelector('#placeKara') as HTMLButtonElement
 const placeLeafsBtn = document.querySelector('#placeLeafs') as HTMLButtonElement
 const placeTreesBtn = document.querySelector('#placeTrees') as HTMLButtonElement
 const placeShroomsBtn = document.querySelector('#placeShrooms') as HTMLButtonElement
 
 function toggleEditMode(btn, type): void{
 	if (btn.className === ''){
+		placeKaraBtn.className = ''
 		placeLeafsBtn.className = ''
 		placeTreesBtn.className = ''
 		placeShroomsBtn.className = ''
@@ -124,6 +134,9 @@ function toggleEditMode(btn, type): void{
 }
 
 function main(): void{
+	placeKaraBtn.onclick = () => {
+		toggleEditMode(placeKaraBtn, 'kara')
+	}
 	placeLeafsBtn.onclick = () => {
 		toggleEditMode(placeLeafsBtn, 'leaf')
 	}

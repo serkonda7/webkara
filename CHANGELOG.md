@@ -1,5 +1,7 @@
 # Changelog
 ## _unreleased_
+**Additions**
+- add edit button to set / remove kara
 
 ## 0.0.3
 _28 September 2022_

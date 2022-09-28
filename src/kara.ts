@@ -12,15 +12,32 @@ let kara_pos = {
 	y: 0,
 }
 let kara_orientation = 1 // 0 up, 1 right, 2 down, 3 left
+let is_kara_active = false
+
+const getLookVector = (): Vector2 => {
+	switch (kara_orientation){
+	case 0:
+		return { x:0, y:1 }
+	case 1:
+		return { x:1, y:0 }
+	case 2:
+		return { x:0, y:-1 }
+	case 3:
+		return { x:-1, y:0 }
+	}
+}
 
 const kara = {
 	move: function(): void{
+		if (!is_kara_active) {
+			return
+		}
 		if (this.treeFront()) {
 			alert('kara cannot move: tree front')
 			return
 		}
 		if (this.mushroomFront()){
-			const vec = this.getLookVector()
+			const vec = getLookVector()
 			let frontField = {
 				x: vec.x + kara_pos.x,
 				y: vec.y + kara_pos.y,
@@ -42,13 +59,16 @@ const kara = {
 			const idx = findMushroomIndex(frontField.x, frontField.y)
 			shroom_positions[idx] = nextField
 		}
-		const vec = this.getLookVector()
+		const vec = getLookVector()
 		kara_pos.x += vec.x
 		kara_pos.y += vec.y
 		kara_pos = mapOverflowToWorld(kara_pos)
 		draw()
 	},
 	turnLeft: function(): void{
+		if (!is_kara_active) {
+			return
+		}
 		kara_orientation--
 		if (kara_orientation < 0) {
 			kara_orientation = 3
@@ -56,6 +76,9 @@ const kara = {
 		draw()
 	},
 	turnRight: function(): void{
+		if (!is_kara_active) {
+			return
+		}
 		kara_orientation++
 		if (kara_orientation > 3) {
 			kara_orientation = 0
@@ -63,6 +86,9 @@ const kara = {
 		draw()
 	},
 	putLeaf: function(): void{
+		if (!is_kara_active) {
+			return
+		}
 		if (this.onLeaf()){
 			alert('kara cannot put a leaf on another leaf')
 			return
@@ -71,6 +97,9 @@ const kara = {
 		draw()
 	},
 	takeLeaf: function(): void{
+		if (!is_kara_active) {
+			return
+		}
 		const idx = findLeafIndex(kara_pos.x, kara_pos.y)
 		if (idx === -1){
 			alert('kara cannot take a leaf where is none')
@@ -80,10 +109,16 @@ const kara = {
 		draw()
 	},
 	onLeaf: function(){
+		if (!is_kara_active) {
+			return
+		}
 		return world.isLeaf(kara_pos.x, kara_pos.y)
 	},
 	treeFront: function(){
-		let vec = this.getLookVector()
+		if (!is_kara_active) {
+			return
+		}
+		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
 		vec = mapOverflowToWorld(vec)
@@ -91,6 +126,9 @@ const kara = {
 
 	},
 	treeLeft: function(){
+		if (!is_kara_active) {
+			return
+		}
 		let target = {
 			x: kara_pos.x,
 			y: kara_pos.y,
@@ -113,6 +151,9 @@ const kara = {
 		return world.isTree(target.x, target.y)
 	},
 	treeRight: function(){
+		if (!is_kara_active) {
+			return
+		}
 		let target = {
 			x: kara_pos.x,
 			y: kara_pos.y,
@@ -135,13 +176,17 @@ const kara = {
 		return world.isTree(target.x, target.y)
 	},
 	mushroomFront: function(){
-		let vec = this.getLookVector()
+		if (!is_kara_active) {
+			return
+		}
+		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
 		vec = mapOverflowToWorld(vec)
 		return world.isMushroom(vec.x, vec.y)
 	},
 	setPosition: function(x: number, y: number) {
+		is_kara_active = true
 		kara_pos.x = x
 		kara_pos.y = y
 		draw()
@@ -164,18 +209,14 @@ const kara = {
 	getOrientation: function() {
 		return kara_orientation
 	},
-	getLookVector: function(){
-		switch (kara_orientation){
-		case 0:
-			return { x:0, y:1 }
-		case 1:
-			return { x:1, y:0 }
-		case 2:
-			return { x:0, y:-1 }
-		case 3:
-			return { x:-1, y:0 }
-		}
-	},
+}
+
+const setKaraActive = (active: boolean): void => {
+	is_kara_active = active
+}
+
+const isKaraActive = (): boolean => {
+	return is_kara_active
 }
 
 const initKaraButtons = (): void => {
@@ -186,4 +227,4 @@ const initKaraButtons = (): void => {
 	DOM.setBtnOnclickBinded('#btnTake', kara.takeLeaf, kara)
 }
 
-export { initKaraButtons, kara }
+export { initKaraButtons, kara, setKaraActive, isKaraActive }
