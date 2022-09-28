@@ -3,6 +3,9 @@
 **Breaking**
 - `world`: combine `getSizeX()` and `getSizeY()` into `getSize()` which returns an object like`{x, y}`
 
+**Fixes**
+- Prevent placing trees and mushrooms on kara
+
 **Engineering**
 - more refactoring
 - eslint: error on empty functions

@@ -1,5 +1,6 @@
 import { init as editor_init, runCode } from './editor.js'
 import { kara, initKaraButtons } from './kara.js'
+import { compare_to_vec2 } from './vector.js'
 import {
 	world,
 	leaf_positions, tree_positions, shroom_positions,
@@ -65,11 +66,17 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 				} else if (world.isMushroom(x, y)) {
 					alert('cannot place tree on a mushroom')
 					return
+				} else if (compare_to_vec2(x, y, kara.getPosition())) {
+					alert('cannot place tree on kara')
+					return
 				}
 				tree_positions.push({ x:x, y:y })
 			} else {
 				if (world.isTree(x, y)) {
 					alert('cannot place mushroom on a tree')
+					return
+				} else if (compare_to_vec2(x, y, kara.getPosition())) {
+					alert('cannot place mushroom on kara')
 					return
 				}
 				shroom_positions.push({ x:x, y:y })
