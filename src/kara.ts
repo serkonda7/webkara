@@ -1,3 +1,5 @@
+import { Vector2 } from './vector.js'
+import { DOM } from './dom_util.js'
 import { draw } from './main.js'
 import {
 	world, mapOverflowToWorld,
@@ -144,8 +146,11 @@ const kara = {
 		kara_pos.y = y
 		draw()
 	},
-	getPosition: function() {
-		return { x:kara_pos.x, y:kara_pos.y }
+	getPosition: function(): Vector2 {
+		return {
+			x: kara_pos.x,
+			y: kara_pos.y,
+		}
 	},
 	setOrientation: function(o: number) {
 		if (o < 0){
@@ -173,4 +178,12 @@ const kara = {
 	},
 }
 
-export { kara, kara_pos, kara_orientation }
+const initKaraButtons = (): void => {
+	DOM.setBtnOnclick('#btnMove', kara.move)
+	DOM.setBtnOnclick('#btnLeft', kara.turnLeft)
+	DOM.setBtnOnclick('#btnRight', kara.turnRight)
+	DOM.setBtnOnclick('#btnPut', kara.putLeaf)
+	DOM.setBtnOnclick('#btnTake', kara.takeLeaf)
+}
+
+export { initKaraButtons, kara }

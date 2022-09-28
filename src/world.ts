@@ -78,11 +78,11 @@ const world = {
 	isMushroom:function(x, y): boolean{
 		return findMushroomIndex(x, y) >= 0
 	},
-	getSizeX:function(): number{
-		return world_size.x
-	},
-	getSizeY:function(): number{
-		return world_size.y
+	getSize:function(): Vector2{
+		return {
+			x: world_size.x,
+			y: world_size.y,
+		}
 	},
 }
 

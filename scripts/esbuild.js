@@ -9,6 +9,7 @@ const config = {
 		'src/editor.ts',
 		'src/data_storage.ts',
 		'src/vector.ts',
+		'src/dom_util.ts',
 	],
 	outdir: 'public/js',
 }

@@ -1,5 +1,11 @@
 # Changelog
 ## _unreleased_
+**Breaking**
+- `world`: combine `getSizeX()` and `getSizeY()` into `getSize()` which returns an object like`{x, y}`
+
+**Engineering**
+- more refactoring
+- eslint: error on empty functions
 
 ## 0.0.2
 _24 September 2022_

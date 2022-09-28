@@ -1,5 +1,5 @@
 import { init as editor_init, runCode } from './editor.js'
-import { kara, kara_pos, kara_orientation } from './kara.js'
+import { kara, initKaraButtons } from './kara.js'
 import {
 	world,
 	leaf_positions, tree_positions, shroom_positions,
@@ -24,8 +24,9 @@ function draw(): void{
 	cells.forEach((el) => {
 		el.innerHTML = ''
 	})
-	const kara_cell = document.querySelector(`#cell_${kara_pos.x}_${kara_pos.y}`)
-	kara_cell.innerHTML = kara_to_arrow[kara_orientation]
+	const kpos = kara.getPosition()
+	const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
+	kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
 	leaf_positions.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
@@ -79,9 +80,10 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 }
 
 const createBoardTable = (): void => {
-	for (let y = world.getSizeY() - 1; y >= 0; y--){
+	const wsize = world.getSize()
+	for (let y = wsize.y - 1; y >= 0; y--){
 		const row = document.createElement('tr')
-		for (let x = 0; x < world.getSizeX(); x++){
+		for (let x = 0; x < wsize.x; x++){
 			const cell = document.createElement('td')
 			cell.id = `cell_${x}_${y}`
 			cell.onclick = () => {
@@ -115,22 +117,6 @@ function toggleEditMode(btn, type): void{
 }
 
 function main(): void{
-	(document.querySelector('#btnMove') as HTMLButtonElement).onclick = () => {
-		kara.move()
-	}
-	(document.querySelector('#btnLeft') as HTMLButtonElement).onclick = () => {
-		kara.turnLeft()
-	}
-	(document.querySelector('#btnRight') as HTMLButtonElement).onclick = () => {
-		kara.turnRight()
-	}
-	(document.querySelector('#btnPut') as HTMLButtonElement).onclick = () => {
-		kara.putLeaf()
-	}
-	(document.querySelector('#btnTake') as HTMLButtonElement).onclick = () => {
-		kara.takeLeaf()
-	}
-
 	placeLeafsBtn.onclick = () => {
 		toggleEditMode(placeLeafsBtn, 'leaf')
 	}
@@ -145,6 +131,7 @@ function main(): void{
 		runCode()
 	}
 
+	initKaraButtons()
 	editor_init()
 
 	createBoardTable()

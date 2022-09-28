@@ -11,6 +11,7 @@ const save_code = (): void => {
 	storage.save_string(EDITOR_CONTENT_KEY, codeEditor.innerText)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const FnConstructor = Object.getPrototypeOf(function () { }).constructor
 
 const runCode = (): void => {

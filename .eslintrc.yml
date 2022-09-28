@@ -39,6 +39,5 @@ rules:
   space-infix-ops: 2
 
   # typescript
-  '@typescript-eslint/no-empty-function': 1
   '@typescript-eslint/explicit-function-return-type': [2, allowExpressions: true]
   '@typescript-eslint/type-annotation-spacing': 2
