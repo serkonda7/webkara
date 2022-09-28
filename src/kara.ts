@@ -179,11 +179,11 @@ const kara = {
 }
 
 const initKaraButtons = (): void => {
-	DOM.setBtnOnclick('#btnMove', kara.move)
-	DOM.setBtnOnclick('#btnLeft', kara.turnLeft)
-	DOM.setBtnOnclick('#btnRight', kara.turnRight)
-	DOM.setBtnOnclick('#btnPut', kara.putLeaf)
-	DOM.setBtnOnclick('#btnTake', kara.takeLeaf)
+	DOM.setBtnOnclick('#btnMove', () => { kara.move() })
+	DOM.setBtnOnclick('#btnLeft', () => { kara.turnLeft() })
+	DOM.setBtnOnclick('#btnRight', () => { kara.turnRight() })
+	DOM.setBtnOnclick('#btnPut', () => { kara.putLeaf() })
+	DOM.setBtnOnclick('#btnTake', () => { kara.takeLeaf() })
 }
 
 export { initKaraButtons, kara }
