@@ -15,6 +15,7 @@ const save_code = (): void => {
 const FnConstructor = Object.getPrototypeOf(function () { }).constructor
 
 const runCode = (): void => {
+	save_code()
 	const userFn = new FnConstructor('kara', 'world', codeEditor.innerText)
 	try {
 		userFn(kara, world)
