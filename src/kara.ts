@@ -27,9 +27,14 @@ const getLookVector = (): Vector2 => {
 	}
 }
 
+const karaInactiveAlert = (): void => {
+	alert('kara is not in the world!')
+}
+
 const kara = {
 	move: function(): void{
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		if (this.treeFront()) {
@@ -67,6 +72,7 @@ const kara = {
 	},
 	turnLeft: function(): void{
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		kara_orientation--
@@ -77,6 +83,7 @@ const kara = {
 	},
 	turnRight: function(): void{
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		kara_orientation++
@@ -87,6 +94,7 @@ const kara = {
 	},
 	putLeaf: function(): void{
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		if (this.onLeaf()){
@@ -98,6 +106,7 @@ const kara = {
 	},
 	takeLeaf: function(): void{
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		const idx = findLeafIndex(kara_pos.x, kara_pos.y)
@@ -110,12 +119,14 @@ const kara = {
 	},
 	onLeaf: function(){
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		return world.isLeaf(kara_pos.x, kara_pos.y)
 	},
 	treeFront: function(){
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		let vec = getLookVector()
@@ -127,6 +138,7 @@ const kara = {
 	},
 	treeLeft: function(){
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		let target = {
@@ -152,6 +164,7 @@ const kara = {
 	},
 	treeRight: function(){
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		let target = {
@@ -177,6 +190,7 @@ const kara = {
 	},
 	mushroomFront: function(){
 		if (!is_kara_active) {
+			karaInactiveAlert()
 			return
 		}
 		let vec = getLookVector()
@@ -192,12 +206,20 @@ const kara = {
 		draw()
 	},
 	getPosition: function(): Vector2 {
+		if (!is_kara_active) {
+			karaInactiveAlert()
+			return
+		}
 		return {
 			x: kara_pos.x,
 			y: kara_pos.y,
 		}
 	},
 	setOrientation: function(o: number) {
+		if (!is_kara_active) {
+			karaInactiveAlert()
+			return
+		}
 		if (o < 0){
 			o = 0
 		} else if (o > 3){
@@ -207,6 +229,10 @@ const kara = {
 		draw()
 	},
 	getOrientation: function() {
+		if (!is_kara_active) {
+			karaInactiveAlert()
+			return
+		}
 		return kara_orientation
 	},
 }
