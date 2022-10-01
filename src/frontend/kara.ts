@@ -111,7 +111,7 @@ const kara = {
 			alert('kara cannot take a leaf where is none')
 			return
 		}
-		b_world.leafs.splice(idx, 1)
+		b_world.remove_leaf(kara_pos.x, kara_pos.y)
 		draw()
 	},
 	onLeaf: function(){

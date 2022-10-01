@@ -12,8 +12,7 @@ const world = {
 		if (putLeaf){
 			b_world.push_leaf(x, y)
 		} else {
-			const idx = b_world.find_leaf_index(x, y)
-			b_world.leafs.splice(idx, 1)
+			b_world.remove_leaf(x, y)
 		}
 		draw()
 	},
@@ -21,8 +20,7 @@ const world = {
 		if (putTree){
 			b_world.push_tree(x, y)
 		} else {
-			const idx = b_world.find_tree_index(x, y)
-			b_world.trees.splice(idx, 1)
+			b_world.remove_tree(x, y)
 		}
 		draw()
 	},
@@ -30,8 +28,7 @@ const world = {
 		if (putMushroom){
 			b_world.push_mushroom(x, y)
 		} else {
-			const idx = b_world.find_mushroom_index(x, y)
-			b_world.mushrooms.splice(idx, 1)
+			b_world.remove_mushroom(x, y)
 		}
 		draw()
 	},
