@@ -63,7 +63,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place leaf on a tree')
 					return
 				}
-				b_world.leafs.push({ x:x, y:y })
+				b_world.push_leaf(x, y)
 			} else if (edit_type === 'tree'){
 				if (world.isLeaf(x, y)){
 					alert('cannot place tree on a leaf')
@@ -75,7 +75,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place tree on kara')
 					return
 				}
-				b_world.trees.push({ x:x, y:y })
+				b_world.push_tree(x, y)
 			} else {
 				if (world.isTree(x, y)) {
 					alert('cannot place mushroom on a tree')
@@ -84,7 +84,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place mushroom on kara')
 					return
 				}
-				b_world.mushrooms.push({ x:x, y:y })
+				b_world.push_mushroom(x, y)
 			}
 		}
 		draw()

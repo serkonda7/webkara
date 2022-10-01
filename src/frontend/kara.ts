@@ -98,7 +98,7 @@ const kara = {
 			alert('kara cannot put a leaf on another leaf')
 			return
 		}
-		b_world.leafs.push({ x:kara_pos.x, y:kara_pos.y })
+		b_world.push_leaf(kara_pos.x, kara_pos.y)
 		draw()
 	},
 	takeLeaf: function(): void{

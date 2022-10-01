@@ -9,10 +9,36 @@ class WorldBackend {
 		return this.#size
 	}
 
-	// TODO make these private
 	leafs: Array<Vector2> = []
 	trees: Array<Vector2> = []
 	mushrooms: Array<Vector2> = []
+
+	push_leaf(x: number, y: number, safe: boolean = false): void {
+		if (safe && this.is_leaf(x, y)) {
+			throw `${x}|${y} already has a leaf`
+		}
+		this.leafs.push({ x: x, y: y})
+	}
+
+	push_tree(x: number, y: number, safe: boolean = false): void {
+		if (safe && this.is_tree(x, y)) {
+			throw `${x}|${y} already has a tree`
+		}
+		this.trees.push({ x: x, y: y})
+	}
+
+	push_mushroom(x: number, y: number, safe: boolean = false): void {
+		if (safe && this.is_mushroom(x, y)) {
+			throw `${x}|${y} already has a mushroom`
+		}
+		this.mushrooms.push({ x: x, y: y})
+	}
+
+	clear_world(): void {
+		this.leafs = []
+		this.trees = []
+		this.mushrooms = []
+	}
 
 	#find_index(arr: Array<Vector2>, x: number, y: number): number {
 		return arr.findIndex((el) => {
