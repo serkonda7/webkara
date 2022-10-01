@@ -1,6 +1,6 @@
 import { setKaraActive } from './kara.js'
 import { draw } from './main.js'
-import { Vector2 } from './vector.js'
+import { Vector2 } from '../backend/vector.js'
 import { b_world } from '../backend/world.js'
 
 const findIndex = (arr: Array<Vector2>, x, y): number => {

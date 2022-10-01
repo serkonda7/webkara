@@ -1,9 +1,12 @@
-import { Vector2 } from '../frontend/vector.js'
+import { Vector2 } from './vector.js'
 
 class WorldBackend {
-	size: Vector2 = {
+	#size: Vector2 = {
 		x: 7,
 		y: 7,
+	}
+
+	get_size(): Vector2 {
 	}
 
 	leafs: Array<Vector2> = []

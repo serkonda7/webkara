@@ -1,4 +1,4 @@
-import { Vector2 } from './vector.js'
+import { Vector2 } from '../backend/vector.js'
 import { DOM } from './dom_util.js'
 import { draw } from './main.js'
 import {

@@ -1,6 +1,6 @@
 import { init as editor_init, runCode } from './editor.js'
 import { kara, setKaraActive, isKaraActive, initKaraButtons } from './kara.js'
-import { compare_to_vec2 } from './vector.js'
+import { compare_to_vec2 } from '../backend/vector.js'
 import {
 	world,
 	findLeafIndex, findTreeIndex, findMushroomIndex,
