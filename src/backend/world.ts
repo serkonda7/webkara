@@ -5,16 +5,48 @@ class WorldBackend {
 		x: 7,
 		y: 7,
 	}
-
 	get_size(): Vector2 {
 		return this.#size
 	}
 
+	// TODO make these private
 	leafs: Array<Vector2> = []
 	trees: Array<Vector2> = []
 	mushrooms: Array<Vector2> = []
 
-	#valOnAxis = (val: number, axis_size: number): number => {
+	#find_index(arr: Array<Vector2>, x: number, y: number): number {
+		return arr.findIndex((el) => {
+			return el.x === x && el.y === y
+		})
+	}
+	find_leaf_index (x: number, y: number): number {
+		return this.#find_index(this.leafs, x, y)
+	}
+	find_tree_index (x: number, y: number): number {
+		return this.#find_index(this.trees, x, y)
+	}
+	find_mushroom_index (x: number, y: number): number {
+		return this.#find_index(this.mushrooms, x, y)
+	}
+
+	is_empty(x: number, y: number): boolean{
+		if ( this.is_leaf(x, y) || this.is_tree(x, y) || this.is_mushroom(x, y)){
+			return false
+		}
+		return true
+	}
+	is_leaf(x: number, y: number): boolean{
+		return this.find_leaf_index(x, y) >= 0
+
+	}
+	is_tree(x: number, y: number): boolean{
+		return this.find_tree_index(x, y) >= 0
+	}
+	is_mushroom(x: number, y: number): boolean{
+		return this.find_mushroom_index(x, y) >= 0
+	}
+
+	#val_on_axis(val: number, axis_size: number): number {
 		if (val < 0) {
 			return axis_size - 1
 		}
@@ -24,9 +56,9 @@ class WorldBackend {
 		return val
 	}
 
-	cellOnWorldTorus = (cell: Vector2): Vector2 => {
-		cell.x = this.#valOnAxis(cell.x, this.#size.x)
-		cell.y = this.#valOnAxis(cell.y, this.#size.y)
+	cell_on_world_torus(cell: Vector2): Vector2 {
+		cell.x = this.#val_on_axis(cell.x, this.#size.x)
+		cell.y = this.#val_on_axis(cell.y, this.#size.y)
 		return cell
 	}
 }

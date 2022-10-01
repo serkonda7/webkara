@@ -1,10 +1,7 @@
 import { Vector2 } from '../backend/vector.js'
 import { DOM } from './dom_util.js'
 import { draw } from './main.js'
-import {
-	world,
-	findLeafIndex, findMushroomIndex,
-} from './world.js'
+import { world } from './world.js'
 import { b_world } from '../backend/world.js'
 
 let kara_pos = {
@@ -47,12 +44,12 @@ const kara = {
 				x: vec.x + kara_pos.x,
 				y: vec.y + kara_pos.y,
 			}
-			frontField = b_world.cellOnWorldTorus(frontField)
+			frontField = b_world.cell_on_world_torus(frontField)
 			let nextField = {
 				x:frontField.x + vec.x,
 				y:frontField.y + vec.y,
 			}
-			nextField = b_world.cellOnWorldTorus(nextField)
+			nextField = b_world.cell_on_world_torus(nextField)
 			if (world.isMushroom(nextField.x, nextField.y)) {
 				alert('kara cannot push multiple mushrooms')
 				return
@@ -61,13 +58,13 @@ const kara = {
 				alert('kara tried pushing a mushroom into a tree')
 				return
 			}
-			const idx = findMushroomIndex(frontField.x, frontField.y)
+			const idx = b_world.find_mushroom_index(frontField.x, frontField.y)
 			b_world.mushrooms[idx] = nextField
 		}
 		const vec = getLookVector()
 		kara_pos.x += vec.x
 		kara_pos.y += vec.y
-		kara_pos = b_world.cellOnWorldTorus(kara_pos)
+		kara_pos = b_world.cell_on_world_torus(kara_pos)
 		draw()
 	},
 	turnLeft: function(): void{
@@ -109,7 +106,7 @@ const kara = {
 			karaInactiveAlert()
 			return
 		}
-		const idx = findLeafIndex(kara_pos.x, kara_pos.y)
+		const idx = b_world.find_leaf_index(kara_pos.x, kara_pos.y)
 		if (idx === -1){
 			alert('kara cannot take a leaf where is none')
 			return
@@ -132,7 +129,7 @@ const kara = {
 		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = b_world.cellOnWorldTorus(vec)
+		vec = b_world.cell_on_world_torus(vec)
 		return world.isTree(vec.x, vec.y)
 
 	},
@@ -159,7 +156,7 @@ const kara = {
 			target.y--
 			break
 		}
-		target = b_world.cellOnWorldTorus(target)
+		target = b_world.cell_on_world_torus(target)
 		return world.isTree(target.x, target.y)
 	},
 	treeRight: function(){
@@ -185,7 +182,7 @@ const kara = {
 			target.y++
 			break
 		}
-		target = b_world.cellOnWorldTorus(target)
+		target = b_world.cell_on_world_torus(target)
 		return world.isTree(target.x, target.y)
 	},
 	mushroomFront: function(){
@@ -196,7 +193,7 @@ const kara = {
 		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = b_world.cellOnWorldTorus(vec)
+		vec = b_world.cell_on_world_torus(vec)
 		return world.isMushroom(vec.x, vec.y)
 	},
 	setPosition: function(x: number, y: number) {

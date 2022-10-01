@@ -1,10 +1,7 @@
 import { init as editor_init, runCode } from './editor.js'
 import { kara, setKaraActive, isKaraActive, initKaraButtons } from './kara.js'
 import { compare_to_vec2 } from '../backend/vector.js'
-import {
-	world,
-	findLeafIndex, findTreeIndex, findMushroomIndex,
-} from './world.js'
+import { world } from './world.js'
 import { b_world } from '../backend/world.js'
 
 const board = document.querySelector('#board')
@@ -47,13 +44,13 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 			if (edit_type === 'kara') {
 				setKaraActive(false)
 			} else if (edit_type === 'leaf'){
-				const idx = findLeafIndex(x, y)
+				const idx = b_world.find_leaf_index(x, y)
 				b_world.leafs.splice(idx, 1)
 			} else if (edit_type === 'tree'){
-				const idx = findTreeIndex(x, y)
+				const idx = b_world.find_tree_index(x, y)
 				b_world.trees.splice(idx, 1)
 			} else {
-				const idx = findMushroomIndex(x, y)
+				const idx = b_world.find_mushroom_index(x, y)
 				b_world.mushrooms.splice(idx, 1)
 			}
 		} else {
