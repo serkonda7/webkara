@@ -10,9 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "prod": "tsc --noEmit -p . && node scripts/esbuild.js",
-    "dev": "tsc -p .",
-    "watch": "tsc -w -p .",
+    "prod": "tsc -p .",
+    "dev": "tsc --sourceMap -p .",
+    "watch": "tsc -w --sourceMap -p .",
     "lint": "eslint ."
   },
   "engines": {
@@ -21,7 +21,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "~5.37.0",
     "@typescript-eslint/parser": "~5.37.0",
-    "esbuild": "~0.15.7",
     "eslint": "~8.23.1",
     "typescript": "~4.8.3"
   }
