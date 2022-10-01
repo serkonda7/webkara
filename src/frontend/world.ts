@@ -1,15 +1,7 @@
 import { setKaraActive } from './kara.js'
 import { draw } from './main.js'
 import { Vector2 } from './vector.js'
-
-const world_size: Vector2 = {
-	x: 7,
-	y: 7,
-}
-
-let leaf_positions: Array<Vector2> = []
-let tree_positions: Array<Vector2> = []
-let shroom_positions: Array<Vector2> = []
+import { b_world } from '../backend/world.js'
 
 const findIndex = (arr: Array<Vector2>, x, y): number => {
 	return arr.findIndex((el) => {
@@ -18,49 +10,49 @@ const findIndex = (arr: Array<Vector2>, x, y): number => {
 }
 
 const findLeafIndex = (x, y): number => {
-	return findIndex(leaf_positions, x, y)
+	return findIndex(b_world.leafs, x, y)
 }
 
 const findTreeIndex = (x, y): number => {
-	return findIndex(tree_positions, x, y)
+	return findIndex(b_world.trees, x, y)
 }
 
 const findMushroomIndex = (x, y): number => {
-	return findIndex(shroom_positions, x, y)
+	return findIndex(b_world.mushrooms, x, y)
 }
 
 const world = {
 	clearAll:function(): void{
-		leaf_positions = []
-		tree_positions = []
-		shroom_positions = []
+		b_world.leafs = []
+		b_world.trees = []
+		b_world.mushrooms = []
 		setKaraActive(false)
 		draw()
 	},
 	setLeaf:function(x, y, putLeaf: boolean): void{
 		if (putLeaf){
-			leaf_positions.push({ x:x, y:y })
+			b_world.leafs.push({ x:x, y:y })
 		} else {
 			const idx = findLeafIndex(x, y)
-			leaf_positions.splice(idx, 1)
+			b_world.leafs.splice(idx, 1)
 		}
 		draw()
 	},
 	setTree:function(x, y, putTree: boolean): void{
 		if (putTree){
-			tree_positions.push({ x:x, y:y })
+			b_world.trees.push({ x:x, y:y })
 		} else {
 			const idx = findTreeIndex(x, y)
-			tree_positions.splice(idx, 1)
+			b_world.trees.splice(idx, 1)
 		}
 		draw()
 	},
 	setMushroom:function(x, y, putMushroom: boolean): void{
 		if (putMushroom){
-			shroom_positions.push({ x:x, y:y })
+			b_world.mushrooms.push({ x:x, y:y })
 		} else {
 			const idx = findMushroomIndex(x, y)
-			shroom_positions.splice(idx, 1)
+			b_world.mushrooms.splice(idx, 1)
 		}
 		draw()
 	},
@@ -82,21 +74,21 @@ const world = {
 	},
 	getSize:function(): Vector2{
 		return {
-			x: world_size.x,
-			y: world_size.y,
+			x: b_world.size.x,
+			y: b_world.size.y,
 		}
 	},
 }
 
 const mapOverflowToWorld = (cell: Vector2): Vector2 => {
 	if (cell.x < 0) {
-		cell.x = world_size.x - 1
-	} else if (cell.x >= world_size.x){
+		cell.x = b_world.size.x - 1
+	} else if (cell.x >= b_world.size.x){
 		cell.x = 0
 	}
 	if (cell.y < 0) {
-		cell.y = world_size.y - 1
-	} else if (cell.y >= world_size.y){
+		cell.y = b_world.size.y - 1
+	} else if (cell.y >= b_world.size.y){
 		cell.y = 0
 	}
 	return cell
@@ -106,5 +98,4 @@ export {
 	world,
 	mapOverflowToWorld,
 	findLeafIndex, findTreeIndex, findMushroomIndex,
-	leaf_positions, tree_positions, shroom_positions,
 }

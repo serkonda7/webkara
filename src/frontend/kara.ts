@@ -3,9 +3,9 @@ import { DOM } from './dom_util.js'
 import { draw } from './main.js'
 import {
 	world, mapOverflowToWorld,
-	leaf_positions, shroom_positions,
 	findLeafIndex, findMushroomIndex,
 } from './world.js'
+import { b_world } from '../backend/world.js'
 
 let kara_pos = {
 	x: 0,
@@ -62,7 +62,7 @@ const kara = {
 				return
 			}
 			const idx = findMushroomIndex(frontField.x, frontField.y)
-			shroom_positions[idx] = nextField
+			b_world.mushrooms[idx] = nextField
 		}
 		const vec = getLookVector()
 		kara_pos.x += vec.x
@@ -101,7 +101,7 @@ const kara = {
 			alert('kara cannot put a leaf on another leaf')
 			return
 		}
-		leaf_positions.push({ x:kara_pos.x, y:kara_pos.y })
+		b_world.leafs.push({ x:kara_pos.x, y:kara_pos.y })
 		draw()
 	},
 	takeLeaf: function(): void{
@@ -114,7 +114,7 @@ const kara = {
 			alert('kara cannot take a leaf where is none')
 			return
 		}
-		leaf_positions.splice(idx, 1)
+		b_world.leafs.splice(idx, 1)
 		draw()
 	},
 	onLeaf: function(){
