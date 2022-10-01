@@ -14,17 +14,19 @@ class WorldBackend {
 	trees: Array<Vector2> = []
 	mushrooms: Array<Vector2> = []
 
+	#valOnAxis = (val: number, axis_size: number): number => {
+		if (val < 0) {
+			return axis_size - 1
+		}
+		if (val >= axis_size) {
+			return 0
+		}
+		return val
+	}
+
 	cellOnWorldTorus = (cell: Vector2): Vector2 => {
-		if (cell.x < 0) {
-			cell.x = this.#size.x - 1
-		} else if (cell.x >= this.#size.x){
-			cell.x = 0
-		}
-		if (cell.y < 0) {
-			cell.y = this.#size.y - 1
-		} else if (cell.y >= this.#size.y){
-			cell.y = 0
-		}
+		cell.x = this.#valOnAxis(cell.x, this.#size.x)
+		cell.y = this.#valOnAxis(cell.y, this.#size.y)
 		return cell
 	}
 }
