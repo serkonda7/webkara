@@ -73,29 +73,11 @@ const world = {
 		return findMushroomIndex(x, y) >= 0
 	},
 	getSize:function(): Vector2{
-		return {
-			x: b_world.size.x,
-			y: b_world.size.y,
-		}
+		return b_world.get_size()
 	},
-}
-
-const mapOverflowToWorld = (cell: Vector2): Vector2 => {
-	if (cell.x < 0) {
-		cell.x = b_world.size.x - 1
-	} else if (cell.x >= b_world.size.x){
-		cell.x = 0
-	}
-	if (cell.y < 0) {
-		cell.y = b_world.size.y - 1
-	} else if (cell.y >= b_world.size.y){
-		cell.y = 0
-	}
-	return cell
 }
 
 export {
 	world,
-	mapOverflowToWorld,
 	findLeafIndex, findTreeIndex, findMushroomIndex,
 }

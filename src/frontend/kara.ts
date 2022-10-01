@@ -2,7 +2,7 @@ import { Vector2 } from '../backend/vector.js'
 import { DOM } from './dom_util.js'
 import { draw } from './main.js'
 import {
-	world, mapOverflowToWorld,
+	world,
 	findLeafIndex, findMushroomIndex,
 } from './world.js'
 import { b_world } from '../backend/world.js'
@@ -47,12 +47,12 @@ const kara = {
 				x: vec.x + kara_pos.x,
 				y: vec.y + kara_pos.y,
 			}
-			frontField = mapOverflowToWorld(frontField)
+			frontField = b_world.cellOnWorldTorus(frontField)
 			let nextField = {
 				x:frontField.x + vec.x,
 				y:frontField.y + vec.y,
 			}
-			nextField = mapOverflowToWorld(nextField)
+			nextField = b_world.cellOnWorldTorus(nextField)
 			if (world.isMushroom(nextField.x, nextField.y)) {
 				alert('kara cannot push multiple mushrooms')
 				return
@@ -67,7 +67,7 @@ const kara = {
 		const vec = getLookVector()
 		kara_pos.x += vec.x
 		kara_pos.y += vec.y
-		kara_pos = mapOverflowToWorld(kara_pos)
+		kara_pos = b_world.cellOnWorldTorus(kara_pos)
 		draw()
 	},
 	turnLeft: function(): void{
@@ -132,7 +132,7 @@ const kara = {
 		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = mapOverflowToWorld(vec)
+		vec = b_world.cellOnWorldTorus(vec)
 		return world.isTree(vec.x, vec.y)
 
 	},
@@ -159,7 +159,7 @@ const kara = {
 			target.y--
 			break
 		}
-		target = mapOverflowToWorld(target)
+		target = b_world.cellOnWorldTorus(target)
 		return world.isTree(target.x, target.y)
 	},
 	treeRight: function(){
@@ -185,7 +185,7 @@ const kara = {
 			target.y++
 			break
 		}
-		target = mapOverflowToWorld(target)
+		target = b_world.cellOnWorldTorus(target)
 		return world.isTree(target.x, target.y)
 	},
 	mushroomFront: function(){
@@ -196,7 +196,7 @@ const kara = {
 		let vec = getLookVector()
 		vec.x += kara_pos.x
 		vec.y += kara_pos.y
-		vec = mapOverflowToWorld(vec)
+		vec = b_world.cellOnWorldTorus(vec)
 		return world.isMushroom(vec.x, vec.y)
 	},
 	setPosition: function(x: number, y: number) {
