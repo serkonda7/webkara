@@ -13,40 +13,40 @@ class WorldBackend {
 	trees: Array<Vector2> = []
 	mushrooms: Array<Vector2> = []
 
-	push_leaf(x: number, y: number, safe: boolean = false): void {
+	push_leaf(x: number, y: number, safe = false): void {
 		if (safe && this.is_leaf(x, y)) {
 			throw `(${x}, ${y}) already has a leaf`
 		}
-		this.leafs.push({ x: x, y: y})
+		this.leafs.push({ x: x, y: y })
 	}
-	push_tree(x: number, y: number, safe: boolean = false): void {
+	push_tree(x: number, y: number, safe = false): void {
 		if (safe && this.is_tree(x, y)) {
 			throw `(${x}, ${y}) already has a tree`
 		}
-		this.trees.push({ x: x, y: y})
+		this.trees.push({ x: x, y: y })
 	}
-	push_mushroom(x: number, y: number, safe: boolean = false): void {
+	push_mushroom(x: number, y: number, safe = false): void {
 		if (safe && this.is_mushroom(x, y)) {
 			throw `(${x}, ${y}) already has a mushroom`
 		}
-		this.mushrooms.push({ x: x, y: y})
+		this.mushrooms.push({ x: x, y: y })
 	}
 
-	remove_leaf(x: number, y: number, safe: boolean = false): void {
+	remove_leaf(x: number, y: number, safe = false): void {
 		const idx = this.find_leaf_index(x, y)
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no leaf`
 		}
 		this.leafs.splice(idx, 1)
 	}
-	remove_tree(x: number, y: number, safe: boolean = false): void {
+	remove_tree(x: number, y: number, safe = false): void {
 		const idx = this.find_tree_index(x, y)
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no tree`
 		}
 		this.trees.splice(idx, 1)
 	}
-	remove_mushroom(x: number, y: number, safe: boolean = false): void {
+	remove_mushroom(x: number, y: number, safe = false): void {
 		const idx = this.find_mushroom_index(x, y)
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no mushroom`
