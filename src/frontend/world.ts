@@ -10,25 +10,25 @@ const world = {
 	},
 	setLeaf:function(x: number, y: number, putLeaf: boolean): void{
 		if (putLeaf){
-			b_world.push_leaf(x, y)
+			b_world.push_leaf(x, y, true)
 		} else {
-			b_world.remove_leaf(x, y)
+			b_world.remove_leaf(x, y, true)
 		}
 		draw()
 	},
 	setTree:function(x: number, y: number, putTree: boolean): void{
 		if (putTree){
-			b_world.push_tree(x, y)
+			b_world.push_tree(x, y, true)
 		} else {
-			b_world.remove_tree(x, y)
+			b_world.remove_tree(x, y, true)
 		}
 		draw()
 	},
 	setMushroom:function(x: number, y: number, putMushroom: boolean): void{
 		if (putMushroom){
-			b_world.push_mushroom(x, y)
+			b_world.push_mushroom(x, y, true)
 		} else {
-			b_world.remove_mushroom(x, y)
+			b_world.remove_mushroom(x, y, true)
 		}
 		draw()
 	},
