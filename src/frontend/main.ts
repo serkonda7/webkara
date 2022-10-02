@@ -1,11 +1,8 @@
 import { init as editor_init, runCode } from './editor.js'
 import { kara, setKaraActive, isKaraActive, initKaraButtons } from './kara.js'
-import { compare_to_vec2 } from './vector.js'
-import {
-	world,
-	leaf_positions, tree_positions, shroom_positions,
-	findLeafIndex, findTreeIndex, findMushroomIndex,
-} from './world.js'
+import { compare_to_vec2 } from '../backend/vector.js'
+import { world } from './world.js'
+import { b_world } from '../backend/world.js'
 
 const board = document.querySelector('#board')
 
@@ -30,13 +27,13 @@ function draw(): void{
 		const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
 		kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
 	}
-	leaf_positions.forEach((val) => {
+	b_world.leafs.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
-	tree_positions.forEach((val) => {
+	b_world.trees.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
 	})
-	shroom_positions.forEach((val) => {
+	b_world.mushrooms.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
 	})
 }
@@ -47,14 +44,11 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 			if (edit_type === 'kara') {
 				setKaraActive(false)
 			} else if (edit_type === 'leaf'){
-				const idx = findLeafIndex(x, y)
-				leaf_positions.splice(idx, 1)
+				b_world.remove_leaf(x, y)
 			} else if (edit_type === 'tree'){
-				const idx = findTreeIndex(x, y)
-				tree_positions.splice(idx, 1)
+				b_world.remove_tree(x, y)
 			} else {
-				const idx = findMushroomIndex(x, y)
-				shroom_positions.splice(idx, 1)
+				b_world.remove_mushroom(x, y)
 			}
 		} else {
 			if (edit_type === 'kara') {
@@ -66,7 +60,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place leaf on a tree')
 					return
 				}
-				leaf_positions.push({ x:x, y:y })
+				b_world.push_leaf(x, y)
 			} else if (edit_type === 'tree'){
 				if (world.isLeaf(x, y)){
 					alert('cannot place tree on a leaf')
@@ -78,7 +72,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place tree on kara')
 					return
 				}
-				tree_positions.push({ x:x, y:y })
+				b_world.push_tree(x, y)
 			} else {
 				if (world.isTree(x, y)) {
 					alert('cannot place mushroom on a tree')
@@ -87,7 +81,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 					alert('cannot place mushroom on kara')
 					return
 				}
-				shroom_positions.push({ x:x, y:y })
+				b_world.push_mushroom(x, y)
 			}
 		}
 		draw()

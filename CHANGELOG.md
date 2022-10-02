@@ -7,6 +7,10 @@
 - `world.clearAll()` removes kara too
 - editor: code is saved before running
 
+**Engineering**
+- Begin splitting src files into frontend and backend code (done: `world`)
+- Remove esbuild and use tsc for prod
+
 ## 0.0.3
 _28 September 2022_
 
