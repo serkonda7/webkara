@@ -27,13 +27,13 @@ function draw(): void{
 		const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
 		kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
 	}
-	b_world.#leafs.forEach((val) => {
+	b_world.leafs.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9752;'
 	})
-	b_world.#trees.forEach((val) => {
+	b_world.trees.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9820;'
 	})
-	b_world.#mushrooms.forEach((val) => {
+	b_world.mushrooms.forEach((val) => {
 		document.querySelector(`#cell_${val.x}_${val.y}`).innerHTML += '&#9730;'
 	})
 }

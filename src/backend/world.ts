@@ -9,27 +9,27 @@ class WorldBackend {
 		return this.#size
 	}
 
-	#leafs: Array<Vector2> = []
-	#trees: Array<Vector2> = []
-	#mushrooms: Array<Vector2> = []
+	leafs: Array<Vector2> = []
+	trees: Array<Vector2> = []
+	mushrooms: Array<Vector2> = []
 
 	push_leaf(x: number, y: number, safe: boolean = false): void {
 		if (safe && this.is_leaf(x, y)) {
 			throw `(${x}, ${y}) already has a leaf`
 		}
-		this.#leafs.push({ x: x, y: y})
+		this.leafs.push({ x: x, y: y})
 	}
 	push_tree(x: number, y: number, safe: boolean = false): void {
 		if (safe && this.is_tree(x, y)) {
 			throw `(${x}, ${y}) already has a tree`
 		}
-		this.#trees.push({ x: x, y: y})
+		this.trees.push({ x: x, y: y})
 	}
 	push_mushroom(x: number, y: number, safe: boolean = false): void {
 		if (safe && this.is_mushroom(x, y)) {
 			throw `(${x}, ${y}) already has a mushroom`
 		}
-		this.#mushrooms.push({ x: x, y: y})
+		this.mushrooms.push({ x: x, y: y})
 	}
 
 	remove_leaf(x: number, y: number, safe: boolean = false): void {
@@ -37,32 +37,32 @@ class WorldBackend {
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no leaf`
 		}
-		this.#leafs.splice(idx, 1)
+		this.leafs.splice(idx, 1)
 	}
 	remove_tree(x: number, y: number, safe: boolean = false): void {
 		const idx = this.find_tree_index(x, y)
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no tree`
 		}
-		this.#trees.splice(idx, 1)
+		this.trees.splice(idx, 1)
 	}
 	remove_mushroom(x: number, y: number, safe: boolean = false): void {
 		const idx = this.find_mushroom_index(x, y)
 		if (safe && idx < 0) {
 			throw `(${x}, ${y}) has no mushroom`
 		}
-		this.#mushrooms.splice(idx, 1)
+		this.mushrooms.splice(idx, 1)
 	}
 
 	relocate_mushroom(x: number, y: number, new_pos: Vector2): void {
 		const idx = this.find_mushroom_index(x, y)
-		this.#mushrooms[idx] = new_pos
+		this.mushrooms[idx] = new_pos
 	}
 
 	clear_world(): void {
-		this.#leafs = []
-		this.#trees = []
-		this.#mushrooms = []
+		this.leafs = []
+		this.trees = []
+		this.mushrooms = []
 	}
 
 	#find_index(arr: Array<Vector2>, x: number, y: number): number {
@@ -71,13 +71,13 @@ class WorldBackend {
 		})
 	}
 	find_leaf_index (x: number, y: number): number {
-		return this.#find_index(this.#leafs, x, y)
+		return this.#find_index(this.leafs, x, y)
 	}
 	find_tree_index (x: number, y: number): number {
-		return this.#find_index(this.#trees, x, y)
+		return this.#find_index(this.trees, x, y)
 	}
 	find_mushroom_index (x: number, y: number): number {
-		return this.#find_index(this.#mushrooms, x, y)
+		return this.#find_index(this.mushrooms, x, y)
 	}
 
 	is_empty(x: number, y: number): boolean{
