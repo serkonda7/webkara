@@ -58,8 +58,7 @@ const kara = {
 				alert('kara tried pushing a mushroom into a tree')
 				return
 			}
-			const idx = b_world.find_mushroom_index(frontField.x, frontField.y)
-			b_world.mushrooms[idx] = nextField
+			b_world.relocate_mushroom(frontField.x, frontField.y, nextField)
 		}
 		const vec = getLookVector()
 		kara_pos.x += vec.x
