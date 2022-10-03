@@ -1,8 +1,9 @@
 import { init as editor_init, runCode } from './editor.js'
-import { kara, setKaraActive, isKaraActive, initKaraButtons } from './kara.js'
+import { kara, initKaraButtons } from './kara.js'
 import { compare_to_vec2 } from '../backend/vector.js'
-import { world } from './world.js'
-import { b_world } from '../backend/world.js'
+import world from './world.js'
+import b_world from '../backend/world.js'
+import { b_kara } from '../backend/kara.js'
 
 const board = document.querySelector('#board')
 
@@ -22,7 +23,7 @@ function draw(): void{
 	cells.forEach((el) => {
 		el.innerHTML = ''
 	})
-	if (isKaraActive()) {
+	if (b_kara.is_in_world()) {
 		const kpos = kara.getPosition()
 		const kara_cell = document.querySelector(`#cell_${kpos.x}_${kpos.y}`)
 		kara_cell.innerHTML = kara_to_arrow[kara.getOrientation()]
@@ -42,7 +43,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 	if (is_edit_mode) {
 		if (cell.innerHTML.includes(edit_val)){
 			if (edit_type === 'kara') {
-				setKaraActive(false)
+				b_kara.set_in_world(false)
 			} else if (edit_type === 'leaf'){
 				b_world.remove_leaf(x, y)
 			} else if (edit_type === 'tree'){
@@ -52,7 +53,7 @@ const cellclick_handler = (cell, x: number, y: number): void => {
 			}
 		} else {
 			if (edit_type === 'kara') {
-				setKaraActive(true)
+				b_kara.set_in_world(true)
 				kara.setPosition(x, y)
 				kara.setOrientation(1)
 			} else if (edit_type === 'leaf'){

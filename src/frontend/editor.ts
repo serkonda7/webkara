@@ -1,5 +1,5 @@
 import { kara } from './kara.js'
-import { world } from './world.js'
+import world from './world.js'
 import * as storage from './data_storage.js'
 
 const EDITOR_CONTENT_KEY = 'editorContent'

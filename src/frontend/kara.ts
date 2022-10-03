@@ -1,244 +1,58 @@
 import { Vector2 } from '../backend/vector.js'
 import { DOM } from './dom_util.js'
 import { draw } from './main.js'
-import { world } from './world.js'
-import { b_world } from '../backend/world.js'
-
-let kara_pos = {
-	x: 0,
-	y: 0,
-}
-let kara_orientation = 1 // 0 up, 1 right, 2 down, 3 left
-let is_kara_active = false
-
-const getLookVector = (): Vector2 => {
-	switch (kara_orientation){
-	case 0:
-		return { x:0, y:1 }
-	case 1:
-		return { x:1, y:0 }
-	case 2:
-		return { x:0, y:-1 }
-	case 3:
-		return { x:-1, y:0 }
-	}
-}
-
-const karaInactiveAlert = (): void => {
-	alert('kara is not in the world!')
-}
+import { b_kara, Orientation } from '../backend/kara.js'
 
 const kara = {
 	move: function(): void{
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		if (this.treeFront()) {
-			alert('kara cannot move: tree front')
-			return
-		}
-		if (this.mushroomFront()){
-			const vec = getLookVector()
-			let frontField = {
-				x: vec.x + kara_pos.x,
-				y: vec.y + kara_pos.y,
-			}
-			frontField = b_world.cell_on_world_torus(frontField)
-			let nextField = {
-				x:frontField.x + vec.x,
-				y:frontField.y + vec.y,
-			}
-			nextField = b_world.cell_on_world_torus(nextField)
-			if (world.isMushroom(nextField.x, nextField.y)) {
-				alert('kara cannot push multiple mushrooms')
-				return
-			}
-			if (world.isTree(nextField.x, nextField.y)) {
-				alert('kara tried pushing a mushroom into a tree')
-				return
-			}
-			b_world.relocate_mushroom(frontField.x, frontField.y, nextField)
-		}
-		const vec = getLookVector()
-		kara_pos.x += vec.x
-		kara_pos.y += vec.y
-		kara_pos = b_world.cell_on_world_torus(kara_pos)
+		b_kara.move()
 		draw()
 	},
 	turnLeft: function(): void{
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		kara_orientation--
-		if (kara_orientation < 0) {
-			kara_orientation = 3
-		}
+		b_kara.turn_left()
 		draw()
 	},
 	turnRight: function(): void{
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		kara_orientation++
-		if (kara_orientation > 3) {
-			kara_orientation = 0
-		}
+		b_kara.turn_right()
 		draw()
 	},
 	putLeaf: function(): void{
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		if (this.onLeaf()){
-			alert('kara cannot put a leaf on another leaf')
-			return
-		}
-		b_world.push_leaf(kara_pos.x, kara_pos.y)
+		b_kara.put_leaf()
 		draw()
 	},
 	takeLeaf: function(): void{
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		const idx = b_world.find_leaf_index(kara_pos.x, kara_pos.y)
-		if (idx === -1){
-			alert('kara cannot take a leaf where is none')
-			return
-		}
-		b_world.remove_leaf(kara_pos.x, kara_pos.y)
+		b_kara.take_leaf()
 		draw()
 	},
 	onLeaf: function(){
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		return world.isLeaf(kara_pos.x, kara_pos.y)
+		b_kara.on_leaf()
 	},
 	treeFront: function(){
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		let vec = getLookVector()
-		vec.x += kara_pos.x
-		vec.y += kara_pos.y
-		vec = b_world.cell_on_world_torus(vec)
-		return world.isTree(vec.x, vec.y)
-
+		return b_kara.tree_front()
 	},
 	treeLeft: function(){
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		let target = {
-			x: kara_pos.x,
-			y: kara_pos.y,
-		}
-		switch (kara_orientation){
-		case 0:
-			target.x--
-			break
-		case 1:
-			target.y++
-			break
-		case 2:
-			target.x++
-			break
-		case 3:
-			target.y--
-			break
-		}
-		target = b_world.cell_on_world_torus(target)
-		return world.isTree(target.x, target.y)
+		return b_kara.tree_left()
 	},
 	treeRight: function(){
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		let target = {
-			x: kara_pos.x,
-			y: kara_pos.y,
-		}
-		switch (kara_orientation){
-		case 0:
-			target.x++
-			break
-		case 1:
-			target.y--
-			break
-		case 2:
-			target.x--
-			break
-		case 3:
-			target.y++
-			break
-		}
-		target = b_world.cell_on_world_torus(target)
-		return world.isTree(target.x, target.y)
+		return b_kara.tree_right()
 	},
 	mushroomFront: function(){
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		let vec = getLookVector()
-		vec.x += kara_pos.x
-		vec.y += kara_pos.y
-		vec = b_world.cell_on_world_torus(vec)
-		return world.isMushroom(vec.x, vec.y)
+		return b_kara.mushroom_front()
 	},
 	setPosition: function(x: number, y: number) {
-		is_kara_active = true
-		kara_pos.x = x
-		kara_pos.y = y
+		b_kara.set_position(x, y)
 		draw()
 	},
 	getPosition: function(): Vector2 {
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		return {
-			x: kara_pos.x,
-			y: kara_pos.y,
-		}
+		return b_kara.get_position()
 	},
-	setOrientation: function(o: number) {
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		if (o < 0){
-			o = 0
-		} else if (o > 3){
-			o = 3
-		}
-		kara_orientation = o
+	setOrientation: function(o: Orientation) {
+		b_kara.set_orientation(o)
 		draw()
 	},
 	getOrientation: function() {
-		if (!is_kara_active) {
-			karaInactiveAlert()
-			return
-		}
-		return kara_orientation
+		return b_kara.get_orientation()
 	},
-}
-
-const setKaraActive = (active: boolean): void => {
-	is_kara_active = active
-}
-
-const isKaraActive = (): boolean => {
-	return is_kara_active
 }
 
 const initKaraButtons = (): void => {
@@ -249,4 +63,4 @@ const initKaraButtons = (): void => {
 	DOM.setBtnOnclickBinded('#btnTake', kara.takeLeaf, kara)
 }
 
-export { initKaraButtons, kara, setKaraActive, isKaraActive }
+export { initKaraButtons, kara }

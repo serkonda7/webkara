@@ -1,11 +1,9 @@
-import { setKaraActive } from './kara.js'
 import { draw } from './main.js'
-import { b_world } from '../backend/world.js'
+import b_world from '../backend/world.js'
 
 const world = {
 	clearAll:function(): void{
 		b_world.clear_world()
-		setKaraActive(false)
 		draw()
 	},
 	setLeaf:function(x: number, y: number, putLeaf: boolean): void{
@@ -50,4 +48,4 @@ const world = {
 	},
 }
 
-export { world }
+export default world
