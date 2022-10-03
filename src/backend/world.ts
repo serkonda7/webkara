@@ -1,4 +1,5 @@
 import { Vector2 } from './vector.js'
+import { b_kara } from './kara.js'
 
 class WorldBackend {
 	#size: Vector2 = {
@@ -63,6 +64,7 @@ class WorldBackend {
 		this.leafs = []
 		this.trees = []
 		this.mushrooms = []
+		b_kara.set_in_world(false)
 	}
 
 	#find_index(arr: Array<Vector2>, x: number, y: number): number {
@@ -114,5 +116,4 @@ class WorldBackend {
 }
 
 const b_world = new WorldBackend()
-
-export { b_world }
+export default b_world
