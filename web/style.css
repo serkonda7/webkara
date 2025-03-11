@@ -8,27 +8,27 @@ body {
   gap: 1px;
 }
 
-.cell {
+.cell,
+.cell div {
   width: 50px;
   height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   outline: 1px solid black;
+  background-size: cover;
+  image-rendering: pixelated;
 }
 
 .leaf {
-  background-color: green;
+  background-image: url('img/leaf.png');
 }
 
 .tree {
-  background-color: #B5651D;
+  background-image: url('img/tree.png');
 }
 
 .shroom {
-  background-color: red;
+  background-image: url('img/mushroom.png');
 }
 
 .player {
-  background-color: blue;
+  background-image: url('img/kara.png');
 }

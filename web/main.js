@@ -4,11 +4,18 @@
 // 4 = shroom
 // 5 = leaf + shroom
 // 8 = player
+// 9 = player + leaf
 const world = [
-	[8, 2, 1],
+	[9, 2, 1],
 	[1, 4, 0],
-	[0, 2, 0],
+	[0, 5, 0],
 ]
+
+function add_foreground(div, class_name) {
+	const fg = document.createElement('div')
+	fg.classList.add(class_name)
+	div.appendChild(fg)
+}
 
 function drawGrid() {
 	const world_grid = document.querySelector('#world-grid')
@@ -32,12 +39,15 @@ function drawGrid() {
 					cell_div.classList.add('shroom')
 					break
 				case 5:
-					console.log('TODO')
-					// cell_div.classList.add('leaf')
-					// cell_div.classList.add('shroom')
+					cell_div.classList.add('leaf')
+					add_foreground(cell_div, 'shroom')
 					break
 				case 8:
 					cell_div.classList.add('player')
+					break
+				case 9:
+					cell_div.classList.add('leaf')
+					add_foreground(cell_div, 'player')
 					break
 			}
 			world_grid.appendChild(cell_div)
