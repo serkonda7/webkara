@@ -6,9 +6,14 @@
 // 8 = player
 // 9 = player + leaf
 const world = [
-	[9, 2, 1],
-	[1, 4, 0],
-	[0, 5, 0],
+	[0, 0, 0, 0],
+	[0, 8, 0, 0],
+	[0, 0, 0, 0],
+	[0, 0, 0, 0],
+	//
+	// [9, 2, 1],
+	// [1, 4, 0],
+	// [0, 5, 0],
 ]
 
 function add_foreground(div, class_name) {
@@ -55,4 +60,26 @@ function drawGrid() {
 	})
 }
 
-drawGrid()
+const editor = document.querySelector('#editor')
+const run_btn = document.querySelector('#run')
+
+async function execute_code(){
+	run_btn.disabled = true
+	run_btn.innerText = 'Running...'
+
+	// TODO
+
+	run_btn.innerText = 'Run Code'
+	run_btn.disabled = false
+}
+
+function main() {
+	editor.value = localStorage.getItem('editorContent') || ''
+	editor.addEventListener('input', () => {
+		localStorage.setItem('editorContent', editor.value)
+	})
+
+	drawGrid()
+}
+
+main()
