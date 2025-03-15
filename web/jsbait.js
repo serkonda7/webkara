@@ -126,7 +126,7 @@ class Parser{
 		const val = this.tok.val
 		this.next()
 		return {
-			kind: "var",
+			kind: "ident",
 			name: val
 		}
 	}
@@ -138,7 +138,31 @@ class Sema {
 	}
 
 	check() {
-		// TODO
+		for (let node of this.nodes) {
+			this.expr(node)
+		}
+	}
+
+	expr(expr) {
+		switch (expr.kind) {
+			case "call":
+				this.call(expr)
+				break
+			case "ident":
+				this.ident(expr)
+				break
+			default:
+				throw new Error("Cannot check: " + expr.kind)
+		}
+	}
+
+	call(expr) {
+		if (expr.rec) {
+			this.expr(expr.rec)
+		}
+	}
+
+	ident(expr) {
 	}
 }
 
@@ -150,9 +174,18 @@ class JsGen{
 
 	gen() {
 		for (let node of this.nodes) {
-			this.expr(node)
+			this.stmt(node)
 		}
 		return this.out
+	}
+
+	stmt(stmt) {
+		switch (stmt.kind) {
+			default:
+				this.expr(stmt)
+				this.out += "\n"
+				break
+		}
 	}
 
 	expr(expr) {
@@ -160,8 +193,8 @@ class JsGen{
 			case "call":
 				this.call(expr)
 				break
-			case "var":
-				this.var(expr)
+			case "ident":
+				this.ident(expr)
 				break
 			default:
 				throw new Error("Cannot gen: " + expr.kind)
@@ -177,7 +210,7 @@ class JsGen{
 		this.out += expr.name + "()"
 	}
 
-	var(expr) {
+	ident(expr) {
 		this.out += expr.name
 	}
 }

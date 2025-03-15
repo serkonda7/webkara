@@ -64,6 +64,18 @@ textarea {
   background-image: url('img/kara.png');
 }
 
+.up {
+  transform: rotate(-90deg);
+}
+
+.down {
+  transform: rotate(90deg);
+}
+
+.left {
+  transform: rotate(180deg);
+}
+
 #run {
   position: absolute;
   bottom: 10px;

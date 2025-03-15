@@ -72,6 +72,7 @@ function initWorld() {
 	draw()
 }
 
+// TODO delay between moves
 function draw() {
 	const cells = document.querySelectorAll('.cell')
 	cells.forEach(cell => {
@@ -80,6 +81,7 @@ function draw() {
 
 	const kara_cell = document.querySelector(`#c_${kara.pos.x}_${kara.pos.y}`)
 	add_foreground(kara_cell, 'player')
+	kara_cell.classList.add(kara.dir_to_class())
 
 	// TODO draw leafs, trees, mushrooms
 }
@@ -96,8 +98,13 @@ function execute_code(){
 	const code = editor.value
 	const user_js_code = compile(code)
 
-	const user_func = new FuncConstructor('kara', user_js_code)
-	user_func(kara)
+	try {
+		const user_func = new FuncConstructor('kara', user_js_code)
+		user_func(kara)
+	} catch (e) {
+		console.error(e)
+		console.log(user_js_code)
+	}
 
 	run_btn.innerText = 'Run Code'
 	run_btn.disabled = false
