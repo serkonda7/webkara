@@ -1,5 +1,5 @@
 import { world } from './world.js'
-import { draw } from './main.js'
+import { draw_with_delay } from './main.js'
 
 const direction_vectors = [
 	{ x: 0, y: -1 },
@@ -31,28 +31,28 @@ const kara = {
 		return dir_class_list[this.direction]
 	},
 
-	move() {
+	async move() {
 		const dir_vec = direction_vectors[kara.direction]
 		const front = {
 			x: kara.pos.x + dir_vec.x,
 			y: kara.pos.y + dir_vec.y,
 		}
 		this.pos = world.wrap_to_world(front)
-		draw()
+		await draw_with_delay()
 	},
 
 	turn_direction(dir_delta) {
 		return ((this.direction + dir_delta % 4) + 4) % 4
 	},
 
-	turn_left() {
+	async turn_left() {
 		kara.direction = this.turn_direction(-1)
-		draw()
+		await draw_with_delay()
 	},
 
-	turn_right() {
+	async turn_right() {
 		kara.direction = this.turn_direction(1)
-		draw()
+		await draw_with_delay()
 	},
 }
 

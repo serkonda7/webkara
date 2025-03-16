@@ -202,6 +202,9 @@ class JsGen{
 	}
 
 	call(expr) {
+		// TODO add await only if needed
+		this.out += "await "
+
 		if (expr.rec) {
 			this.expr(expr.rec)
 			this.out += "."

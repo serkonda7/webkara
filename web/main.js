@@ -1,5 +1,6 @@
 import { world } from './world.js'
 import { kara } from './kara.js'
+import { tools } from './tools.js'
 import { compile } from './jsbait.js'
 
 // 0 = empty
@@ -72,7 +73,11 @@ function initWorld() {
 	draw()
 }
 
-// TODO delay between moves
+async function draw_with_delay() {
+	await tools.sleep(500)
+	draw()
+}
+
 function draw() {
 	const cells = document.querySelectorAll('.cell')
 	cells.forEach(cell => {
@@ -89,7 +94,7 @@ function draw() {
 const editor = document.querySelector('#editor')
 const run_btn = document.querySelector('#run')
 
-const FuncConstructor = Object.getPrototypeOf(function() {}).constructor
+const FuncConstructor = Object.getPrototypeOf(async function() {}).constructor
 
 function execute_code(){
 	run_btn.disabled = true
@@ -97,6 +102,7 @@ function execute_code(){
 
 	const code = editor.value
 	const user_js_code = compile(code)
+	console.log(user_js_code)
 
 	try {
 		const user_func = new FuncConstructor('kara', user_js_code)
@@ -123,4 +129,4 @@ function main() {
 
 main()
 
-export { draw }
+export { draw, draw_with_delay }
