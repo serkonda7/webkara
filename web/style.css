@@ -1,0 +1,41 @@
+/* Tab-Bar */
+
+.tab-bar {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tab-bar button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+.tab-bar button:hover {
+  background-color: #ddd;
+}
+
+.tab-bar button.active {
+  background-color: #ccc;
+}
+
+.tab-content {
+  display: none;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* General CSS */
+
+body {
+  margin: 0;
+}
