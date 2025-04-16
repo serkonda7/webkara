@@ -1,4 +1,7 @@
 class ToolsBackend {
+}
+
+class Tools {
 	println(msg) {
 		throw new Error('println() not implemented')
 	}
@@ -28,6 +31,7 @@ class ToolsBackend {
 	}
 }
 
-const _tools = new ToolsBackend()
+const b_tools = new ToolsBackend()
+const tools = new Tools()
 
-export { _tools }
+export { b_tools, tools }

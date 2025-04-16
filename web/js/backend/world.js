@@ -1,4 +1,11 @@
 class WorldBackend {
+	size = {
+		width: 1,
+		height: 1,
+	}
+}
+
+class World {
 	clear() {
 		throw new Error('clear() not implemented')
 	}
@@ -40,6 +47,7 @@ class WorldBackend {
 	}
 }
 
-const _world = new WorldBackend()
+const b_world = new WorldBackend()
+const world = new World()
 
-export { _world }
+export { b_world, world }

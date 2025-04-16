@@ -1,4 +1,7 @@
 class KaraBackend {
+}
+
+class Kara {
 	move() {
 		throw new Error('move() not implemented')
 	}
@@ -56,6 +59,7 @@ class KaraBackend {
 	}
 }
 
-const _kara = new KaraBackend()
+const b_kara = new KaraBackend()
+const kara = new Kara()
 
-export { _kara }
+export { b_kara, kara }
