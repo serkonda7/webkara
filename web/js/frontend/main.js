@@ -1,5 +1,6 @@
-import { b_world } from "../backend/world.js"
-import * as f_world from "./f_world.js"
+import { b_world } from '../backend/world.js'
+import * as f_world from './f_world.js'
+import * as state from './state.js'
 
 const btn_run = document.querySelector('#run-btn')
 const btn_pause = document.querySelector('#pause-btn')
@@ -15,13 +16,17 @@ const btn_obj_tree = document.querySelector('#obj-tree')
 const btn_obj_shroom = document.querySelector('#obj-shroom')
 const btn_obj_trash = document.querySelector('#obj-trash')
 
+function restore_state() {
+	state.load_world()
+	inp_world_width.value = b_world.size.width
+	inp_world_height.value = b_world.size.height
+}
+
 function not_implemented() {
 	alert('Not implemented')
 }
 
-function main() {
-	f_world.draw_empty_grid()
-
+function init_click_listeners() {
 	btn_run.addEventListener('click', () => {
 		not_implemented()
 	})
@@ -35,6 +40,7 @@ function main() {
 	btn_apply_world_size.addEventListener('click', () => {
 		b_world.size.width = parseInt(inp_world_width.value)
 		b_world.size.height = parseInt(inp_world_height.value)
+		state.save_world()
 		f_world.draw_empty_grid()
 	})
 
@@ -53,6 +59,14 @@ function main() {
 	btn_obj_trash.addEventListener('click', () => {
 		not_implemented()
 	})
+}
+
+function main() {
+	restore_state()
+
+	f_world.draw_empty_grid()
+
+	init_click_listeners()
 }
 
 main()

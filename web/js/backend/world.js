@@ -1,7 +1,7 @@
 class WorldBackend {
 	size = {
-		width: 1,
-		height: 1,
+		width: 9,
+		height: 9,
 	}
 }
 
