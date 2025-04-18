@@ -18,4 +18,16 @@ button {
   transform: rotate(90deg);
 }
 
-/* TODO world grid styling */
+#world-grid {
+  display: inline-grid;
+  gap: 1px;
+  height: fit-content;
+}
+
+.cell {
+  width: 28px;
+  height: 28px;
+  outline: 1px solid black;
+  background-size: cover;
+  image-rendering: pixelated;
+}
