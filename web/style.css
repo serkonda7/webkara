@@ -57,3 +57,23 @@ img {
 #world-objects button.selected {
   background-color: lightgreen;
 }
+
+.cursor-kara {
+  cursor: url('img/kara.png') 13 13, auto;
+}
+
+.cursor-leaf {
+  cursor: url('img/leaf.png') 13 13, auto;
+}
+
+.cursor-tree {
+  cursor: url('img/tree.png') 13 13, auto;
+}
+
+.cursor-shroom {
+  cursor: url('img/shroom.png') 13 13, auto;
+}
+
+.cursor-trash {
+  cursor: url('img/trash.png') 13 13, auto;
+}
