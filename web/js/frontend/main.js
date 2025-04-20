@@ -1,6 +1,7 @@
 import { b_world } from '../backend/world.js'
 import * as f_world from './f_world.js'
 import * as state from './state.js'
+import * as edit_mode from './edit_mode.js'
 
 const btn_run = document.querySelector('#run-btn')
 const btn_pause = document.querySelector('#pause-btn')
@@ -10,11 +11,11 @@ const btn_apply_world_size = document.querySelector('#apply-world-size')
 const inp_world_width = document.querySelector('#world-width')
 const inp_world_height = document.querySelector('#world-height')
 
-const btn_obj_kara = document.querySelector('#obj-kara')
-const btn_obj_leaf = document.querySelector('#obj-leaf')
-const btn_obj_tree = document.querySelector('#obj-tree')
-const btn_obj_shroom = document.querySelector('#obj-shroom')
-const btn_obj_trash = document.querySelector('#obj-trash')
+const btn_cmd_move = document.querySelector('#cmd-move')
+const btn_cmd_turn_left = document.querySelector('#cmd-turn-left')
+const btn_cmd_turn_right = document.querySelector('#cmd-turn-right')
+const btn_cmd_put_leaf = document.querySelector('#cmd-put-leaf')
+const btn_cmd_take_leaf = document.querySelector('#cmd-take-leaf')
 
 function restore_state() {
 	state.load_world()
@@ -27,6 +28,7 @@ function not_implemented() {
 }
 
 function init_click_listeners() {
+	// Group: Code execution
 	btn_run.addEventListener('click', () => {
 		not_implemented()
 	})
@@ -37,6 +39,7 @@ function init_click_listeners() {
 		not_implemented()
 	})
 
+	// Group: World settings
 	btn_apply_world_size.addEventListener('click', () => {
 		b_world.size.width = parseInt(inp_world_width.value)
 		b_world.size.height = parseInt(inp_world_height.value)
@@ -44,19 +47,23 @@ function init_click_listeners() {
 		f_world.draw_empty_grid()
 	})
 
-	btn_obj_kara.addEventListener('click', () => {
+	// Group: World objects
+	edit_mode.init_click_listeners()
+
+	// Group: Kara controls
+	btn_cmd_move.addEventListener('click', () => {
 		not_implemented()
 	})
-	btn_obj_leaf.addEventListener('click', () => {
+	btn_cmd_turn_left.addEventListener('click', () => {
 		not_implemented()
 	})
-	btn_obj_tree.addEventListener('click', () => {
+	btn_cmd_turn_right.addEventListener('click', () => {
 		not_implemented()
 	})
-	btn_obj_shroom.addEventListener('click', () => {
+	btn_cmd_put_leaf.addEventListener('click', () => {
 		not_implemented()
 	})
-	btn_obj_trash.addEventListener('click', () => {
+	btn_cmd_take_leaf.addEventListener('click', () => {
 		not_implemented()
 	})
 }

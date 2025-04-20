@@ -9,6 +9,10 @@ button {
   font-size: inherit;
 }
 
+img {
+  image-rendering: pixelated;
+}
+
 #code-editor {
   font-family: 'Consolas', 'Courier New', monospace;
   background-color: white;
@@ -17,10 +21,6 @@ button {
   min-height: 150px;
   max-height: 80vh;
   overflow-y: auto;
-}
-
-#obj-kara > img {
-  transform: rotate(90deg);
 }
 
 #world-grid {
@@ -35,4 +35,25 @@ button {
   outline: 1px solid black;
   background-size: cover;
   image-rendering: pixelated;
+}
+
+#world-objects {
+  display: flex;
+  gap: 5px
+}
+
+#world-objects button {
+  width: 40px;
+  height: 40px;
+  padding: 4px;
+}
+
+#world-objects button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#world-objects button.selected {
+  background-color: lightgreen;
 }
