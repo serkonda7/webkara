@@ -1,4 +1,4 @@
-import { b_world } from '../backend/world.js'
+import { world } from '../backend/world.js'
 import * as f_world from './f_world.js'
 import * as state from './state.js'
 import * as edit_mode from './edit_mode.js'
@@ -19,8 +19,9 @@ const btn_cmd_take_leaf = document.querySelector('#cmd-take-leaf')
 
 function restore_state() {
 	state.load_world()
-	inp_world_width.value = b_world.size.width
-	inp_world_height.value = b_world.size.height
+	const size = world.get_size()
+	inp_world_width.value = size.width
+	inp_world_height.value = size.height
 }
 
 function not_implemented() {
@@ -41,8 +42,9 @@ function init_click_listeners() {
 
 	// Group: World settings
 	btn_apply_world_size.addEventListener('click', () => {
-		b_world.size.width = parseInt(inp_world_width.value)
-		b_world.size.height = parseInt(inp_world_height.value)
+		const w = parseInt(inp_world_width.value)
+		const h = parseInt(inp_world_height.value)
+		world.set_size(w, h)
 		state.save_world()
 		f_world.draw_empty_grid()
 	})

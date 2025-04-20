@@ -37,6 +37,35 @@ img {
   image-rendering: pixelated;
 }
 
+.leaf {
+  background-image: url('img/leaf.png');
+}
+
+.tree {
+  background-image: url('img/tree.png');
+}
+
+.shroom {
+  background-image: url('img/shroom.png');
+}
+
+.kara {
+  background-image: url('img/kara.png');
+}
+
+.right {
+  transform: rotate(90deg);
+}
+
+.down {
+  transform: rotate(180deg);
+}
+
+.left {
+  transform: rotate(270deg);
+}
+
+
 #world-objects {
   display: flex;
   gap: 5px

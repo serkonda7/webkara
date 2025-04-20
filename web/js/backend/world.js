@@ -11,11 +11,16 @@ class World {
 	}
 
 	set_size(width, height) {
-		throw new Error('set_size() not implemented')
+		if (width < 1 || height < 1) {
+			throw new Error('World size must be at least 1x1')
+		}
+
+		b_world.size.width = width
+		b_world.size.height = height
 	}
 
 	get_size() {
-		throw new Error('get_size() not implemented')
+		return b_world.size
 	}
 
 	is_empty(x, y) {

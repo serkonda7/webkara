@@ -12,6 +12,8 @@ function init_click_listeners() {
 	btn_obj_tree.addEventListener('click', edit_mode)
 	btn_obj_shroom.addEventListener('click', edit_mode)
 	btn_obj_trash.addEventListener('click', edit_mode)
+
+	world_grid.addEventListener('click', world_grid_click)
 }
 
 let edit_mode_active = false
@@ -39,6 +41,20 @@ function edit_mode(ev) {
 
 	world_grid.classList.add(`cursor-${target.dataset.obj}`)
 	target.classList.add('selected')
+}
+
+function world_grid_click(ev) {
+	if (!edit_mode_active) {
+		return
+	}
+
+	const cell = ev.target.closest('.cell')
+	// Click in the gap between cells
+	if (!cell) {
+		return
+	}
+
+	// TODO remove or add object
 }
 
 export { init_click_listeners }
