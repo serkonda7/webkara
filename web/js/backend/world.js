@@ -13,6 +13,33 @@ class WorldBackend {
 		}
 	}
 
+	add_leaf(x, y, safe = false) {
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			this.check_leaf_placable(x, y)
+		}
+
+		this.leafs.push({ x, y })
+	}
+
+	add_tree(x, y, safe = false) {
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			this.check_tree_placable(x, y)
+		}
+
+		this.trees.push({ x, y })
+	}
+
+	add_mushroom(x, y, safe = false) {
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			this.check_mushroom_placable(x, y)
+		}
+
+		this.mushrooms.push({ x, y })
+	}
+
 	is_leaf_placeable(x, y) {
 		if (this.is_leaf(x, y) || this.is_tree(x, y)) {
 			return false
@@ -33,6 +60,24 @@ class WorldBackend {
 		// TODO check for kara
 
 		return true
+	}
+
+	check_leaf_placable(x, y) {
+		if (!this.is_leaf_placeable(x, y)) {
+			throw new Error(`Leaf cannot be placed at (${x}, ${y})`)
+		}
+	}
+
+	check_tree_placable(x, y) {
+		if (!this.is_tree_placeable(x, y)) {
+			throw new Error(`Tree cannot be placed at (${x}, ${y})`)
+		}
+	}
+
+	check_mushroom_placable(x, y) {
+		if (!this.is_mushroom_placeable(x, y)) {
+			throw new Error(`Mushroom cannot be placed at (${x}, ${y})`)
+		}
 	}
 
 	index_of_leaf(x, y) {
