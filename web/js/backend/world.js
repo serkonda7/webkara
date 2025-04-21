@@ -7,6 +7,12 @@ class WorldBackend {
 	trees = []
 	mushrooms = []
 
+	check_pos_in_bounds(x, y) {
+		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
+			throw new Error(`Position out of bounds: (${x}, ${y})`)
+		}
+	}
+
 	index_of_leaf(x, y) {
 		return this.leafs.findIndex((leaf) => {
 			leaf.x === x && leaf.y === y
@@ -23,6 +29,21 @@ class WorldBackend {
 		return this.mushrooms.findIndex((mushroom) => {
 			mushroom.x === x && mushroom.y === y
 		})
+	}
+
+	// like `is_leaf` without bounds check
+	is_leaf_unsafe(x, y) {
+		return b_world.index_of_leaf(x, y) !== -1
+	}
+
+	// like `is_tree` without bounds check
+	is_tree_unsafe(x, y) {
+		return b_world.index_of_tree(x, y) !== -1
+	}
+
+	// like `is_mushroom` without bounds check
+	is_mushroom_unsafe(x, y) {
+		return b_world.index_of_mushroom(x, y) !== -1
 	}
 }
 
@@ -48,7 +69,9 @@ class World {
 	}
 
 	is_empty(x, y) {
-		if (this.is_leaf(x, y) || this.is_tree(x, y) || this.is_mushroom(x, y)) {
+		b_world.check_pos_in_bounds(x, y)
+
+		if (b_world.is_leaf_unsafe(x, y) || b_world.is_tree_unsafe(x, y) || b_world.is_mushroom_unsafe(x, y)) {
 			return false
 		}
 
@@ -60,7 +83,8 @@ class World {
 	}
 
 	is_leaf(x, y) {
-		return b_world.index_of_leaf(x, y) !== -1
+		b_world.check_pos_in_bounds(x, y)
+		return b_world.is_leaf_unsafe(x, y)
 	}
 
 	set_tree(x, y, put) {
@@ -68,7 +92,8 @@ class World {
 	}
 
 	is_tree(x, y) {
-		return b_world.index_of_tree(x, y) !== -1
+		b_world.check_pos_in_bounds(x, y)
+		return b_world.is_tree_unsafe(x, y)
 	}
 
 	set_mushroom(x, y, put) {
@@ -76,7 +101,8 @@ class World {
 	}
 
 	is_mushroom(x, y) {
-		return b_world.index_of_mushroom(x, y) !== -1
+		b_world.check_pos_in_bounds(x, y)
+		return b_world.is_mushroom_unsafe(x, y)
 	}
 }
 
