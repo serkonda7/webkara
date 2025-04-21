@@ -3,11 +3,35 @@ class WorldBackend {
 		width: 9,
 		height: 9,
 	}
+	leafs = []
+	trees = []
+	mushrooms = []
+
+	index_of_leaf(x, y) {
+		return this.leafs.findIndex((leaf) => {
+			leaf.x === x && leaf.y === y
+		})
+	}
+
+	index_of_tree(x, y) {
+		return this.trees.findIndex((tree) => {
+			tree.x === x && tree.y === y
+		})
+	}
+
+	index_of_mushroom(x, y) {
+		return this.mushrooms.findIndex((mushroom) => {
+			mushroom.x === x && mushroom.y === y
+		})
+	}
 }
 
 class World {
 	clear() {
-		throw new Error('clear() not implemented')
+		b_world.leafs = []
+		b_world.trees = []
+		b_world.mushrooms = []
+		// TODO remove kara
 	}
 
 	set_size(width, height) {
@@ -24,7 +48,11 @@ class World {
 	}
 
 	is_empty(x, y) {
-		throw new Error('is_empty() not implemented')
+		if (this.is_leaf(x, y) || this.is_tree(x, y) || this.is_mushroom(x, y)) {
+			return false
+		}
+
+		return true
 	}
 
 	set_leaf(x, y, put) {
@@ -32,7 +60,7 @@ class World {
 	}
 
 	is_leaf(x, y) {
-		throw new Error('is_leaf() not implemented')
+		return b_world.index_of_leaf(x, y) !== -1
 	}
 
 	set_tree(x, y, put) {
@@ -40,7 +68,7 @@ class World {
 	}
 
 	is_tree(x, y) {
-		throw new Error('is_tree() not implemented')
+		return b_world.index_of_tree(x, y) !== -1
 	}
 
 	set_mushroom(x, y, put) {
@@ -48,7 +76,7 @@ class World {
 	}
 
 	is_mushroom(x, y) {
-		throw new Error('is_mushroom() not implemented')
+		return b_world.index_of_mushroom(x, y) !== -1
 	}
 }
 
