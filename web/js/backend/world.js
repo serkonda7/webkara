@@ -13,6 +13,28 @@ class WorldBackend {
 		}
 	}
 
+	is_leaf_placeable(x, y) {
+		if (this.is_leaf(x, y) || this.is_tree(x, y)) {
+			return false
+		}
+
+		return true
+	}
+
+	is_tree_placeable(x, y) {
+		return this.is_empty(x, y)
+	}
+
+	is_mushroom_placeable(x, y) {
+		if (this.is_mushroom(x, y) || this.is_tree(x, y)) {
+			return false
+		}
+
+		// TODO check for kara
+
+		return true
+	}
+
 	index_of_leaf(x, y) {
 		return this.leafs.findIndex((leaf) => {
 			leaf.x === x && leaf.y === y
@@ -31,19 +53,42 @@ class WorldBackend {
 		})
 	}
 
-	// like `is_leaf` without bounds check
-	is_leaf_unsafe(x, y) {
-		return b_world.index_of_leaf(x, y) !== -1
+	is_empty(x, y, check_bounds = false) {
+		if (check_bounds) {
+			this.check_pos_in_bounds(x, y)
+		}
+
+		if (this.is_leaf(x, y) || this.is_tree(x, y) || this.is_mushroom(x, y)) {
+			return false
+		}
+
+		// TODO check for kara
+
+		return true
 	}
 
-	// like `is_tree` without bounds check
-	is_tree_unsafe(x, y) {
-		return b_world.index_of_tree(x, y) !== -1
+	is_leaf(x, y, check_bounds = false) {
+		if (check_bounds) {
+			this.check_pos_in_bounds(x, y)
+		}
+
+		return this.index_of_leaf(x, y) !== -1
 	}
 
-	// like `is_mushroom` without bounds check
-	is_mushroom_unsafe(x, y) {
-		return b_world.index_of_mushroom(x, y) !== -1
+	is_tree(x, y, check_bounds = false) {
+		if (check_bounds) {
+			this.check_pos_in_bounds(x, y)
+		}
+
+		return this.index_of_tree(x, y) !== -1
+	}
+
+	is_mushroom(x, y, check_bounds = false) {
+		if (check_bounds) {
+			this.check_pos_in_bounds(x, y)
+		}
+
+		return this.index_of_mushroom(x, y) !== -1
 	}
 }
 
@@ -69,9 +114,7 @@ class World {
 	}
 
 	is_empty(x, y) {
-		b_world.check_pos_in_bounds(x, y)
-
-		if (b_world.is_leaf_unsafe(x, y) || b_world.is_tree_unsafe(x, y) || b_world.is_mushroom_unsafe(x, y)) {
+		if (b_world.is_leaf(x, y, true) || b_world.is_tree(x, y) || b_world.is_mushroom(x, y)) {
 			return false
 		}
 
@@ -83,8 +126,7 @@ class World {
 	}
 
 	is_leaf(x, y) {
-		b_world.check_pos_in_bounds(x, y)
-		return b_world.is_leaf_unsafe(x, y)
+		return b_world.is_leaf(x, y, true)
 	}
 
 	set_tree(x, y, put) {
@@ -92,8 +134,7 @@ class World {
 	}
 
 	is_tree(x, y) {
-		b_world.check_pos_in_bounds(x, y)
-		return b_world.is_tree_unsafe(x, y)
+		return b_world.is_tree(x, y, true)
 	}
 
 	set_mushroom(x, y, put) {
@@ -101,8 +142,7 @@ class World {
 	}
 
 	is_mushroom(x, y) {
-		b_world.check_pos_in_bounds(x, y)
-		return b_world.is_mushroom_unsafe(x, y)
+		return b_world.is_mushroom(x, y, true)
 	}
 }
 

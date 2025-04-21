@@ -31,13 +31,13 @@ function not_implemented() {
 function init_click_listeners() {
 	// Group: Code execution
 	btn_run.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_pause.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_stop.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 
 	// Group: World settings
@@ -54,19 +54,19 @@ function init_click_listeners() {
 
 	// Group: Kara controls
 	btn_cmd_move.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_cmd_turn_left.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_cmd_turn_right.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_cmd_put_leaf.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 	btn_cmd_take_leaf.addEventListener('click', () => {
-		not_implemented()
+		not_implemented() // TODO
 	})
 }
 

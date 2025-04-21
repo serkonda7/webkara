@@ -1,3 +1,5 @@
+import { b_world } from "../backend/world.js"
+
 const btn_obj_kara = document.querySelector('#obj-kara')
 const btn_obj_leaf = document.querySelector('#obj-leaf')
 const btn_obj_tree = document.querySelector('#obj-tree')
@@ -11,13 +13,18 @@ function init_click_listeners() {
 	btn_obj_leaf.addEventListener('click', edit_mode)
 	btn_obj_tree.addEventListener('click', edit_mode)
 	btn_obj_shroom.addEventListener('click', edit_mode)
-	btn_obj_trash.addEventListener('click', edit_mode)
+	btn_obj_trash.addEventListener('click', () => {
+		alert('Not implemented') // TODO
+	})
 
 	world_grid.addEventListener('click', world_grid_click)
 }
 
 let edit_mode_active = false
 let edit_mode_selected = null
+let edit_mode_obj = ""
+let fun_b_world_placable = null
+let fun_b_world_is_obj = null
 
 function edit_mode(ev) {
 	const target = ev.currentTarget
@@ -38,6 +45,26 @@ function edit_mode(ev) {
 	// Enable edit mode or switch selected object
 	edit_mode_active = true
 	edit_mode_selected = target
+	edit_mode_obj = target.dataset.obj
+
+	switch (edit_mode_obj) {
+		// TODO kara
+		case 'leaf':
+			fun_b_world_placable = (x, y) => b_world.is_leaf_placeable(x, y)
+			fun_b_world_is_obj = (x, y) => b_world.is_leaf(x, y)
+			break
+		case 'tree':
+			fun_b_world_placable = (x, y) => b_world.is_tree_placeable(x, y)
+			fun_b_world_is_obj = (x, y) => b_world.is_tree(x, y)
+			break
+		case 'shroom':
+			fun_b_world_placable = (x, y) => b_world.is_mushroom_placeable(x, y)
+			fun_b_world_is_obj = (x, y) => b_world.is_mushroom(x, y)
+			break
+		// TODO trash
+		default:
+			break
+	}
 
 	world_grid.classList.add(`cursor-${target.dataset.obj}`)
 	target.classList.add('selected')
@@ -54,7 +81,14 @@ function world_grid_click(ev) {
 		return
 	}
 
-	// TODO remove or add object
+	const x = parseInt(cell.dataset.x)
+	const y = parseInt(cell.dataset.y)
+
+	if (fun_b_world_is_obj(x, y)) {
+		// TODO remove obj
+	} else if (fun_b_world_placable(x, y)) {
+		// TODO add obj
+	}
 }
 
 export { init_click_listeners }
