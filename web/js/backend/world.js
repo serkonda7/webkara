@@ -40,6 +40,45 @@ class WorldBackend {
 		this.mushrooms.push({ x, y })
 	}
 
+	remove_leaf(x, y, safe = false) {
+		const idx = this.index_of_leaf(x, y)
+
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			if (idx === -1) {
+				throw new Error(`No leaf at (${x}, ${y})`)
+			}
+		}
+
+		this.leafs.splice(idx, 1)
+	}
+
+	remove_tree(x, y, safe = false) {
+		const idx = this.index_of_tree(x, y)
+
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			if (idx === -1) {
+				throw new Error(`No tree at (${x}, ${y})`)
+			}
+		}
+
+		this.trees.splice(idx, 1)
+	}
+
+	remove_mushroom(x, y, safe = false) {
+		const idx = this.index_of_mushroom(x, y)
+
+		if (safe) {
+			this.check_pos_in_bounds(x, y)
+			if (idx === -1) {
+				throw new Error(`No mushroom at (${x}, ${y})`)
+			}
+		}
+
+		this.mushrooms.splice(idx, 1)
+	}
+
 	is_leaf_placeable(x, y) {
 		if (this.is_leaf(x, y) || this.is_tree(x, y)) {
 			return false
