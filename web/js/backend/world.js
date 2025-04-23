@@ -120,21 +120,33 @@ class WorldBackend {
 	}
 
 	index_of_leaf(x, y) {
-		return this.leafs.findIndex((leaf) => {
-			leaf.x === x && leaf.y === y
-		})
+		for (let i = 0; i < this.leafs.length; i++) {
+			const leaf = this.leafs[i]
+			if (leaf.x === x && leaf.y === y) {
+				return i
+			}
+		}
+		return -1
 	}
 
 	index_of_tree(x, y) {
-		return this.trees.findIndex((tree) => {
-			tree.x === x && tree.y === y
-		})
+		for (let i = 0; i < this.trees.length; i++) {
+			const tree = this.trees[i]
+			if (tree.x === x && tree.y === y) {
+				return i
+			}
+		}
+		return -1
 	}
 
 	index_of_mushroom(x, y) {
-		return this.mushrooms.findIndex((mushroom) => {
-			mushroom.x === x && mushroom.y === y
-		})
+		for (let i = 0; i < this.mushrooms.length; i++) {
+			const shroom = this.mushrooms[i]
+			if (shroom.x === x && shroom.y === y) {
+				return i
+			}
+		}
+		return -1
 	}
 
 	is_empty(x, y, check_bounds = false) {

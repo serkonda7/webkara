@@ -108,10 +108,6 @@ function world_grid_click(ev) {
 		fun_b_world_add_obj(x, y)
 		cell.classList.add(edit_mode_obj)
 	}
-
-	// TODO [EDIT-1] fix index_of...
-
-	// TODO [EDIT-1] fix leaf and shroom order (currently only shows one)
 }
 
 export { init_click_listeners }
