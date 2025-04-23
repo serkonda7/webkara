@@ -23,66 +23,65 @@ function init_click_listeners() {
 }
 
 let edit_mode_active = false
-let edit_mode_selected = null
-let edit_mode_obj = ""
-let fun_b_world_placable = null
-let fun_b_world_is_obj = null
-let fun_b_world_add_obj = null
-let fun_b_world_remove_obj = null
+let selected_obj_btn = null
+let edit_mode_obj_class = ""
+let current_edit_mode = {
+	placable_fn: null,
+	is_obj_fn: null,
+	add_obj_fn: null,
+	remove_obj_fn: null,
+}
+
+const EDIT_MODE_STATES = {
+	'leaf': {
+		placable_fn: (x, y) => b_world.is_leaf_placeable(x, y),
+		is_obj_fn: (x, y) => b_world.is_leaf(x, y),
+		add_obj_fn: (x, y) => b_world.add_leaf(x, y),
+		remove_obj_fn: (x, y) => b_world.remove_leaf(x, y),
+	},
+	'tree': {
+		placable_fn: (x, y) => b_world.is_tree_placeable(x, y),
+		is_obj_fn: (x, y) => b_world.is_tree(x, y),
+		add_obj_fn: (x, y) => b_world.add_tree(x, y),
+		remove_obj_fn: (x, y) => b_world.remove_tree(x, y),
+	},
+	'shroom': {
+		placable_fn: (x, y) => b_world.is_mushroom_placeable(x, y),
+		is_obj_fn: (x, y) => b_world.is_mushroom(x, y),
+		add_obj_fn: (x, y) => b_world.add_mushroom(x, y),
+		remove_obj_fn: (x, y) => b_world.remove_mushroom(x, y),
+	},
+	'null': {
+		placable_fn: null,
+		is_obj_fn: null,
+		add_obj_fn: null,
+		remove_obj_fn: null,
+	},
+}
 
 function edit_mode(ev) {
 	const target = ev.currentTarget
 
 	if (edit_mode_active) {
 		// Unselect current object button
-		edit_mode_selected.classList.remove('selected')
-		world_grid.classList.remove(`cursor-${edit_mode_selected.dataset.obj}`)
+		selected_obj_btn.classList.remove('selected')
+		world_grid.classList.remove(`cursor-${selected_obj_btn.dataset.obj}`)
 
 		// Disable edit mode
-		if (edit_mode_selected.dataset.obj == target.dataset.obj) {
+		if (selected_obj_btn.dataset.obj == target.dataset.obj) {
 			edit_mode_active = false
-			edit_mode_selected = null
+			selected_obj_btn = null
 			return
 		}
 	}
 
 	// Enable edit mode or switch selected object
 	edit_mode_active = true
-	edit_mode_selected = target
-	edit_mode_obj = target.dataset.obj
+	selected_obj_btn = target
+	edit_mode_obj_class = target.dataset.obj
 
-	switch (edit_mode_obj) {
-		case 'kara':
-			// TODO
-			fun_b_world_placable = null
-			fun_b_world_is_obj = null
-			fun_b_world_add_obj = null
-			fun_b_world_remove_obj = null
-			break
-		case 'leaf':
-			fun_b_world_placable = (x, y) => b_world.is_leaf_placeable(x, y)
-			fun_b_world_is_obj = (x, y) => b_world.is_leaf(x, y)
-			fun_b_world_add_obj = (x, y) => b_world.add_leaf(x, y)
-			fun_b_world_remove_obj = (x, y) => b_world.remove_leaf(x, y)
-			break
-		case 'tree':
-			fun_b_world_placable = (x, y) => b_world.is_tree_placeable(x, y)
-			fun_b_world_is_obj = (x, y) => b_world.is_tree(x, y)
-			fun_b_world_add_obj = (x, y) => b_world.add_tree(x, y)
-			fun_b_world_remove_obj = (x, y) => b_world.remove_tree(x, y)
-			break
-		case 'shroom':
-			fun_b_world_placable = (x, y) => b_world.is_mushroom_placeable(x, y)
-			fun_b_world_is_obj = (x, y) => b_world.is_mushroom(x, y)
-			fun_b_world_add_obj = (x, y) => b_world.add_mushroom(x, y)
-			fun_b_world_remove_obj = (x, y) => b_world.remove_mushroom(x, y)
-			break
-		case 'trash':
-			// TODO
-			break
-		default:
-			break
-	}
+
+	current_edit_mode = EDIT_MODE_STATES[target.dataset.obj] || EDIT_MODE_STATES['null']
 
 	world_grid.classList.add(`cursor-${target.dataset.obj}`)
 	target.classList.add('selected')
@@ -98,15 +97,17 @@ function world_grid_click(ev) {
 	if (!cell) {
 		return
 	}
+
 	const x = parseInt(cell.dataset.x)
 	const y = parseInt(cell.dataset.y)
 
-	if (fun_b_world_is_obj(x, y)) {
-		fun_b_world_remove_obj(x, y)
-		cell.classList.remove(edit_mode_obj)
-	} else if (fun_b_world_placable(x, y)) {
-		fun_b_world_add_obj(x, y)
-		cell.classList.add(edit_mode_obj)
+	// Remove or add object
+	if (current_edit_mode.is_obj_fn(x, y)) {
+		current_edit_mode.remove_obj_fn(x, y)
+		cell.classList.remove(edit_mode_obj_class)
+	} else if (current_edit_mode.placable_fn(x, y)) {
+		current_edit_mode.add_obj_fn(x, y)
+		cell.classList.add(edit_mode_obj_class)
 	}
 }
 
