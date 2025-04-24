@@ -1,4 +1,4 @@
-import { b_world } from "../backend/world.js"
+import { b_world, world } from "../backend/world.js"
 
 const btn_obj_kara = document.querySelector('#obj-kara')
 const btn_obj_leaf = document.querySelector('#obj-leaf')
@@ -7,6 +7,22 @@ const btn_obj_shroom = document.querySelector('#obj-shroom')
 const btn_obj_trash = document.querySelector('#obj-trash')
 
 const world_grid = document.querySelector('#world-grid')
+
+const world_context_menu = document.querySelector('#world-context')
+const ctx_clear_world = document.querySelector('#ctx-clear-world')
+
+function show_world_context_menu(ev) {
+	ev.preventDefault()
+
+	world_context_menu.style.top = `${ev.clientY}px`
+	world_context_menu.style.left = `${ev.clientX}px`
+	world_context_menu.classList.remove('hidden')
+}
+
+function clear_world() {
+	world.clear()
+	world_context_menu.classList.add('hidden')
+}
 
 function init_click_listeners() {
 	btn_obj_kara.addEventListener('click', () => {
@@ -20,6 +36,14 @@ function init_click_listeners() {
 	})
 
 	world_grid.addEventListener('click', world_grid_click)
+
+	world_grid.addEventListener('contextmenu', show_world_context_menu)
+	ctx_clear_world.addEventListener('click', clear_world)
+
+	// Hide context menu on click outside
+	document.addEventListener('click', (ev) => {
+		world_context_menu.classList.add('hidden')
+	})
 }
 
 let edit_mode_active = false

@@ -186,13 +186,11 @@ class WorldBackend {
 
 		return this.index_of_mushroom(x, y) !== -1
 	}
-}
 
-class World {
 	clear() {
-		b_world.leafs = []
-		b_world.trees = []
-		b_world.mushrooms = []
+		this.leafs = []
+		this.trees = []
+		this.mushrooms = []
 		// TODO remove kara
 	}
 
@@ -201,8 +199,20 @@ class World {
 			throw new Error('World size must be at least 1x1')
 		}
 
-		b_world.size.width = width
-		b_world.size.height = height
+		this.size.width = width
+		this.size.height = height
+	}
+}
+
+class World {
+	clear() {
+		b_world.clear()
+		// TODO draw
+	}
+
+	set_size(width, height) {
+		b_world.set_size(width, height)
+		// TODO draw
 	}
 
 	get_size() {
