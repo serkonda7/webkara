@@ -53,6 +53,14 @@ img {
   background-image: url('img/kara.png');
 }
 
+.leaf.shroom {
+  background-image: url('img/shroom.png'), url('img/leaf.png');
+}
+
+.leaf.kara {
+  background-image: url('img/kara.png'), url('img/leaf.png');
+}
+
 .right {
   transform: rotate(90deg);
 }

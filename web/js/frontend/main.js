@@ -80,6 +80,5 @@ function main() {
 
 main()
 
-// TODO fix leaf and shroom order (currently only shows one)
 // TODO right click context menu -> clear all
 // TODO store world object state
