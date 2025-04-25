@@ -46,10 +46,9 @@ function init_click_listeners() {
 		const h = parseInt(inp_world_height.value)
 		world.set_size(w, h)
 		state.save_world()
-		f_world.draw_empty_grid()
 	})
 
-	// Group: World objects
+	// Group: World objects and context menu
 	edit_mode.init_click_listeners()
 
 	// Group: Kara controls
@@ -80,5 +79,4 @@ function main() {
 
 main()
 
-// TODO right click context menu -> clear all
 // TODO store world object state

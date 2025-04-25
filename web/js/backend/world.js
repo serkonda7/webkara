@@ -1,3 +1,5 @@
+import * as f_world from '../frontend/f_world.js'
+
 class WorldBackend {
 	size = {
 		width: 9,
@@ -96,8 +98,6 @@ class WorldBackend {
 			return false
 		}
 
-		// TODO check for kara
-
 		return true
 	}
 
@@ -158,8 +158,6 @@ class WorldBackend {
 			return false
 		}
 
-		// TODO check for kara
-
 		return true
 	}
 
@@ -186,14 +184,11 @@ class WorldBackend {
 
 		return this.index_of_mushroom(x, y) !== -1
 	}
-}
 
-class World {
 	clear() {
-		b_world.leafs = []
-		b_world.trees = []
-		b_world.mushrooms = []
-		// TODO remove kara
+		this.leafs = []
+		this.trees = []
+		this.mushrooms = []
 	}
 
 	set_size(width, height) {
@@ -201,8 +196,26 @@ class World {
 			throw new Error('World size must be at least 1x1')
 		}
 
-		b_world.size.width = width
-		b_world.size.height = height
+		this.size.width = width
+		this.size.height = height
+
+		// Remove objects that are out of bounds
+		this.leafs = this.leafs.filter(leaf => leaf.x < width && leaf.y < height)
+		this.trees = this.trees.filter(tree => tree.x < width && tree.y < height)
+		this.mushrooms = this.mushrooms.filter(mushroom => mushroom.x < width && mushroom.y < height)
+	}
+}
+
+class World {
+	clear() {
+		b_world.clear()
+		f_world.draw_empty_grid()
+	}
+
+	set_size(width, height) {
+		b_world.set_size(width, height)
+		f_world.draw_empty_grid()
+		f_world.draw_world_objects()
 	}
 
 	get_size() {

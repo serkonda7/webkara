@@ -92,7 +92,7 @@ img {
 }
 
 #world-objects button.selected {
-  background-color: lightgreen;
+  background-color: #85e085;
 }
 
 .cursor-kara {
@@ -113,4 +113,33 @@ img {
 
 .cursor-trash {
   cursor: url('img/trash.png') 13 13, auto;
+}
+
+.context-menu {
+  position: absolute;
+  z-index: 99;
+  background-color: #bbeebb;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.6);
+}
+
+.context-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.context-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.context-menu li:hover {
+  border-radius: 5px;
+  background-color: #85e085;
+}
+
+.hidden {
+  display: none;
 }
