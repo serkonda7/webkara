@@ -17,4 +17,21 @@ function draw_empty_grid() {
 	}
 }
 
-export { draw_empty_grid }
+function draw_world_objects() {
+	for (const leaf of b_world.leafs) {
+		const cell = world_grid.querySelector(`[data-x="${leaf.x}"][data-y="${leaf.y}"]`)
+		cell.classList.add('leaf')
+	}
+
+	for (const tree of b_world.trees) {
+		const cell = world_grid.querySelector(`[data-x="${tree.x}"][data-y="${tree.y}"]`)
+		cell.classList.add('tree')
+	}
+
+	for (const mushroom of b_world.mushrooms) {
+		const cell = world_grid.querySelector(`[data-x="${mushroom.x}"][data-y="${mushroom.y}"]`)
+		cell.classList.add('mushroom')
+	}
+}
+
+export { draw_empty_grid, draw_world_objects }

@@ -1,3 +1,5 @@
+import * as f_world from '../frontend/f_world.js'
+
 class WorldBackend {
 	size = {
 		width: 9,
@@ -201,18 +203,24 @@ class WorldBackend {
 
 		this.size.width = width
 		this.size.height = height
+
+		// Remove objects that are out of bounds
+		this.leafs = this.leafs.filter(leaf => leaf.x < width && leaf.y < height)
+		this.trees = this.trees.filter(tree => tree.x < width && tree.y < height)
+		this.mushrooms = this.mushrooms.filter(mushroom => mushroom.x < width && mushroom.y < height)
 	}
 }
 
 class World {
 	clear() {
 		b_world.clear()
-		// TODO draw
+		f_world.draw_empty_grid()
 	}
 
 	set_size(width, height) {
 		b_world.set_size(width, height)
-		// TODO draw
+		f_world.draw_empty_grid()
+		f_world.draw_world_objects()
 	}
 
 	get_size() {

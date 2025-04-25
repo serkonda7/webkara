@@ -46,7 +46,6 @@ function init_click_listeners() {
 		const h = parseInt(inp_world_height.value)
 		world.set_size(w, h)
 		state.save_world()
-		f_world.draw_empty_grid()
 	})
 
 	// Group: World objects and context menu
