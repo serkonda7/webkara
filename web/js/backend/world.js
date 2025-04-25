@@ -98,8 +98,6 @@ class WorldBackend {
 			return false
 		}
 
-		// TODO check for kara
-
 		return true
 	}
 
@@ -160,8 +158,6 @@ class WorldBackend {
 			return false
 		}
 
-		// TODO check for kara
-
 		return true
 	}
 
@@ -193,7 +189,6 @@ class WorldBackend {
 		this.leafs = []
 		this.trees = []
 		this.mushrooms = []
-		// TODO remove kara
 	}
 
 	set_size(width, height) {
