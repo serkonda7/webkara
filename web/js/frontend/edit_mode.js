@@ -10,8 +10,15 @@ const world_grid = document.querySelector('#world-grid')
 
 const world_context_menu = document.querySelector('#world-context')
 const ctx_clear_world = document.querySelector('#ctx-clear-world')
+let ctx_menu_visible = false
 
 function show_world_context_menu(ev) {
+	if (ctx_menu_visible) {
+		hide_context_menu()
+		return
+	}
+
+	ctx_menu_visible = true
 	ev.preventDefault()
 
 	world_context_menu.style.top = `${ev.clientY}px`
@@ -19,9 +26,14 @@ function show_world_context_menu(ev) {
 	world_context_menu.classList.remove('hidden')
 }
 
+function hide_context_menu() {
+	world_context_menu.classList.add('hidden')
+	ctx_menu_visible = false
+}
+
 function clear_world() {
 	world.clear()
-	world_context_menu.classList.add('hidden')
+	hide_context_menu()
 }
 
 function init_click_listeners() {
@@ -42,7 +54,7 @@ function init_click_listeners() {
 
 	// Hide context menu on click outside
 	document.addEventListener('click', (ev) => {
-		world_context_menu.classList.add('hidden')
+		hide_context_menu()
 	})
 }
 
