@@ -1,12 +1,12 @@
 import { b_world, world } from "../backend/world.js"
 
+const world_grid = document.querySelector('#world-grid')
+
 const btn_obj_kara = document.querySelector('#obj-kara')
 const btn_obj_leaf = document.querySelector('#obj-leaf')
 const btn_obj_tree = document.querySelector('#obj-tree')
 const btn_obj_shroom = document.querySelector('#obj-shroom')
 const btn_obj_trash = document.querySelector('#obj-trash')
-
-const world_grid = document.querySelector('#world-grid')
 
 const world_context_menu = document.querySelector('#world-context')
 const ctx_clear_world = document.querySelector('#ctx-clear-world')
@@ -47,18 +47,29 @@ function init_click_listeners() {
 		alert('Not implemented') // TODO
 	})
 
-	world_grid.addEventListener('click', world_grid_click)
-
+	// world_grid.addEventListener('click', world_grid_click)
 	world_grid.addEventListener('contextmenu', show_world_context_menu)
 	ctx_clear_world.addEventListener('click', clear_world)
 
 	// Hide context menu on click outside
-	document.addEventListener('click', (ev) => {
-		hide_context_menu()
+	document.addEventListener('click', hide_context_menu)
+
+	world_grid.addEventListener('mousedown', (ev) => {
+		if (!edit_mode_active || ev.button !== 0) {
+			return
+		}
+
+		is_drag_edit = true
+		world_grid_click(ev)
+	})
+
+	world_grid.addEventListener('mouseup', () => {
+		is_drag_edit = false
 	})
 }
 
 let edit_mode_active = false
+let is_drag_edit = false
 let selected_obj_btn = null
 let edit_mode_obj_class = ""
 let current_edit_mode = {
@@ -134,6 +145,18 @@ function world_grid_click(ev) {
 		return
 	}
 
+	toggle_cell_object(cell)
+}
+
+function handle_drag_cell_enter(ev) {
+	if (!is_drag_edit) {
+		return
+	}
+
+	toggle_cell_object(ev.target)
+}
+
+function toggle_cell_object(cell) {
 	const x = parseInt(cell.dataset.x)
 	const y = parseInt(cell.dataset.y)
 
@@ -147,4 +170,4 @@ function world_grid_click(ev) {
 	}
 }
 
-export { init_click_listeners }
+export { init_click_listeners, handle_drag_cell_enter }
