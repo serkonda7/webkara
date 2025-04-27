@@ -43,11 +43,8 @@ function init_click_listeners() {
 	btn_obj_leaf.addEventListener('click', edit_mode)
 	btn_obj_tree.addEventListener('click', edit_mode)
 	btn_obj_shroom.addEventListener('click', edit_mode)
-	btn_obj_trash.addEventListener('click', () => {
-		alert('Not implemented') // TODO
-	})
+	btn_obj_trash.addEventListener('click', edit_mode)
 
-	// world_grid.addEventListener('click', world_grid_click)
 	world_grid.addEventListener('contextmenu', show_world_context_menu)
 	ctx_clear_world.addEventListener('click', clear_world)
 
@@ -77,6 +74,7 @@ let current_edit_mode = {
 	is_obj_fn: null,
 	add_obj_fn: null,
 	remove_obj_fn: null,
+	edit_action_fn: null,
 }
 
 const EDIT_MODE_STATES = {
@@ -85,18 +83,24 @@ const EDIT_MODE_STATES = {
 		is_obj_fn: (x, y) => b_world.is_leaf(x, y),
 		add_obj_fn: (x, y) => b_world.add_leaf(x, y),
 		remove_obj_fn: (x, y) => b_world.remove_leaf(x, y),
+		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
 	'tree': {
 		placable_fn: (x, y) => b_world.is_tree_placeable(x, y),
 		is_obj_fn: (x, y) => b_world.is_tree(x, y),
 		add_obj_fn: (x, y) => b_world.add_tree(x, y),
 		remove_obj_fn: (x, y) => b_world.remove_tree(x, y),
+		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
 	'shroom': {
 		placable_fn: (x, y) => b_world.is_mushroom_placeable(x, y),
 		is_obj_fn: (x, y) => b_world.is_mushroom(x, y),
 		add_obj_fn: (x, y) => b_world.add_mushroom(x, y),
 		remove_obj_fn: (x, y) => b_world.remove_mushroom(x, y),
+		edit_action_fn: (cell) => { toggle_cell_object(cell) },
+	},
+	'trash': {
+		edit_action_fn: (cell) => { clear_cell(cell) }
 	},
 	'null': {
 		placable_fn: null,
@@ -145,7 +149,7 @@ function world_grid_click(ev) {
 		return
 	}
 
-	toggle_cell_object(cell)
+	current_edit_mode.edit_action_fn(cell)
 }
 
 function handle_drag_cell_enter(ev) {
@@ -153,7 +157,7 @@ function handle_drag_cell_enter(ev) {
 		return
 	}
 
-	toggle_cell_object(ev.target)
+	current_edit_mode.edit_action_fn(ev.target)
 }
 
 function toggle_cell_object(cell) {
@@ -168,6 +172,16 @@ function toggle_cell_object(cell) {
 		current_edit_mode.add_obj_fn(x, y)
 		cell.classList.add(edit_mode_obj_class)
 	}
+}
+
+function clear_cell(cell) {
+	const x = parseInt(cell.dataset.x)
+	const y = parseInt(cell.dataset.y)
+
+	b_world.clear_cell(x, y)
+	cell.classList.remove('leaf')
+	cell.classList.remove('tree')
+	cell.classList.remove('shroom')
 }
 
 export { init_click_listeners, handle_drag_cell_enter }

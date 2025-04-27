@@ -185,6 +185,12 @@ class WorldBackend {
 		return this.index_of_mushroom(x, y) !== -1
 	}
 
+	clear_cell(x, y) {
+		this.remove_leaf(x, y)
+		this.remove_tree(x, y)
+		this.remove_mushroom(x, y)
+	}
+
 	clear() {
 		this.leafs = []
 		this.trees = []
