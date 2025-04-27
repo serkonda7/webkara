@@ -1,4 +1,5 @@
 import { b_world } from "../backend/world.js"
+import { handle_drag_cell_enter } from "./edit_mode.js"
 
 const world_grid = document.querySelector('#world-grid')
 
@@ -12,6 +13,7 @@ function draw_empty_grid() {
 			cell.dataset.x = x
 			cell.dataset.y = y
 			cell.classList.add('cell')
+			cell.addEventListener('mouseover', handle_drag_cell_enter)
 			world_grid.appendChild(cell)
 		}
 	}
