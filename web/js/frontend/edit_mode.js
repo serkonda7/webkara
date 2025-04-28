@@ -37,9 +37,7 @@ function clear_world() {
 }
 
 function init_click_listeners() {
-	btn_obj_kara.addEventListener('click', () => {
-		alert('Not implemented') // TODO
-	})
+	btn_obj_kara.addEventListener('click', edit_mode)
 	btn_obj_leaf.addEventListener('click', edit_mode)
 	btn_obj_tree.addEventListener('click', edit_mode)
 	btn_obj_shroom.addEventListener('click', edit_mode)
@@ -99,14 +97,18 @@ const EDIT_MODE_STATES = {
 		remove_obj_fn: (x, y) => b_world.remove_mushroom(x, y),
 		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
+	'kara': {
+
+	},
 	'trash': {
-		edit_action_fn: (cell) => { clear_cell(cell) }
+		edit_action_fn: (cell) => { clear_cell(cell) },
 	},
 	'null': {
 		placable_fn: null,
 		is_obj_fn: null,
 		add_obj_fn: null,
 		remove_obj_fn: null,
+		edit_action_fn: null,
 	},
 }
 
