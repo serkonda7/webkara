@@ -1,4 +1,5 @@
 import { b_world, world } from "../backend/world.js"
+import { b_kara } from "../backend/kara.js"
 
 const world_grid = document.querySelector('#world-grid')
 
@@ -37,9 +38,7 @@ function clear_world() {
 }
 
 function init_click_listeners() {
-	btn_obj_kara.addEventListener('click', () => {
-		alert('Not implemented') // TODO
-	})
+	btn_obj_kara.addEventListener('click', edit_mode)
 	btn_obj_leaf.addEventListener('click', edit_mode)
 	btn_obj_tree.addEventListener('click', edit_mode)
 	btn_obj_shroom.addEventListener('click', edit_mode)
@@ -99,14 +98,30 @@ const EDIT_MODE_STATES = {
 		remove_obj_fn: (x, y) => b_world.remove_mushroom(x, y),
 		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
+	'kara': {
+		placable_fn: (x, y) => b_kara.is_kara_placable(x, y),
+		is_obj_fn: (x, y) => {
+			const pos = b_kara.get_position()
+			return pos.x == x && pos.y == y
+		},
+		remove_obj_fn: (x, y) => {
+			b_kara.in_world = false
+		},
+		add_obj_fn: (x, y) => {
+			document.querySelector('.cell.kara')?.classList.remove('kara')
+			b_kara.set_position(x, y)
+		},
+		edit_action_fn: (cell) => { toggle_cell_object(cell) },
+	},
 	'trash': {
-		edit_action_fn: (cell) => { clear_cell(cell) }
+		edit_action_fn: (cell) => { clear_cell(cell) },
 	},
 	'null': {
 		placable_fn: null,
 		is_obj_fn: null,
 		add_obj_fn: null,
 		remove_obj_fn: null,
+		edit_action_fn: null,
 	},
 }
 
