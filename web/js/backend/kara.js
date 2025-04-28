@@ -1,4 +1,4 @@
-import { b_world } from "./world"
+import { b_world } from "./world.js"
 
 const DIRECTION = {
 	'up': 0,

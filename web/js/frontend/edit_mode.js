@@ -1,4 +1,5 @@
 import { b_world, world } from "../backend/world.js"
+import { b_kara } from "../backend/kara.js"
 
 const world_grid = document.querySelector('#world-grid')
 
@@ -98,7 +99,19 @@ const EDIT_MODE_STATES = {
 		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
 	'kara': {
-
+		placable_fn: (x, y) => b_kara.is_kara_placable(x, y),
+		is_obj_fn: (x, y) => {
+			const pos = b_kara.get_position()
+			return pos.x == x && pos.y == y
+		},
+		remove_obj_fn: (x, y) => {
+			b_kara.in_world = false
+		},
+		add_obj_fn: (x, y) => {
+			document.querySelector('.cell.kara')?.classList.remove('kara')
+			b_kara.set_position(x, y)
+		},
+		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
 	'trash': {
 		edit_action_fn: (cell) => { clear_cell(cell) },
