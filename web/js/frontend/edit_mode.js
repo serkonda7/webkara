@@ -63,6 +63,11 @@ function init_click_listeners() {
 	document.addEventListener('mouseup', () => {
 		is_drag_edit = false
 	})
+
+	// Prevent default object drag that conflicts with our drag edit
+	world_grid.addEventListener('dragstart', (ev) => {
+		ev.preventDefault()
+	})
 }
 
 let edit_mode_active = false
