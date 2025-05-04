@@ -33,6 +33,7 @@ function hide_context_menu() {
 }
 
 function clear_world() {
+	disable_edit_mode()
 	world.clear()
 	hide_context_menu()
 }
@@ -135,14 +136,10 @@ function edit_mode(ev) {
 	const target = ev.currentTarget
 
 	if (edit_mode_active) {
-		// Unselect current object button
-		selected_obj_btn.classList.remove('selected')
-		world_grid.classList.remove(`cursor-${selected_obj_btn.dataset.obj}`)
+		disable_edit_mode()
 
-		// Disable edit mode
-		if (selected_obj_btn.dataset.obj == target.dataset.obj) {
-			edit_mode_active = false
-			selected_obj_btn = null
+		// No need to reenable if same button is clicked
+		if (edit_mode_obj_class == target.dataset.obj) {
 			return
 		}
 	}
@@ -157,6 +154,16 @@ function edit_mode(ev) {
 
 	world_grid.classList.add(`cursor-${target.dataset.obj}`)
 	target.classList.add('selected')
+}
+
+function disable_edit_mode() {
+	// Unselect current object button
+	selected_obj_btn.classList.remove('selected')
+	world_grid.classList.remove(`cursor-${selected_obj_btn.dataset.obj}`)
+
+	// Disable edit mode
+	edit_mode_active = false
+	selected_obj_btn = null
 }
 
 function world_grid_click(ev) {
