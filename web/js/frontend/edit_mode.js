@@ -59,7 +59,8 @@ function init_click_listeners() {
 		world_grid_click(ev)
 	})
 
-	world_grid.addEventListener('mouseup', () => {
+	// Disable drag edit on mouseup (anywhere)
+	document.addEventListener('mouseup', () => {
 		is_drag_edit = false
 	})
 }
