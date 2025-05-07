@@ -159,6 +159,10 @@ function edit_mode(ev) {
 }
 
 function disable_edit_mode() {
+	if (!edit_mode_active) {
+		return
+	}
+
 	// Unselect current object button
 	selected_obj_btn.classList.remove('selected')
 	world_grid.classList.remove(`cursor-${selected_obj_btn.dataset.obj}`)
