@@ -219,6 +219,7 @@ function clear_cell(cell) {
 	cell.classList.remove('leaf')
 	cell.classList.remove('tree')
 	cell.classList.remove('mushroom')
+	cell.classList.remove('kara')
 
 	state.save_world()
 }
