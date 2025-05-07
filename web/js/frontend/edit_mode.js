@@ -1,12 +1,13 @@
 import { b_world, world } from "../backend/world.js"
 import { b_kara } from "../backend/kara.js"
+import * as state from './state.js'
 
 const world_grid = document.querySelector('#world-grid')
 
 const btn_obj_kara = document.querySelector('#obj-kara')
 const btn_obj_leaf = document.querySelector('#obj-leaf')
 const btn_obj_tree = document.querySelector('#obj-tree')
-const btn_obj_shroom = document.querySelector('#obj-shroom')
+const btn_obj_shroom = document.querySelector('#obj-mushroom')
 const btn_obj_trash = document.querySelector('#obj-trash')
 
 const world_context_menu = document.querySelector('#world-context')
@@ -98,7 +99,7 @@ const EDIT_MODE_STATES = {
 		remove_obj_fn: (x, y) => b_world.remove_tree(x, y),
 		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
-	'shroom': {
+	'mushroom': {
 		placable_fn: (x, y) => b_world.is_mushroom_placeable(x, y),
 		is_obj_fn: (x, y) => b_world.is_mushroom(x, y),
 		add_obj_fn: (x, y) => b_world.add_mushroom(x, y),
@@ -178,7 +179,9 @@ function world_grid_click(ev) {
 	}
 
 	current_edit_mode.edit_action_fn(cell)
+	state.save_world()
 }
+
 
 function handle_drag_cell_enter(ev) {
 	if (!is_drag_edit) {
@@ -186,6 +189,7 @@ function handle_drag_cell_enter(ev) {
 	}
 
 	current_edit_mode.edit_action_fn(ev.target)
+	state.save_world()
 }
 
 function toggle_cell_object(cell) {
@@ -209,7 +213,7 @@ function clear_cell(cell) {
 	b_world.clear_cell(x, y)
 	cell.classList.remove('leaf')
 	cell.classList.remove('tree')
-	cell.classList.remove('shroom')
+	cell.classList.remove('mushroom')
 }
 
 export { init_click_listeners, handle_drag_cell_enter }
