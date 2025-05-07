@@ -73,6 +73,7 @@ function main() {
 	restore_state()
 
 	f_world.draw_empty_grid()
+	f_world.draw_world_objects()
 
 	init_click_listeners()
 }

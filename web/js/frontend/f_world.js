@@ -1,4 +1,5 @@
 import { b_world } from "../backend/world.js"
+import { b_kara } from "../backend/kara.js"
 import { handle_drag_cell_enter } from "./edit_mode.js"
 
 const world_grid = document.querySelector('#world-grid')
@@ -33,6 +34,11 @@ function draw_world_objects() {
 	for (const mushroom of b_world.mushrooms) {
 		const cell = world_grid.querySelector(`[data-x="${mushroom.x}"][data-y="${mushroom.y}"]`)
 		cell.classList.add('mushroom')
+	}
+
+	if (b_kara.in_world) {
+		const cell = world_grid.querySelector(`[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
+		cell.classList.add('kara')
 	}
 }
 

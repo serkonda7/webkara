@@ -1,4 +1,5 @@
 import * as f_world from '../frontend/f_world.js'
+import { b_kara } from "./kara.js"
 
 class WorldBackend {
 	size = {
@@ -189,6 +190,10 @@ class WorldBackend {
 		this.remove_leaf(x, y)
 		this.remove_tree(x, y)
 		this.remove_mushroom(x, y)
+
+		if (b_kara.in_world && b_kara.pos.x === x && b_kara.pos.y === y) {
+			b_kara.in_world = false
+		}
 	}
 
 	clear() {

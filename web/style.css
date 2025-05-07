@@ -45,7 +45,7 @@ img {
   background-image: url('img/tree.png');
 }
 
-.shroom {
+.mushroom {
   background-image: url('img/shroom.png');
 }
 
@@ -53,7 +53,7 @@ img {
   background-image: url('img/kara.png');
 }
 
-.leaf.shroom {
+.leaf.mushroom {
   background-image: url('img/shroom.png'), url('img/leaf.png');
 }
 
@@ -107,7 +107,7 @@ img {
   cursor: url('img/tree.png') 13 13, auto;
 }
 
-.cursor-shroom {
+.cursor-mushroom {
   cursor: url('img/shroom.png') 13 13, auto;
 }
 
