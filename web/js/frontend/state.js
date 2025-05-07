@@ -1,3 +1,4 @@
+import { b_kara } from "../backend/kara.js"
 import { b_world, world } from "../backend/world.js"
 
 const KEY_WORLD_SIZE = 'world_size'
@@ -14,6 +15,13 @@ function save_world() {
 
 	const mushrooms_s = JSON.stringify(b_world.mushrooms)
 	localStorage.setItem('mushrooms', mushrooms_s)
+
+	const kara_s = JSON.stringify({
+		in_world: b_kara.in_world,
+		pos: b_kara.pos,
+		dir: b_kara.dir,
+	})
+	localStorage.setItem('kara', kara_s)
 }
 
 function load_world() {
@@ -39,6 +47,14 @@ function load_world() {
 	if (mushrooms_s !== null) {
 		const mushrooms = JSON.parse(mushrooms_s)
 		b_world.mushrooms = mushrooms
+	}
+
+	const kara_s = localStorage.getItem('kara')
+	if (kara_s !== null) {
+		const kara_obj = JSON.parse(kara_s)
+		b_kara.in_world = kara_obj.in_world
+		b_kara.pos = kara_obj.pos
+		b_kara.dir = kara_obj.dir
 	}
 }
 
