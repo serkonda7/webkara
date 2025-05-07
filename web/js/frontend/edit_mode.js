@@ -36,6 +36,7 @@ function hide_context_menu() {
 function clear_world() {
 	disable_edit_mode()
 	world.clear()
+	state.save_world()
 	hide_context_menu()
 }
 
@@ -214,6 +215,8 @@ function clear_cell(cell) {
 	cell.classList.remove('leaf')
 	cell.classList.remove('tree')
 	cell.classList.remove('mushroom')
+
+	state.save_world()
 }
 
 export { init_click_listeners, handle_drag_cell_enter }
