@@ -1,5 +1,5 @@
 import * as f_world from '../frontend/f_world.js'
-import { b_kara } from "./kara.js"
+import { b_kara, kara } from "./kara.js"
 
 class WorldBackend {
 	size = {
@@ -232,6 +232,9 @@ class WorldBackend {
 		this.leafs = []
 		this.trees = []
 		this.mushrooms = []
+
+		b_kara.in_world = false
+		b_kara.dir = 0
 	}
 
 	set_size(width, height) {
