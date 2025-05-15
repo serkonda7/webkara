@@ -117,7 +117,7 @@ const EDIT_MODE_STATES = {
 			b_kara.in_world = false
 		},
 		add_obj_fn: (x, y) => {
-			document.querySelector('.cell.kara')?.classList.remove('kara')
+			document.querySelector('.cell.kara')?.classList.remove('kara', 'up', 'right', 'down', 'left')
 			b_kara.set_position(x, y)
 			world_grid.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`).classList.add(b_kara.direction_class())
 		},
