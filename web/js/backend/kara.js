@@ -11,6 +11,13 @@ const DIRECTION = {
 	'left': 3,
 }
 
+const NUM_TO_DIR = {
+	[0]: 'up',
+	[1]: 'right',
+	[2]: 'down',
+	[3]: 'left',
+}
+
 const DIR_VECTORS = {
 	[0]: { x: 0, y: 1 },
 	[1]: { x: 1, y: 0 },
@@ -22,6 +29,10 @@ class KaraBackend {
 	in_world = false
 	pos = { x: 0, y: 0 }
 	dir = DIRECTION.up
+
+	direction_class() {
+		return NUM_TO_DIR[this.dir]
+	}
 
 	check_in_world() {
 		if (!this.in_world) {
@@ -56,6 +67,24 @@ class KaraBackend {
 		// TODO handle mushroom push
 
 		this.pos = next_cell
+	}
+
+	turn_left() {
+		this.check_in_world()
+
+		this.dir -= 1
+		if (this.dir < 0) {
+			this.dir = 3
+		}
+	}
+
+	turn_right() {
+		this.check_in_world()
+
+		this.dir += 1
+		if (this.dir > 3) {
+			this.dir = 0
+		}
 	}
 
 	set_position(x, y, safe = false) {
@@ -100,16 +129,24 @@ class Kara {
 	move() {
 		b_kara.move()
 
-		document.querySelector('.cell.kara').classList.remove('kara')
-		document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`).classList.add('kara')
+		document.querySelector('.cell.kara').classList.remove('kara', 'up', 'right', 'down', 'left')
+		const new_cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
+		new_cell.classList.add('kara')
+		new_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	turn_left() {
-		throw new Error('turn_left() not implemented')
+		b_kara.turn_left()
+		const kara_cell = document.querySelector('.cell.kara')
+		kara_cell.classList.remove('up', 'right', 'down', 'left')
+		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	turn_right() {
-		throw new Error('turn_right() not implemented')
+		b_kara.turn_right()
+		const kara_cell = document.querySelector('.cell.kara')
+		kara_cell.classList.remove('up', 'right', 'down', 'left')
+		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	put_leaf() {
