@@ -16,6 +16,25 @@ class WorldBackend {
 		}
 	}
 
+	val_on_axis(val, axis_size) {
+		if (val < 0) {
+			return axis_size - 1
+		}
+
+		if (val >= axis_size) {
+			return 0
+		}
+
+		return val
+	}
+
+	cell_on_world_torus({ x, y }) {
+		return {
+			x: this.val_on_axis(x, this.size.width),
+			y: this.val_on_axis(y, this.size.height),
+		}
+	}
+
 	add_leaf(x, y, safe = false) {
 		if (safe) {
 			this.check_pos_in_bounds(x, y)

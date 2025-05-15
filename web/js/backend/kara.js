@@ -1,10 +1,21 @@
 import { b_world } from "./world.js"
 
+function vec2_add(a, b) {
+	return { x: a.x + b.x, y: a.y + b.y }
+}
+
 const DIRECTION = {
 	'up': 0,
 	'right': 1,
 	'down': 2,
 	'left': 3,
+}
+
+const DIR_VECTORS = {
+	[0]: { x: 0, y: 1 },
+	[1]: { x: 1, y: 0 },
+	[2]: { x: 0, y: -1 },
+	[3]: { x: -1, y: 0 },
 }
 
 class KaraBackend {
@@ -30,6 +41,21 @@ class KaraBackend {
 		if (!this.is_kara_placable(x, y)) {
 			throw new Error(`Kara cannot be placed at (${x}, ${y})`)
 		}
+	}
+
+	move() {
+		this.check_in_world()
+
+		const vec = DIR_VECTORS[this.dir]
+		const next_cell = b_world.cell_on_world_torus(vec2_add(this.pos, vec))
+
+		if (b_world.is_tree(next_cell.x, next_cell.y)) {
+			throw new Error('Kara cannot move into a tree')
+		}
+
+		// TODO handle mushroom push
+
+		this.pos = next_cell
 	}
 
 	set_position(x, y, safe = false) {
@@ -72,7 +98,10 @@ class KaraBackend {
 
 class Kara {
 	move() {
-		throw new Error('move() not implemented')
+		b_kara.move()
+
+		document.querySelector('.cell.kara').classList.remove('kara')
+		document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`).classList.add('kara')
 	}
 
 	turn_left() {
