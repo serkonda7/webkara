@@ -64,7 +64,19 @@ class KaraBackend {
 			throw new Error('Kara cannot move into a tree')
 		}
 
-		// TODO handle mushroom push
+		if (b_world.is_mushroom(next_cell.x, next_cell.y)) {
+			const after_cell = b_world.cell_on_world_torus(vec2_add(next_cell, vec))
+
+			if (b_world.is_mushroom(after_cell.x, after_cell.y)) {
+				throw new Error('Kara cannot push multiple mushrooms')
+			}
+
+			if (b_world.is_tree(after_cell.x, after_cell.y)) {
+				throw new Error('Kara cannot push a mushroom into a tree')
+			}
+
+			// TODO relocate mushroom
+		}
 
 		this.pos = next_cell
 	}
