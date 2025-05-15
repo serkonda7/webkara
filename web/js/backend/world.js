@@ -1,5 +1,5 @@
 import * as f_world from '../frontend/f_world.js'
-import { b_kara } from "./kara.js"
+import { b_kara, kara } from "./kara.js"
 
 class WorldBackend {
 	size = {
@@ -13,6 +13,25 @@ class WorldBackend {
 	check_pos_in_bounds(x, y) {
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
 			throw new Error(`Position out of bounds: (${x}, ${y})`)
+		}
+	}
+
+	val_on_axis(val, axis_size) {
+		if (val < 0) {
+			return axis_size - 1
+		}
+
+		if (val >= axis_size) {
+			return 0
+		}
+
+		return val
+	}
+
+	cell_on_world_torus({ x, y }) {
+		return {
+			x: this.val_on_axis(x, this.size.width),
+			y: this.val_on_axis(y, this.size.height),
 		}
 	}
 
@@ -41,6 +60,19 @@ class WorldBackend {
 		}
 
 		this.mushrooms.push({ x, y })
+	}
+
+	relocate_mushroom(x, y, new_x, new_y) {
+		const idx = this.index_of_mushroom(x, y)
+
+		const shroom_cell = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`)
+		shroom_cell.classList.remove('mushroom')
+
+		this.mushrooms[idx].x = new_x
+		this.mushrooms[idx].y = new_y
+
+		const new_cell = document.querySelector(`.cell[data-x="${new_x}"][data-y="${new_y}"]`)
+		new_cell.classList.add('mushroom')
 	}
 
 	remove_leaf(x, y, safe = false) {
@@ -200,6 +232,9 @@ class WorldBackend {
 		this.leafs = []
 		this.trees = []
 		this.mushrooms = []
+
+		b_kara.in_world = false
+		b_kara.dir = 0
 	}
 
 	set_size(width, height) {

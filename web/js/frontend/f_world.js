@@ -39,6 +39,7 @@ function draw_world_objects() {
 	if (b_kara.in_world) {
 		const cell = world_grid.querySelector(`[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
 		cell.classList.add('kara')
+		cell.classList.add(b_kara.direction_class())
 	}
 }
 

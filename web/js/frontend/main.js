@@ -2,6 +2,7 @@ import { world } from '../backend/world.js'
 import * as f_world from './f_world.js'
 import * as state from './state.js'
 import * as edit_mode from './edit_mode.js'
+import { kara } from '../backend/kara.js'
 
 const btn_run = document.querySelector('#run-btn')
 const btn_pause = document.querySelector('#pause-btn')
@@ -53,14 +54,20 @@ function init_click_listeners() {
 
 	// Group: Kara controls
 	btn_cmd_move.addEventListener('click', () => {
-		not_implemented() // TODO
+		kara.move()
+		state.save_world()
 	})
+
 	btn_cmd_turn_left.addEventListener('click', () => {
-		not_implemented() // TODO
+		kara.turn_left()
+		state.save_world()
 	})
+
 	btn_cmd_turn_right.addEventListener('click', () => {
-		not_implemented() // TODO
+		kara.turn_right()
+		state.save_world()
 	})
+
 	btn_cmd_put_leaf.addEventListener('click', () => {
 		not_implemented() // TODO
 	})
@@ -79,5 +86,3 @@ function main() {
 }
 
 main()
-
-// TODO store world object state

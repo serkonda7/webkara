@@ -117,8 +117,9 @@ const EDIT_MODE_STATES = {
 			b_kara.in_world = false
 		},
 		add_obj_fn: (x, y) => {
-			document.querySelector('.cell.kara')?.classList.remove('kara')
+			document.querySelector('.cell.kara')?.classList.remove('kara', 'up', 'right', 'down', 'left')
 			b_kara.set_position(x, y)
+			world_grid.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`).classList.add(b_kara.direction_class())
 		},
 		edit_action_fn: (cell) => { toggle_cell_object(cell) },
 	},
@@ -216,10 +217,8 @@ function clear_cell(cell) {
 	const y = parseInt(cell.dataset.y)
 
 	b_world.clear_cell(x, y)
-	cell.classList.remove('leaf')
-	cell.classList.remove('tree')
-	cell.classList.remove('mushroom')
-	cell.classList.remove('kara')
+	cell.classList.remove('leaf', 'tree', 'mushroom')
+	cell.classList.remove('kara', 'up', 'right', 'down', 'left')
 
 	state.save_world()
 }

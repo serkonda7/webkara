@@ -1,5 +1,9 @@
 import { b_world } from "./world.js"
 
+function vec2_add(a, b) {
+	return { x: a.x + b.x, y: a.y + b.y }
+}
+
 const DIRECTION = {
 	'up': 0,
 	'right': 1,
@@ -7,10 +11,28 @@ const DIRECTION = {
 	'left': 3,
 }
 
+const NUM_TO_DIR = {
+	[0]: 'up',
+	[1]: 'right',
+	[2]: 'down',
+	[3]: 'left',
+}
+
+const DIR_VECTORS = {
+	[0]: { x: 0, y: 1 },
+	[1]: { x: 1, y: 0 },
+	[2]: { x: 0, y: -1 },
+	[3]: { x: -1, y: 0 },
+}
+
 class KaraBackend {
 	in_world = false
 	pos = { x: 0, y: 0 }
 	dir = DIRECTION.up
+
+	direction_class() {
+		return NUM_TO_DIR[this.dir]
+	}
 
 	check_in_world() {
 		if (!this.in_world) {
@@ -29,6 +51,51 @@ class KaraBackend {
 	check_kara_placable(x, y) {
 		if (!this.is_kara_placable(x, y)) {
 			throw new Error(`Kara cannot be placed at (${x}, ${y})`)
+		}
+	}
+
+	move() {
+		this.check_in_world()
+
+		const vec = DIR_VECTORS[this.dir]
+		const next_cell = b_world.cell_on_world_torus(vec2_add(this.pos, vec))
+
+		if (b_world.is_tree(next_cell.x, next_cell.y)) {
+			throw new Error('Kara cannot move into a tree')
+		}
+
+		if (b_world.is_mushroom(next_cell.x, next_cell.y)) {
+			const after_cell = b_world.cell_on_world_torus(vec2_add(next_cell, vec))
+
+			if (b_world.is_mushroom(after_cell.x, after_cell.y)) {
+				throw new Error('Kara cannot push multiple mushrooms')
+			}
+
+			if (b_world.is_tree(after_cell.x, after_cell.y)) {
+				throw new Error('Kara cannot push a mushroom into a tree')
+			}
+
+			b_world.relocate_mushroom(next_cell.x, next_cell.y, after_cell.x, after_cell.y)
+		}
+
+		this.pos = next_cell
+	}
+
+	turn_left() {
+		this.check_in_world()
+
+		this.dir -= 1
+		if (this.dir < 0) {
+			this.dir = 3
+		}
+	}
+
+	turn_right() {
+		this.check_in_world()
+
+		this.dir += 1
+		if (this.dir > 3) {
+			this.dir = 0
 		}
 	}
 
@@ -72,15 +139,26 @@ class KaraBackend {
 
 class Kara {
 	move() {
-		throw new Error('move() not implemented')
+		b_kara.move()
+
+		document.querySelector('.cell.kara').classList.remove('kara', 'up', 'right', 'down', 'left')
+		const new_cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
+		new_cell.classList.add('kara')
+		new_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	turn_left() {
-		throw new Error('turn_left() not implemented')
+		b_kara.turn_left()
+		const kara_cell = document.querySelector('.cell.kara')
+		kara_cell.classList.remove('up', 'right', 'down', 'left')
+		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	turn_right() {
-		throw new Error('turn_right() not implemented')
+		b_kara.turn_right()
+		const kara_cell = document.querySelector('.cell.kara')
+		kara_cell.classList.remove('up', 'right', 'down', 'left')
+		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
 	put_leaf() {
