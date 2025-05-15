@@ -216,10 +216,8 @@ function clear_cell(cell) {
 	const y = parseInt(cell.dataset.y)
 
 	b_world.clear_cell(x, y)
-	cell.classList.remove('leaf')
-	cell.classList.remove('tree')
-	cell.classList.remove('mushroom')
-	cell.classList.remove('kara')
+	cell.classList.remove('leaf', 'tree', 'mushroom')
+	cell.classList.remove('kara', 'up', 'right', 'down', 'left')
 
 	state.save_world()
 }

@@ -62,6 +62,19 @@ class WorldBackend {
 		this.mushrooms.push({ x, y })
 	}
 
+	relocate_mushroom(x, y, new_x, new_y) {
+		const idx = this.index_of_mushroom(x, y)
+
+		const shroom_cell = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`)
+		shroom_cell.classList.remove('mushroom')
+
+		this.mushrooms[idx].x = new_x
+		this.mushrooms[idx].y = new_y
+
+		const new_cell = document.querySelector(`.cell[data-x="${new_x}"][data-y="${new_y}"]`)
+		new_cell.classList.add('mushroom')
+	}
+
 	remove_leaf(x, y, safe = false) {
 		const idx = this.index_of_leaf(x, y)
 

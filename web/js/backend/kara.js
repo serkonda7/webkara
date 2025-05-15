@@ -75,7 +75,7 @@ class KaraBackend {
 				throw new Error('Kara cannot push a mushroom into a tree')
 			}
 
-			// TODO relocate mushroom
+			b_world.relocate_mushroom(next_cell.x, next_cell.y, after_cell.x, after_cell.y)
 		}
 
 		this.pos = next_cell
