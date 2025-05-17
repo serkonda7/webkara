@@ -69,10 +69,12 @@ function init_click_listeners() {
 	})
 
 	btn_cmd_put_leaf.addEventListener('click', () => {
-		not_implemented() // TODO
+		kara.put_leaf()
+		state.save_world()
 	})
 	btn_cmd_take_leaf.addEventListener('click', () => {
-		not_implemented() // TODO
+		kara.take_leaf()
+		state.save_world()
 	})
 }
 

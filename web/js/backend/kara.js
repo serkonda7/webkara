@@ -99,6 +99,18 @@ class KaraBackend {
 		}
 	}
 
+	put_leaf() {
+		this.check_in_world()
+
+		b_world.add_leaf(this.pos.x, this.pos.y, true)
+	}
+
+	take_leaf() {
+		this.check_in_world()
+
+		b_world.remove_leaf(this.pos.x, this.pos.y, true)
+	}
+
 	set_position(x, y, safe = false) {
 		if (safe) {
 			b_world.check_pos_in_bounds(x, y)
@@ -162,11 +174,15 @@ class Kara {
 	}
 
 	put_leaf() {
-		throw new Error('put_leaf() not implemented')
+		b_kara.put_leaf()
+		const cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
+		cell.classList.add('leaf')
 	}
 
 	take_leaf() {
-		throw new Error('take_leaf() not implemented')
+		b_kara.take_leaf()
+		const cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
+		cell.classList.remove('leaf')
 	}
 
 	is_tree_front() {
