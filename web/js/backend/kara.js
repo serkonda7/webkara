@@ -1,4 +1,5 @@
 import { b_world } from "./world.js"
+import { throw_alert } from "../common/error.js"
 
 function vec2_add(a, b) {
 	return { x: a.x + b.x, y: a.y + b.y }
@@ -36,7 +37,7 @@ class KaraBackend {
 
 	check_in_world() {
 		if (!this.in_world) {
-			throw new Error('Kara is not in the world')
+			throw_alert('Kara is not in the world')
 		}
 	}
 
@@ -50,7 +51,7 @@ class KaraBackend {
 
 	check_kara_placable(x, y) {
 		if (!this.is_kara_placable(x, y)) {
-			throw new Error(`Kara cannot be placed at (${x}, ${y})`)
+			throw_alert(`Kara cannot be placed at (${x}, ${y})`)
 		}
 	}
 
@@ -61,18 +62,18 @@ class KaraBackend {
 		const next_cell = b_world.cell_on_world_torus(vec2_add(this.pos, vec))
 
 		if (b_world.is_tree(next_cell.x, next_cell.y)) {
-			throw new Error('Kara cannot move into a tree')
+			throw_alert('Kara cannot move into a tree')
 		}
 
 		if (b_world.is_mushroom(next_cell.x, next_cell.y)) {
 			const after_cell = b_world.cell_on_world_torus(vec2_add(next_cell, vec))
 
 			if (b_world.is_mushroom(after_cell.x, after_cell.y)) {
-				throw new Error('Kara cannot push multiple mushrooms')
+				throw_alert('Kara cannot push multiple mushrooms')
 			}
 
 			if (b_world.is_tree(after_cell.x, after_cell.y)) {
-				throw new Error('Kara cannot push a mushroom into a tree')
+				throw_alert('Kara cannot push a mushroom into a tree')
 			}
 
 			b_world.relocate_mushroom(next_cell.x, next_cell.y, after_cell.x, after_cell.y)
@@ -135,7 +136,7 @@ class KaraBackend {
 		}
 
 		if (dir < 0 || dir > 3) {
-			throw new Error(`Invalid direction: ${dir}`)
+			throw_alert(`Invalid direction: ${dir}`)
 		}
 
 		this.dir = dir

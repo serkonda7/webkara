@@ -1,5 +1,6 @@
 import * as f_world from '../frontend/f_world.js'
 import { b_kara, kara } from "./kara.js"
+import { throw_alert } from "../common/error.js"
 
 class WorldBackend {
 	size = {
@@ -12,7 +13,7 @@ class WorldBackend {
 
 	check_pos_in_bounds(x, y) {
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
-			throw new Error(`Position out of bounds: (${x}, ${y})`)
+			throw_alert(`Position out of bounds: (${x}, ${y})`)
 		}
 	}
 
@@ -81,7 +82,7 @@ class WorldBackend {
 		if (safe) {
 			this.check_pos_in_bounds(x, y)
 			if (idx === -1) {
-				throw new Error(`No leaf at (${x}, ${y})`)
+				throw_alert(`No leaf at (${x}, ${y})`)
 			}
 		}
 
@@ -94,7 +95,7 @@ class WorldBackend {
 		if (safe) {
 			this.check_pos_in_bounds(x, y)
 			if (idx === -1) {
-				throw new Error(`No tree at (${x}, ${y})`)
+				throw_alert(`No tree at (${x}, ${y})`)
 			}
 		}
 
@@ -107,7 +108,7 @@ class WorldBackend {
 		if (safe) {
 			this.check_pos_in_bounds(x, y)
 			if (idx === -1) {
-				throw new Error(`No mushroom at (${x}, ${y})`)
+				throw_alert(`No mushroom at (${x}, ${y})`)
 			}
 		}
 
@@ -136,19 +137,19 @@ class WorldBackend {
 
 	check_leaf_placable(x, y) {
 		if (!this.is_leaf_placeable(x, y)) {
-			throw new Error(`Leaf cannot be placed at (${x}, ${y})`)
+			throw_alert(`Leaf cannot be placed at (${x}, ${y})`)
 		}
 	}
 
 	check_tree_placable(x, y) {
 		if (!this.is_tree_placeable(x, y)) {
-			throw new Error(`Tree cannot be placed at (${x}, ${y})`)
+			throw_alert(`Tree cannot be placed at (${x}, ${y})`)
 		}
 	}
 
 	check_mushroom_placable(x, y) {
 		if (!this.is_mushroom_placeable(x, y)) {
-			throw new Error(`Mushroom cannot be placed at (${x}, ${y})`)
+			throw_alert(`Mushroom cannot be placed at (${x}, ${y})`)
 		}
 	}
 
@@ -239,7 +240,7 @@ class WorldBackend {
 
 	set_size(width, height) {
 		if (width < 1 || height < 1) {
-			throw new Error('World size must be at least 1x1')
+			throw_alert('World size must be at least 1x1')
 		}
 
 		this.size.width = width
