@@ -3,6 +3,7 @@ import * as f_world from './f_world.js'
 import * as state from './state.js'
 import * as edit_mode from './edit_mode.js'
 import { kara } from '../backend/kara.js'
+import * as editor from './editor.js'
 
 const btn_run = document.querySelector('#run-btn')
 const btn_pause = document.querySelector('#pause-btn')
@@ -32,7 +33,7 @@ function not_implemented() {
 function init_click_listeners() {
 	// Group: Code execution
 	btn_run.addEventListener('click', () => {
-		not_implemented() // TODO
+		editor.execute_code()
 	})
 	btn_pause.addEventListener('click', () => {
 		not_implemented() // TODO
@@ -85,6 +86,7 @@ function main() {
 	f_world.draw_world_objects()
 
 	init_click_listeners()
+	editor.init()
 }
 
 main()
