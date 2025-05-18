@@ -14,7 +14,7 @@ class ToolsBackend {
 		this.step_delay = 0
 	}
 
-	async delayed_draw() {
+	async delay_atfer_draw() {
 		await this.sleep(this.step_delay)
 	}
 }
