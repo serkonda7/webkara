@@ -2,7 +2,8 @@ class AbortExecution extends Error {}
 
 class ToolsBackend {
 	step_delay = 0
-	run_state = 'stop'
+	run_state = 'editor'
+	resume_callback = null
 
 	async sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms))
@@ -21,11 +22,15 @@ class ToolsBackend {
 		await this.sleep(this.step_delay)
 	}
 
-	check_run_state() {
+	async check_run_state() {
+		while (this.run_state == 'pause') {
+			await new Promise(resolve => {
+				this.resume_callback = resolve
+			})
+		}
+
 		if (this.run_state == 'stop') {
 			throw new AbortExecution('')
-		} else if (this.run_state == 'pause') {
-			// TODO
 		}
 	}
 }
@@ -39,8 +44,8 @@ class Tools {
 		throw new Error('show_popup() not implemented')
 	}
 
-	check_run_state() {
-		b_tools.check_run_state()
+	async check_run_state() {
+		await b_tools.check_run_state()
 	}
 
 	async sleep(ms) {

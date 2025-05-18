@@ -27,26 +27,42 @@ function restore_state() {
 	inp_world_height.value = size.height
 }
 
-function not_implemented() {
-	alert('Not implemented')
-}
-
 function init_click_listeners() {
 	// Group: Code execution
 	btn_run.addEventListener('click', async () => {
+		if (b_tools.run_state == 'pause') {
+			if (b_tools.resume_callback) {
+				b_tools.resume_callback()
+				b_tools.resume_callback = null
+				b_tools.run_state = 'run'
+				btn_run.disabled = true
+				btn_pause.disabled = false
+			}
+
+			return
+		}
+
 		btn_run.disabled = true
+		btn_pause.disabled = false
 		btn_stop.disabled = false
 
 		await editor.execute_code()
 
 		btn_run.disabled = false
+		btn_pause.disabled = true
 		btn_stop.disabled = true
 	})
 	btn_pause.addEventListener('click', () => {
-		not_implemented() // TODO
+		b_tools.run_state = 'pause'
+		btn_pause.disabled = true
+		btn_run.disabled = false
 	})
 	btn_stop.addEventListener('click', () => {
 		b_tools.run_state = 'stop'
+		if (b_tools.resume_callback) {
+			b_tools.resume_callback()
+			b_tools.resume_callback = null
+		}
 	})
 
 	// Group: World settings

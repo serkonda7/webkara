@@ -161,7 +161,7 @@ class Kara {
 		new_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 		await b_tools.delay_atfer_draw()
 
-		tools.check_run_state()
+		await tools.check_run_state()
 	}
 
 	async turn_left() {
@@ -173,7 +173,7 @@ class Kara {
 		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 		await b_tools.delay_atfer_draw()
 
-		tools.check_run_state()
+		await tools.check_run_state()
 	}
 
 	async turn_right() {
@@ -185,23 +185,27 @@ class Kara {
 		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 		await b_tools.delay_atfer_draw()
 
-		tools.check_run_state()
+		await tools.check_run_state()
 	}
 
-	put_leaf() {
+	async put_leaf() {
 		b_kara.put_leaf()
+
 		const cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
 		cell.classList.add('leaf')
+		await b_tools.delay_atfer_draw()
 
-		tools.check_run_state()
+		await tools.check_run_state()
 	}
 
-	take_leaf() {
+	async take_leaf() {
 		b_kara.take_leaf()
+
 		const cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
 		cell.classList.remove('leaf')
+		await b_tools.delay_atfer_draw()
 
-		tools.check_run_state()
+		await tools.check_run_state()
 	}
 
 	is_tree_front() {

@@ -30,6 +30,7 @@ async function execute_code() {
 		}
 
 		if (e instanceof AbortExecution) {
+			finish_execution()
 			return
 		}
 
@@ -37,9 +38,13 @@ async function execute_code() {
 		console.error(e)
 	}
 
+	finish_execution()
+}
+
+function finish_execution() {
 	editor_div.setAttribute('contenteditable', 'true')
 	b_tools.clear_step_delay()
-	b_tools.run_state = 'stop'
+	b_tools.run_state = 'editor'
 	state.save_world()
 }
 
