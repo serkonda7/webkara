@@ -4,6 +4,7 @@ import * as state from './state.js'
 import * as edit_mode from './edit_mode.js'
 import { kara } from '../backend/kara.js'
 import * as editor from './editor.js'
+import { b_tools } from '../backend/tools.js'
 
 const btn_run = document.querySelector('#run-btn')
 const btn_pause = document.querySelector('#pause-btn')
@@ -34,16 +35,18 @@ function init_click_listeners() {
 	// Group: Code execution
 	btn_run.addEventListener('click', async () => {
 		btn_run.disabled = true
+		btn_stop.disabled = false
 
 		await editor.execute_code()
 
 		btn_run.disabled = false
+		btn_stop.disabled = true
 	})
 	btn_pause.addEventListener('click', () => {
 		not_implemented() // TODO
 	})
 	btn_stop.addEventListener('click', () => {
-		not_implemented() // TODO
+		b_tools.run_state = 'stop'
 	})
 
 	// Group: World settings

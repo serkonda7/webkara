@@ -1,5 +1,8 @@
+class AbortExecution extends Error {}
+
 class ToolsBackend {
 	step_delay = 0
+	run_state = 'stop'
 
 	async sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms))
@@ -17,6 +20,14 @@ class ToolsBackend {
 	async delay_atfer_draw() {
 		await this.sleep(this.step_delay)
 	}
+
+	check_run_state() {
+		if (this.run_state == 'stop') {
+			throw new AbortExecution('')
+		} else if (this.run_state == 'pause') {
+			// TODO
+		}
+	}
 }
 
 class Tools {
@@ -29,7 +40,7 @@ class Tools {
 	}
 
 	check_run_state() {
-		throw new Error('check_run_state() not implemented')
+		b_tools.check_run_state()
 	}
 
 	async sleep(ms) {
@@ -52,4 +63,4 @@ class Tools {
 const b_tools = new ToolsBackend()
 const tools = new Tools()
 
-export { b_tools, tools }
+export { b_tools, tools, AbortExecution }

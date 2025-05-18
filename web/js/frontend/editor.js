@@ -1,7 +1,7 @@
 import { throw_alert, KaraError } from "../common/error.js"
 import { kara } from "../backend/kara.js"
 import { world } from "../backend/world.js"
-import { b_tools, tools } from "../backend/tools.js"
+import { b_tools, tools, AbortExecution } from "../backend/tools.js"
 import * as state from "./state.js"
 
 const editor_div = document.querySelector('#code-editor')
@@ -18,6 +18,7 @@ async function execute_code() {
 	save_code()
 
 	b_tools.use_speed_slider_delay()
+	b_tools.run_state = 'run'
 
 	const user_fn = new FnConstructor('kara', 'world', 'tools', editor_div.innerText)
 	try {
@@ -28,12 +29,17 @@ async function execute_code() {
 			return
 		}
 
+		if (e instanceof AbortExecution) {
+			return
+		}
+
 		alert('Error: ' + e.message)
 		console.error(e)
 	}
 
 	editor_div.setAttribute('contenteditable', 'true')
 	b_tools.clear_step_delay()
+	b_tools.run_state = 'stop'
 	state.save_world()
 }
 
