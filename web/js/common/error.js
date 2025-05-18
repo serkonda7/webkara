@@ -1,6 +1,14 @@
-function throw_alert(msg) {
-	alert(`Error: ${msg}`)
-	throw new Error(msg)
+class KaraError extends Error {
+	constructor(message) {
+		super(message)
+		this.name = 'KaraError'
+	}
 }
 
-export { throw_alert }
+function throw_alert(msg) {
+	console.error(msg)
+	alert(`Error: ${msg}`)
+	throw new KaraError(msg)
+}
+
+export { throw_alert, KaraError }

@@ -1,4 +1,22 @@
 class ToolsBackend {
+	step_delay = 0
+
+	async sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms))
+	}
+
+	use_speed_slider_delay() {
+		// TODO implement speed slider
+		this.step_delay = 400
+	}
+
+	clear_step_delay() {
+		this.step_delay = 0
+	}
+
+	async delay_atfer_draw() {
+		await this.sleep(this.step_delay)
+	}
 }
 
 class Tools {
@@ -14,8 +32,8 @@ class Tools {
 		throw new Error('check_run_state() not implemented')
 	}
 
-	sleep(ms) {
-		throw new Error('sleep() not implemented')
+	async sleep(ms) {
+		return b_tools.sleep(ms)
 	}
 
 	string_input(msg) {
