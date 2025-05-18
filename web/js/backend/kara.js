@@ -1,5 +1,6 @@
 import { b_world } from "./world.js"
 import { throw_alert } from "../common/error.js"
+import { b_tools, tools } from "./tools.js"
 
 function vec2_add(a, b) {
 	return { x: a.x + b.x, y: a.y + b.y }
@@ -151,24 +152,29 @@ class KaraBackend {
 }
 
 class Kara {
-	move() {
+	async move() {
 		b_kara.move()
 
+		await b_tools.delayed_draw()
 		document.querySelector('.cell.kara').classList.remove('kara', 'up', 'right', 'down', 'left')
 		const new_cell = document.querySelector(`.cell[data-x="${b_kara.pos.x}"][data-y="${b_kara.pos.y}"]`)
 		new_cell.classList.add('kara')
 		new_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
-	turn_left() {
+	async turn_left() {
 		b_kara.turn_left()
+
+		await b_tools.delayed_draw()
 		const kara_cell = document.querySelector('.cell.kara')
 		kara_cell.classList.remove('up', 'right', 'down', 'left')
 		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
 	}
 
-	turn_right() {
+	async turn_right() {
 		b_kara.turn_right()
+
+		await b_tools.delayed_draw()
 		const kara_cell = document.querySelector('.cell.kara')
 		kara_cell.classList.remove('up', 'right', 'down', 'left')
 		kara_cell.classList.add(NUM_TO_DIR[b_kara.dir])
