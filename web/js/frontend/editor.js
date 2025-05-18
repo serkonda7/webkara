@@ -14,6 +14,7 @@ function save_code() {
 const FnConstructor = Object.getPrototypeOf(async function() {}).constructor
 
 async function execute_code() {
+	editor_div.setAttribute('contenteditable', 'false')
 	save_code()
 
 	b_tools.use_speed_slider_delay()
@@ -31,6 +32,7 @@ async function execute_code() {
 		console.error(e)
 	}
 
+	editor_div.setAttribute('contenteditable', 'true')
 	b_tools.clear_step_delay()
 	state.save_world()
 }

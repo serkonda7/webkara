@@ -32,8 +32,12 @@ function not_implemented() {
 
 function init_click_listeners() {
 	// Group: Code execution
-	btn_run.addEventListener('click', () => {
-		editor.execute_code()
+	btn_run.addEventListener('click', async () => {
+		btn_run.disabled = true
+
+		await editor.execute_code()
+
+		btn_run.disabled = false
 	})
 	btn_pause.addEventListener('click', () => {
 		not_implemented() // TODO
