@@ -1,6 +1,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #bbeebb;
+  margin: 0;
 }
 
 input,
@@ -13,13 +14,24 @@ img {
   image-rendering: pixelated;
 }
 
+.split-view {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 10px);
+  margin: 5px;
+  gap: 5px;
+}
+
+.split-view > div {
+  flex: 1;
+}
+
 #code-editor {
   font-family: 'Consolas', 'Courier New', monospace;
   background-color: white;
   border: 1px solid black;
   padding: 5px;
-  min-height: 150px;
-  max-height: 80vh;
+  height: 90%;
   overflow-y: auto;
 }
 
