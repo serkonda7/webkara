@@ -13,6 +13,17 @@ img {
   image-rendering: pixelated;
 }
 
+.sidenav {
+  height: 100vh;
+  width: 0; /* changed by JS */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  background-color: lightcoral;
+}
+
 #code-editor {
   font-family: 'Consolas', 'Courier New', monospace;
   background-color: white;

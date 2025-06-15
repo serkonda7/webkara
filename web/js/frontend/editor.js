@@ -5,6 +5,11 @@ import { b_tools, tools, AbortExecution } from "../backend/tools.js"
 import * as state from "./state.js"
 
 const editor_div = document.querySelector('#code-editor')
+const btn_toggle_nav = document.querySelector('#toggle-editor-nav')
+const editor_nav = document.querySelector('#editor-nav')
+const main_div = document.querySelector('#main-content')
+
+let nav_open = false
 
 function save_code() {
 	const code = editor_div.innerText
@@ -48,9 +53,24 @@ function finish_execution() {
 	state.save_world()
 }
 
+function toggle_editor_nav() {
+	if (nav_open) {
+		editor_nav.style.width = '0px'
+		main_div.style.marginLeft = '0px'
+		nav_open = false
+		return
+	}
+
+	editor_nav.style.width = '200px'
+	main_div.style.marginLeft = '200px'
+	nav_open = true
+}
+
 function init() {
-	editor_div.innerText = localStorage.getItem('usercode') || '// Your code'
-	setInterval(save_code, 10000)
+	// editor_div.innerText = localStorage.getItem('usercode') || '// Your code'
+	// setInterval(save_code, 10000)
+
+	btn_toggle_nav.addEventListener('click', toggle_editor_nav)
 }
 
 export { init, execute_code }
