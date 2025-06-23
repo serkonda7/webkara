@@ -1,3 +1,7 @@
+:root {
+  --sidenav-min-width: 29px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #bbeebb;
@@ -15,6 +19,7 @@ img {
 
 .sidenav {
   height: 100vh;
+  min-width: var(--sidenav-min-width);
   width: 0; /* changed by JS */
   position: fixed;
   z-index: 1;
@@ -22,6 +27,25 @@ img {
   left: 0;
   overflow-x: hidden;
   background-color: lightcoral;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 2px;
+}
+
+.sidenav.expanded button img {
+  transform: rotate(180deg);
+}
+
+.sidenav button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+#main-content {
+  margin-left: var(--sidenav-min-width);
 }
 
 #code-editor {

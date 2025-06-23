@@ -54,13 +54,16 @@ function finish_execution() {
 }
 
 function toggle_editor_nav() {
+
 	if (nav_open) {
-		editor_nav.style.width = '0px'
-		main_div.style.marginLeft = '0px'
+		editor_nav.classList.remove('expanded')
+		editor_nav.style.width = 'var(--sidenav-min-width)'
+		main_div.style.marginLeft = 'var(--sidenav-min-width)'
 		nav_open = false
 		return
 	}
 
+	editor_nav.classList.add('expanded')
 	editor_nav.style.width = '200px'
 	main_div.style.marginLeft = '200px'
 	nav_open = true
