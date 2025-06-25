@@ -10,10 +10,23 @@
 <body>
   <!-- <div id="code-editor" contenteditable="true", spellcheck="false"></div> -->
   <div class="sidenav" id="editor-nav">
-    <button id="toggle-editor-nav">
+    <button class="tooltip-parent" id="toggle-editor-nav">
       <img src="img/sidebar.png">
+      <span class="tooltip-text">Expand sidebar</span>
     </button>
+
+    <ul>
+      <li>
+        <span>untitled</span>
+        <button>
+          <img src="img/external.png">
+        </button>
+      </li>
+    </ul>
   </div>
+  <!-- TODO more styling, classes -->
+  <!-- TODO collapsed: hide edit button, show "nam..." -->
+  <!-- TODO (followup): highlight active file, button to add new -->
 
   <div id="main-content">
     <div>

@@ -1,5 +1,5 @@
 :root {
-  --sidenav-min-width: 29px;
+  --sidenav-min-width: 50px;
 }
 
 body {
@@ -11,6 +11,10 @@ input,
 button {
   font-family: inherit;
   font-size: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 img {
@@ -30,18 +34,44 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4px 2px;
+  padding: 6px 3px;
 }
 
-.sidenav.expanded button img {
+.sidenav.expanded > button img {
   transform: rotate(180deg);
 }
 
-.sidenav button {
+.sidenav > button {
   border: none;
+  background: none;
   padding: 0;
   margin: 0;
   line-height: 0;
+}
+
+.sidenav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-parent {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  background-color: lightblue;
+  text-align: center;
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  left: 50%;
+}
+
+.tooltip-parent:hover .tooltip-text {
+  visibility: visible;
 }
 
 #main-content {
